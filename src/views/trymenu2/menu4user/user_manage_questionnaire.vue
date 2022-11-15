@@ -1,50 +1,59 @@
 <template>
-  <div><h1> </h1></div>
-  <div class="Login" id="figure">
+  <div id="manage">
+    <div class="Login" id="figure">
+    </div>
+    <br>
+    <div style="margin-bottom: 15px">
+      <a-space direction="horizontal" size="large" style="width: 100%">
+        <p>问卷名:</p>
+        <a-mention v-model="question_name"  placeholder="请输入问卷名..." />
+        <a-button @click="serchQuestion" type="outline" >查询</a-button>
+        <a-modal v-model:visible="flag_search" @ok="handleOk" @cancel="handleCancel">
+          <template #title>
+            提醒
+          </template>
+          <div>没有查询到相关问卷</div>
+        </a-modal>
+      </a-space>
+    </div>
+    <a-table :columns="columns" :data="info.col" :pagination="pagination" :row-selection="rowSelection" v-model:selectedKeys="selectedKeys" style="margin-top: 10px">
+      <template #optional="{ record }">
+        <div v-if="record.state==0">
+          <a-button type="primary" style="margin-right:10px;background-color: #ffc940">查看</a-button>
+          <a-button type="primary" style="margin-right:10px;background-color: crimson">修改</a-button>
+          <a-button type="primary" @click="handleClickDelete(record.title)" style="background-color: #409EFF">删除</a-button>
+        </div>
+        <div v-else>
+          <a-button type="primary" style="margin-right:10px;background-color: #ffc940">查看</a-button>
+          <a-button type="primary" style="margin-right:10px;background-color: #4ddc14" @click="disappare(getpath('manage')),appare(getpath('analyse'))">分析</a-button>
+          <a-button type="primary" @click="handleClickDelete(record.title)" style="background-color: #409EFF">删除</a-button>
+        </div>
+        <a-modal v-model:visible="flag_delete" @ok="DeleteQuestion" @cancel="cancelDeleteQuestion">
+          <template #title>
+            提示
+          </template>
+          <div>是否确认删除该问卷</div>
+        </a-modal>
+      </template>
+    </a-table>
   </div>
-  <br>
-  <div style="margin-bottom: 15px">
-    <a-space direction="horizontal" size="large" style="width: 100%">
-      <p>问卷名:</p>
-      <a-mention v-model="question_name"  placeholder="请输入问卷名..." />
-      <a-button @click="serchQuestion" type="outline" >查询</a-button>
-      <a-modal v-model:visible="flag_search" @ok="handleOk" @cancel="handleCancel">
-        <template #title>
-          提醒
-        </template>
-        <div>没有查询到相关问卷</div>
-      </a-modal>
-    </a-space>
+  <div id="analyse" style="display: none">
+    <user_manage_analyse_questionnaire></user_manage_analyse_questionnaire>
   </div>
-  <a-table :columns="columns" :data="info.col" :pagination="pagination" :row-selection="rowSelection" v-model:selectedKeys="selectedKeys" style="margin-top: 10px">
-    <template #optional="{ record }">
-      <div v-if="record.state==0">
-      <a-button type="primary" style="margin-right:10px;background-color: #ffc940">查看</a-button>
-      <a-button type="primary" style="margin-right:10px;background-color: crimson">修改</a-button>
-      <a-button type="primary" @click="handleClickDelete(record.title)" style="background-color: #409EFF">删除</a-button>
-      </div>
-      <div v-else>
-        <a-button type="primary" style="margin-right:10px;background-color: #ffc940">查看</a-button>
-        <a-button type="primary" style="margin-right:10px;background-color: #4ddc14">分析</a-button>
-        <a-button type="primary" @click="handleClickDelete(record.title)" style="background-color: #409EFF">删除</a-button>
-      </div>
-      <a-modal v-model:visible="flag_delete" @ok="DeleteQuestion" @cancel="cancelDeleteQuestion">
-        <template #title>
-          提示
-        </template>
-        <div>是否确认删除该问卷</div>
-      </a-modal>
-    </template>
-  </a-table>
+
 </template>
 
 <script>
 import {reactive, ref} from 'vue';
 import api from "@/api";
 import {Message, Modal} from '@arco-design/web-vue';
+import user_manage_analyse_questionnaire from "@/views/trymenu2/menu4user/user_manage_analyse_questionnaire";
 
 export default {
   name: "user_manage_send_questionnaire",
+  components:{
+    user_manage_analyse_questionnaire,
+  },
   mounted() {
     this.form.title =this.question_name;
     api.searchQuestion(this.form).then(res => {
@@ -69,7 +78,16 @@ export default {
       },
       pagination:{pageSize: 5},
       info:{
-        col:[]
+        col:[
+          {
+            id: '1',
+            title: '问卷一',
+            state:'1',
+            createTime:'2002-6-7',
+            time:'2020-1-4'
+
+          }
+        ]
       },
       flag_search:false,
       flag_delete:false,
@@ -165,7 +183,20 @@ export default {
           Message.error('删除失败！')
         }
       })
+    },
+    getpath(id) {
+      return document.getElementById(id);
+    },
+    disappare(x)//当前问卷分析页面消失
+    {
+      x.style.display="none"
+    },
+    appare(x)//数据大屏页面出现
+    {
+      x.style.display="block"
     }
+
+
   }
 }
 </script>

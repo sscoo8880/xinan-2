@@ -77,14 +77,6 @@ const routes = [
     name: 'echartsPage',
     component: () => import(/* webpackChunkName: "about" */ '../views/tryecharts/echartsPage.vue'),
   }
-  // {
-  //   path: 'menu4user/lessee_manage_user',
-  //   component: () => import('@/views/trymenu2/menu4user/lessee_manage_user.vue'),
-  //   name: 'lessee_manage_user',
-  //   meta: { title: '标题' }
-  // }
-  // 用户界面发送问卷中设计、发送操作都得展开新的页面
-
   // 用户界面分析问卷中分析操作都得展开新的页面
 
   //   //测试用页面
