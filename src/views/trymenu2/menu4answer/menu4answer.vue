@@ -1,17 +1,21 @@
 <template>
-  <a-page-header class="title" title="返回" @back="$router.back()" :style="{padding:'20px',height:'60px'}" />
+  <a-page-header class="title" title="返回" @back="$router.back()" :style="{padding:'20px',height:'25px'}" />
+  <background/>
   <a-form>
     <a-typography-text id="title-m">角色：答者-问卷宝</a-typography-text>
-    <a-avatar :style="{ backgroundColor: '#3370ff',marginRight:'0px'}" id="upic">
+    <a-avatar :style="{ backgroundColor: '#3370ff',marginRight:'0px'}" id="upic"      @click="handleClick">
+      <a-modal v-model:visible="visible" title="退出登录" @cancel="handleCancel" @before-ok="handleBeforeOk">
+        <h2>确定退出登录吗？</h2>
+      </a-modal>
       <IconUser />
     </a-avatar>
-    <a-typography-text id="uname">欢迎答者</a-typography-text>
+    <a-typography-text id="uname" >欢迎答者</a-typography-text>
   </a-form>
 
-  <div id="background-r"></div>
+
   <div class="menu-demo">
     <a-menu
-        :style="{ width: '15%', height: '100%',top:'-30px' }"
+        :style="{ width: '15%', height: '100%',top:'5px' }"
         :default-open-keys="['0']"
         :default-selected-keys="['0_0']"
         show-collapse-button
@@ -46,7 +50,7 @@
 
 
 <script>
-import { ref } from 'vue';
+import {reactive, ref} from 'vue';
 import { Message } from '@arco-design/web-vue';
 import {
   IconMenuFold,
@@ -62,9 +66,11 @@ import menu4answer from "@/views/trymenu2/menu4answer/menu4answer";
 import Answer_manage_questionnaire from "@/views/trymenu2/menu4answer/answer_manage_questionnaire";
 import Answer_myinfo from "@/views/trymenu2/menu4answer/answer_myinfo";
 import Answer_answer_questionnaire from "@/views/trymenu2/menu4answer/answer_answer_questionnaire";
+import background from "@/components/background/background";
 export default {
   components: {
     // 引入子页面
+    background,
     Answer_answer_questionnaire,
     Answer_myinfo,
     Answer_manage_questionnaire,
@@ -87,11 +93,53 @@ export default {
       }
     };
   },
-  data(){
-    return{
+  data() {
+    const rowSelection = reactive({
+      type: 'checkbox',
+      // fixed:false,
+      showCheckedAll: true
+    });
+    // 管理-弹出框
+    const visible = ref(false);
+    const record = reactive({
+      name: '张三',
+      sex: '男',
+      power:'用户',
+      time:'2019-10-26',
+      phone:'165-5671-4545',
+      local:'辽宁省沈阳市',
+      hometown:'辽宁省沈阳市',
+      home: '东北大学浑南校区第二学生宿舍',
+    });
+    const handleClick = () => {
+      visible.value = true;
+    };
+    const handleBeforeOk = (done) => {
+
+
+
+      this.$router.push({path:'/'})
+      // prevent close
+      // done(false)
+
+
+    };
+    const handleCancel = () => {
+      visible.value = false;
+    };
+
+    return {
+      visible,
+      record,
+      rowSelection,
+      handleClick,
+      handleBeforeOk,
+      handleCancel,
+      isReloadData: true,
       key:'-1'
     }
   },
+
   methods:{
     // 菜单函数
     getpath(id) {
@@ -170,12 +218,7 @@ export default {
   background-color: var(--color-neutral-2);
 }
 
-#background-r {
-  background: url("../../../assets/login_background.jpg") no-repeat center;
-  top: 70px;
-  left: 0;
-  position: fixed;
-}
+
 
 #title-m{
   position: absolute;
@@ -205,20 +248,21 @@ export default {
 #div-mm{
   position: absolute;
   top: 10%;
-  left: 20%;
-  width: 1200px;
+  left: 16%;
+  width: 83%;
 }
 #div_mmm{
   position: absolute;
   top: 10%;
-  left: 20%;
-  width: 1200px;
+  left: 16%;
+  width: 83%;
 }
+
 #div_mmmm{
   position: absolute;
   top: 10%;
-  left: 20%;
-  width: 1200px;
+  left: 16%;
+  width: 83%;
 }
 
 </style>
