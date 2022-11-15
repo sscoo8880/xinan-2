@@ -1,25 +1,37 @@
 <template>
-  <div style="margin-bottom: 15px">
-    <a-space direction="horizontal" size="large" style="width: 100%">
-      <a-input-search :style="{width:'320px'}" placeholder="输入问卷名称，进行模糊搜索" search-button/>
-      <a-button type="outline">查询</a-button>
-    </a-space>
+  <div v-if="flag===0">
+    <div style="margin-bottom: 15px">
+      <a-space direction="horizontal" size="large" style="width: 100%">
+        <a-input-search :style="{width:'320px'}" placeholder="输入问卷名称，进行模糊搜索" search-button/>
+        <a-button type="outline">查询</a-button>
+      </a-space>
+    </div>
+    <div>
+      <a-table  :columns="columns" :data="data" :rowKey="data.key" :row-selection="rowSelection" style="margin-top: 10px">
+        <template #optional="{ record }">
+          <!--          <router-link :to="{path:'/complished_questionnaire',query:{id:record.id,name:record.name,date:record.last_update}}">-->
+          <a-button type="primary" @click="changeflag()">查看</a-button>
+          <!--          </router-link>-->
+        </template>
+      </a-table>
+    </div>
   </div>
-  <div style="margin-top: 10px" >
-    <a-table :columns="columns" :data="data" :rowKey="data.key" :row-selection="rowSelection">
-      <template #optional="{ record }">
-        <router-link :to="{path:'/to_answer_questionnaire',query:{id:record.id,name:record.name,date:record.last_update}}"><a-button type="primary"  >答卷</a-button></router-link>
-      </template>
-    </a-table>
 
+  <div v-else>
+    <to_manage_questionnaire @flag="getchange"/>
   </div>
+
 </template>
 
-<script>
-import {reactive, ref} from 'vue';
+<script >
+import {reactive} from "vue";
+import to_manage_questionnaire from "@/views/trymenu2/menu4answer/to_manage_questionnaire";
 
 export default {
-
+  name: "answer_manage_questionnaire",
+  components:{
+    to_manage_questionnaire
+  },
   data(){
     const rowSelection = reactive({
       type: 'checkbox',
@@ -27,6 +39,7 @@ export default {
       showCheckedAll: true
     });
     return{
+      flag:0,
       value : '',
       text : '',
       rowSelection,
@@ -122,15 +135,15 @@ export default {
     });
   },
   methods:{
-    cli(){
-      alert("点击答卷按钮")
-      console.log(global.apiUrl)
+    changeflag(){
+      this.flag=1;
+    },
+    getchange(data){
+      this.flag=data
     }
-  }
+  },
 }
 </script>
 
 <style scoped>
-
 </style>
-

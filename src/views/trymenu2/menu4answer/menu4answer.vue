@@ -48,11 +48,9 @@
         show-collapse-button
         breakpoint="xl"
         @collapse="onCollapse">
-
       <a-menu-item key="0_0" v-on:click="change0(),if_goto_answer_myinfo(getpath('div-m')),if_goto_answer_manage_question(getpath('div-mm')),if_goto_answer_answer_question(getpath('div_mmm')),if_goto_answer_manage_questionnaire(getpath('div_mmmm'))">个人信息</a-menu-item>
       <a-menu-item key="0_1" v-on:click="change0_1(),if_goto_answer_myinfo(getpath('div-m')),if_goto_answer_manage_question(getpath('div-mm')),if_goto_answer_answer_question(getpath('div_mmm')),if_goto_answer_manage_questionnaire(getpath('div_mmmm'))">未处理问卷</a-menu-item>
       <a-menu-item key="0_3" v-on:click="change0_3(),if_goto_answer_myinfo(getpath('div-m')),if_goto_answer_manage_question(getpath('div-mm')),if_goto_answer_answer_question(getpath('div_mmm')),if_goto_answer_manage_questionnaire(getpath('div_mmmm'))">已完成问卷</a-menu-item>
-
     </a-menu>
   </div>
 

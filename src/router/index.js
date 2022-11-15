@@ -68,11 +68,6 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/trymenu2/menu4user/user_qTemplate_detail.vue'),
   },
   {
-    path: '/complished_questionnaire',
-    name: 'complished_questionnaire',
-    component: () => import(/* webpackChunkName: "about" */ '../views/trymenu2/menu4answer/complished_questionnaire.vue'),
-  },
-  {
     path: '/echartsPage',
     name: 'echartsPage',
     component: () => import(/* webpackChunkName: "about" */ '../views/tryecharts/echartsPage.vue'),

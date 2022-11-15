@@ -20,7 +20,7 @@
       <template #optional="{ record }">
         <div v-if="record.state==0">
           <a-button type="primary" style="margin-right:10px;background-color: #ffc940">查看</a-button>
-          <a-button type="primary" style="margin-right:10px;background-color: crimson">修改</a-button>
+          <a-button type="primary" style="margin-right:10px;background-color: crimson" @click="disappare(getpath('manage')),appare(getpath('change'))">修改</a-button>
           <a-button type="primary" @click="handleClickDelete(record.title)" style="background-color: #409EFF">删除</a-button>
         </div>
         <div v-else>
@@ -41,6 +41,10 @@
     <user_manage_analyse_questionnaire></user_manage_analyse_questionnaire>
   </div>
 
+  <div id="change" style="display: none">
+    <user_manage_change_questionnaire></user_manage_change_questionnaire>
+  </div>
+
 </template>
 
 <script>
@@ -48,10 +52,11 @@ import {reactive, ref} from 'vue';
 import api from "@/api";
 import {Message, Modal} from '@arco-design/web-vue';
 import user_manage_analyse_questionnaire from "@/views/trymenu2/menu4user/user_manage_analyse_questionnaire";
-
+import user_manage_change_questionnaire from "@/views/trymenu2/menu4user/user_manage_change_questionnaire";
 export default {
   name: "user_manage_send_questionnaire",
   components:{
+    user_manage_change_questionnaire,
     user_manage_analyse_questionnaire,
   },
   mounted() {
@@ -83,6 +88,13 @@ export default {
             id: '1',
             title: '问卷一',
             state:'1',
+            createTime:'2002-6-7',
+            time:'2020-1-4'
+          },
+          {
+            id: '2',
+            title: '问卷二',
+            state:'0',
             createTime:'2002-6-7',
             time:'2020-1-4'
           }

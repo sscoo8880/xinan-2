@@ -1,5 +1,5 @@
 <template>
-  <div id="answer">
+  <div id="look" >
     <div style="margin-bottom: 15px">
       <a-space direction="horizontal" size="large" style="width: 100%">
         <a-input-search :style="{width:'320px'}" placeholder="输入问卷名称，进行模糊搜索" search-button/>
@@ -9,13 +9,15 @@
     <div>
       <a-table  :columns="columns" :data="data" :rowKey="data.key" :row-selection="rowSelection" style="margin-top: 10px">
         <template #optional="{ record }">
-          <router-link :to="{path:'/complished_questionnaire',query:{id:record.id,name:record.name,date:record.last_update}}"><a-button type="primary" status="success" >查看</a-button></router-link>
+<!--          <router-link :to="{path:'/complished_questionnaire',query:{id:record.id,name:record.name,date:record.last_update}}">-->
+          <a-button type="primary" status="success" @click="appare(getpath('comp')),disappare(getpath('look'))">查看</a-button>
+<!--          </router-link>-->
         </template>
       </a-table>
     </div>
   </div>
-  <div id="to_answer">
-
+  <div id="comp" style="display: none">
+    <to_answer_questionnaire></to_answer_questionnaire>
   </div>
 
 </template>
@@ -25,7 +27,10 @@ import {reactive} from "vue";
 import to_answer_questionnaire from "@/views/trymenu2/menu4answer/to_answer_questionnaire";
 
 export default {
-  components:to_answer_questionnaire,
+  name: "answer_answer_questionnaire",
+  components:{
+    to_answer_questionnaire
+  },
   data(){
     const rowSelection = reactive({
       type: 'checkbox',
@@ -127,6 +132,25 @@ export default {
       showCheckedAll: true
     });
   },
+  methods:{
+    // cli(){
+    //   alert("点击答卷按钮")
+    //   console.log(global.apiUrl)
+    // },
+    getpath(id) {
+      console.log('22355677');
+      return document.getElementById(id);
+
+    },
+    disappare(x)//当前页面消失
+    {
+      x.style.display="none"
+    },
+    appare(x)//新页面出现
+    {
+      x.style.display="block"
+    }
+    },
 }
 </script>
 
