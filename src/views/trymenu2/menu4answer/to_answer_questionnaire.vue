@@ -5,7 +5,7 @@
   </div>
 
 
-  <div id="look" >
+  <div id="look">
     <answer_answer_questionnaire></answer_answer_questionnaire>
   </div>
 </template>
