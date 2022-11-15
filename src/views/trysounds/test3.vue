@@ -16,6 +16,8 @@
     <Button type="info" @click="downPCM()" style="margin:1vw;">下载PCM</Button>
     <Button type="info" @click="downWAV()" style="margin:1vw;">下载WAV</Button>
     <Button type="info" @click="getMp3Data()" style="margin:1vw;">下载MP3</Button>
+    <Button type="info" @click="uploadRecord()" style="margin:1vw;">上传</Button>
+
     <br/>
     <Button type="error" @click="destroyRecorder()" style="margin:1vw;">销毁录音</Button>
     <br/>
@@ -24,11 +26,17 @@
       <span style="padding: 0 10%;"></span>
       <canvas id="playChart"></canvas>
     </div>
+    <audio controls ref="audio" class="aud">
+      <source src="../../assets/recorder.wav" />
+    </audio>
+<!--    <aplayer :music="audio[0]" :list="audio" :showlrc="true"></aplayer>-->
   </div>
+
 </template>
 
 <script>
-import Recorder from 'js-audio-recorder'
+import Recorder from 'js-audio-recorder';
+// import aplayer from "vue-aplayer";
 const lamejs = require('lamejs')
 
 let recorder = new Recorder({
@@ -50,6 +58,8 @@ recorder.onprogress = function(params) {
 }
 export default {
   name: 'home',
+  // components: { aplayer,audio },
+
   data () {
     return {
       //波浪图-录音
@@ -60,12 +70,57 @@ export default {
       drawPlayId:null,
       pCanvas : null,
       pCtx : null,
+      // 音频列表
+      // audio: [
+      //   {
+      //     title: 'dome1', // 歌曲名字
+      //     artist: '豆腐厂厂长', // 演唱者
+      //     url: require('../../assets/mus1.mp3'), // 音频文件url
+      //     pic: '', // 演唱者封面
+      //     lrc: '[00:00.00] (,,•́ . •̀,,) 刚刚开始学钢琴弹的hhhh', // 歌词或者歌词文件
+      //     theme: '', // 歌曲主题
+      //   },
+      //   // {
+      //   //   title: 'dome2',
+      //   //   artist: '杀猪队队长',
+      //   //   url: require('../../assets/vdo/bgm.mp3'),
+      //   //   pic: 'https://edu-guil-1010.oss-cn-beijing.aliyuncs.com/%E4%BB%A5%E5%AE%B6%E4%B9%8B%E5%90%8D.jpg',
+      //   //   lrc: '[00:00.00] (,,•́ . •̀,,) 抱歉，当前歌曲暂无歌词',
+      //   //   theme: '', // 歌曲主题
+      //   // }
+      // ],
     }
   },
   mounted(){
     this.startCanvas();
   },
   methods: {
+    uploadRecord() {
+      if (this.recorder == null || this.recorder.duration === 0) {
+        this.$message({
+          message: '请先录音',
+          type: 'error'
+        })
+        return false
+      }
+      this.recorder.pause() // 暂停录音
+      this.timer = null
+      console.log('上传录音')// 上传录音
+
+      const formData = new FormData()
+      const blob = this.recorder.getWAVBlob()// 获取wav格式音频数据
+      // 此处获取到blob对象后需要设置fileName满足当前项目上传需求，其它项目可直接传把blob作为file塞入formData
+      const newbolb = new Blob([blob], { type: 'audio/wav' })
+      const fileOfBlob = new File([newbolb], new Date().getTime() + '.wav')
+      formData.append('file', fileOfBlob)
+      const url = window.URL.createObjectURL(fileOfBlob)
+      this.src = url
+      // const axios = require('axios')
+      // axios.post(url, formData).then(res => {
+      //   console.log(res.data.data[0].url)
+      // })
+    },
+
     /**
      * 波浪图配置
      * */

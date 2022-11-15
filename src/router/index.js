@@ -78,9 +78,9 @@ const routes = [
   //   component: () => import(/* webpackChunkName: "about" */ '../views/trysounds/test2.vue'),
   // },
   {
-    path: '/test3',
-    name: 'test3',
-    component: () => import(/* webpackChunkName: "about" */ '../views/trysounds/test3.vue'),
+    path: '/test4',
+    name: 'test4',
+    component: () => import(/* webpackChunkName: "about" */ '../views/trysounds/test4.vue'),
   },
 
   // 用户界面分析问卷中分析操作都得展开新的页面

@@ -6613,6 +6613,11 @@
     "core-util-is" "1.0.2"
     "extsprintf" "^1.2.0"
 
+"vue-aplayer@^1.6.1":
+  "integrity" "sha512-c+ZAwZ63bVDsKkcHeKLAonIL2gY4nrVRdKypoPRXSkh+8B1cVhFT2tx8HSTNT6eX6WZyDtaYrEJfcgetrfvcdQ=="
+  "resolved" "https://registry.npmmirror.com/vue-aplayer/-/vue-aplayer-1.6.1.tgz"
+  "version" "1.6.1"
+
 "vue-hot-reload-api@^2.3.0":
   "integrity" "sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog=="
   "resolved" "https://registry.npmjs.org/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz"

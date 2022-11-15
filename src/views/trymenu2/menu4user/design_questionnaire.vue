@@ -57,6 +57,33 @@
               </template>
             </a-button>
 
+            <br>
+            <h3>录音时长：{{ recorder && recorder.duration.toFixed(4) }}</h3>
+<!--            <a-modal >-->
+              <a-button type="primary" @click="pauseRecorder()" style="margin:0.5vw;" :disabled=visible1 >暂停
+                <template #icon >
+                  <IconPlayCircleFill id="icons" style="width: 20px;height: 20px"/>
+                </template>
+              </a-button>
+<!--            </a-modal>-->
+
+            <a-button type="primary" @click="resumeRecorder()" style="margin:0.5vw;" :disabled=visible2>继续
+              <template #icon >
+                <IconPlayCircleFill id="icons" style="width: 20px;height: 20px"/>
+              </template>
+            </a-button>
+
+
+            <br>
+            <a-button type="info" @click="downPCM()" style="margin:1vw;">下载PCM</a-button>
+            <a-button type="info" @click="downWAV()" style="margin:1vw;">下载WAV</a-button>
+            <a-button type="info" @click="getMp3Data()" style="margin:1vw;">下载MP3</a-button>
+
+            <br>
+            <audio controls ref="audio" class="aud">
+              <source src="src/assets/recorder.wav" />
+            </audio>
+
           </template>
           <ul v-else-if="item.type==='textarea'">
             <textarea rows="8" cols="80"></textarea>
@@ -158,12 +185,12 @@ import {IconVoice,IconRecordStop,IconPlayCircle,IconPlayCircleFill} from '@arco-
 
 const lamejs = require('lamejs')
 
-let recorder = new Recorder({
-  sampleBits: 16,                 // 采样位数，支持 8 或 16，默认是16
-  sampleRate: 48000,              // 采样率，支持 11025、16000、22050、24000、44100、48000，根据浏览器默认值，我的chrome是48000
-  numChannels: 1,                 // 声道，支持 1 或 2， 默认是1
-  // compiling: false,(0.x版本中生效,1.x增加中)  // 是否边录边转换，默认是false
-})
+// let recorder = new Recorder({
+//   sampleBits: 16,                 // 采样位数，支持 8 或 16，默认是16
+//   sampleRate: 48000,              // 采样率，支持 11025、16000、22050、24000、44100、48000，根据浏览器默认值，我的chrome是48000
+//   numChannels: 1,                 // 声道，支持 1 或 2， 默认是1
+//   // compiling: false,(0.x版本中生效,1.x增加中)  // 是否边录边转换，默认是false
+// })
 
 export default {
   name: "design_questionnaire",
@@ -195,7 +222,9 @@ export default {
       isShowPrompt: false,
       isShowDatepicker: false,
 
-      recorder,
+      recorder:null,
+      visible1:false,
+      visible2:true,
       //波浪图-录音
       drawRecordId:null,
       oCanvas : null,
@@ -392,51 +421,72 @@ export default {
      * */
     // 开始录音
     startRecorder () {
-      recorder.start().then(() => {
-        this.drawRecord();//开始绘制图片
+      this.recorder = new Recorder()
+      Recorder.getPermission().then(() => {
+        console.log('开始录音')
+        this.recorder.start() // 开始录音
+        this.visible1=false
+        this.visible2=true
       }, (error) => {
-        // 出错了
-        console.log(`${error.name} : ${error.message}`);
+        this.$message({
+          message: '请先允许该网页使用麦克风',
+          type: 'info'
+        })
+        console.log(`${error.name} : ${error.message}`)
       });
+      // recorder.start().then(() => {
+      //   this.drawRecord();//开始绘制图片
+      // }, (error) => {
+      //   // 出错了
+      //   console.log(`${error.name} : ${error.message}`);
+      // });
     },
     // 继续录音
     resumeRecorder () {
-      recorder.resume()
+      this.recorder.resume()
+      this.visible1=false
+      this.visible2=true
     },
     // 暂停录音
     pauseRecorder () {
-      recorder.pause();
+      this.recorder.pause();
+      this.visible1=true
+      this.visible2=false
       this.drawRecordId && cancelAnimationFrame(this.drawRecordId);
       this.drawRecordId = null;
+
     },
     // 结束录音
     stopRecorder () {
-      recorder.stop()
+      this.recorder.stop()
+      this.visible1=true
+      this.visible2=true
       this.drawRecordId && cancelAnimationFrame(this.drawRecordId);
       this.drawRecordId = null;
+
     },
     // 录音播放
     playRecorder () {
-      recorder.play();
+      this.recorder.play();
       this.drawPlay();//绘制波浪图
     },
     // 暂停录音播放
     pausePlayRecorder () {
-      recorder.pausePlay()
+      this.recorder.pausePlay()
     },
     // 恢复录音播放
     resumePlayRecorder () {
-      recorder.resumePlay();
+      this.recorder.resumePlay();
       this.drawPlay();//绘制波浪图
     },
     // 停止录音播放
     stopPlayRecorder () {
-      recorder.stopPlay();
+      this.recorder.stopPlay();
     },
     // 销毁录音
     destroyRecorder () {
-      recorder.destroy().then(function() {
-        recorder = null;
+      this.recorder.destroy().then(function() {
+        this.recorder = null;
         this.drawRecordId && cancelAnimationFrame(this.drawRecordId);
         this.drawRecordId = null;
       });
@@ -461,12 +511,12 @@ export default {
     //下载pcm
     downPCM(){
       //这里传参进去的时文件名
-      recorder.downloadPCM('新文件');
+      this.recorder.downloadPCM('新文件');
     },
     //下载wav
     downWAV(){
       //这里传参进去的时文件名
-      recorder.downloadWAV('新文件');
+      this.recorder.downloadWAV('新文件');
     },
     /**
      *  获取麦克风权限
@@ -483,7 +533,7 @@ export default {
      * */
     getMp3Data(){
       const mp3Blob = this.convertToMp3(recorder.getWAV());
-      recorder.download(mp3Blob, 'recorder', 'mp3');
+      this.recorder.download(mp3Blob, 'recorder', 'mp3');
     },
     convertToMp3(wavDataView) {
       // 获取wav头信息
