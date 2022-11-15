@@ -1,52 +1,17 @@
 <template>
-
-  <div id="first_one">
-    <a-space column="1" direction="horizontal" size="large" style="width: 90%">
+  <div style="margin-bottom: 15px">
+    <a-space direction="horizontal" size="large" style="width: 100%">
       <a-input-search :style="{width:'320px'}" placeholder="输入问卷名称，进行模糊搜索" search-button/>
-
+      <a-button type="outline">查询</a-button>
     </a-space>
   </div>
-  <div id="form" style="width: 500%" >
-    <a-menu
-        :style="{ width: '15%', height: '100%',top:'70px',left:'70px' }"
-        :default-open-keys="['0']"
-        :default-selected-keys="['0_0']"
-        show-collapse-button
-        breakpoint="xl"
-        @collapse="onCollapse">
+  <div style="margin-top: 10px" >
+    <a-table :columns="columns" :data="data" :rowKey="data.key" :row-selection="rowSelection">
+      <template #optional="{ record }">
+        <router-link :to="{path:'/to_answer_questionnaire',query:{id:record.id,name:record.name,date:record.last_update}}"><a-button type="primary"  >答卷</a-button></router-link>
+      </template>
+    </a-table>
 
-
-
-
-      <a-sub-menu>
-        <template #icon><icon-apps></icon-apps></template>
-        <template #title>id:123456789&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;大学生月生活费调查&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2022-1-8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <router-link :to="{path:'/to_answer_questionnaire',query:{id:123456789,name:'大学生月生活费调查',date:'2022-1-8'}}"><a-button   @click="$modal.info({ title:'Name', content:record.id })" type="primary">答卷</a-button></router-link></template>
-      </a-sub-menu>
-
-      <a-sub-menu>
-        <template #icon><icon-apps></icon-apps></template>
-        <template #title>id:123456790&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;问卷2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2022-10-25&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<router-link :to="{path:'/to_answer_questionnaire',query:{id:123456790,name:'问卷2',date:'2022-10-25'}}"><a-button   type="primary">答卷</a-button></router-link></template>
-      </a-sub-menu>
-
-      <a-sub-menu>
-        <template #icon><icon-apps></icon-apps></template>
-        <template #title>id:123456791&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;问卷3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2017-6-1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<router-link :to="{path:'/to_answer_questionnaire',query:{id:123456791,name:'问卷3',date:'2017-6-1'}}"><a-button   type="primary">答卷</a-button></router-link></template>
-      </a-sub-menu>
-
-      <a-sub-menu>
-        <template #icon><icon-apps></icon-apps></template>
-        <template #title>id:123456792&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;问卷4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2019-8-13&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<router-link :to="{path:'/to_answer_questionnaire',query:{id:123456792,name:'问卷4',date:'2019-8-13'}}"><a-button   type="primary">答卷</a-button></router-link></template>
-      </a-sub-menu>
-
-      <a-sub-menu>
-        <template #icon><icon-apps></icon-apps></template>
-        <template #title>id:123456793&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;问卷5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2020-9-30&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<router-link :to="{path:'/to_answer_questionnaire',query:{id:123456793,name:'问卷5',date:'2020-9-30'}}"><a-button  type="primary">答卷</a-button></router-link></template>
-
-      </a-sub-menu>
-
-
-
-    </a-menu>
   </div>
 </template>
 
@@ -58,15 +23,95 @@ export default {
   data(){
     const rowSelection = reactive({
       type: 'checkbox',
+      // fixed:false,
       showCheckedAll: true
     });
-
     return{
       value : '',
       text : '',
       rowSelection,
-      columns : [],
-      data : ([]),
+      columns : [
+        {
+          title: 'ID',
+          dataIndex: 'id',
+          width:150
+        },
+        {
+          title: '群组名称',
+          dataIndex: 'name',
+          width:170
+        },
+        {
+          title: '人数',
+          dataIndex: 'contains',
+          width:110
+        },
+        {
+          title: '更新日期',
+          dataIndex: 'last_update',
+          width:250
+        },
+        {
+          title: '联系人电话',
+          dataIndex: 'phone',
+          width:270
+        },
+        {
+          title: '操作',
+          dataIndex: 'option',
+          width:180,
+          slotName: 'optional'
+        },
+      ],
+      data : ([{
+        key: '1',
+        name: 'Jane Doe',
+        contains:'100',
+        id: 23000,
+        last_update:'2002-6-7',
+        address: '32 Park Road, London',
+        email: 'jane.doe@example.com',
+        phone:'18640967655',
+      }, {
+        key: '2',
+        name: 'Alisa Ross',
+        contains:'50',
+        id: 25000,
+        last_update:'2002-8-10',
+        address: '35 Park Road, London',
+        email: 'alisa.ross@example.com',
+        phone:'19585652545',
+
+      }, {
+        key: '3',
+        name: 'Kevin Sandra',
+        contains:'100',
+        id: 22000,
+        last_update:'1996-5-13',
+        address: '31 Park Road, London',
+        email: 'kevin.sandra@example.com',
+        phone:'13961552541'
+
+      }, {
+        key: '4',
+        name: 'Ed Hellen',
+        contains:'50',
+        id: 17000,
+        last_update:'1992-10-19',
+        address: '42 Park Road, London',
+        email: 'ed.hellen@example.com',
+        phone:'18555625262',
+
+      }, {
+        key: '5',
+        name: 'William Smith',
+        contains:'100',
+        id: 27000,
+        last_update:'1989-6-27',
+        address: '62 Park Road, London',
+        email: 'william.smith@example.com',
+        phone:'13625252573',
+      }]),
     }
   },
   setup(){
@@ -85,50 +130,7 @@ export default {
 }
 </script>
 
-<style >
+<style scoped>
 
-#background-r{
-  background: url("../../../assets/login_background.jpg") no-repeat center;
-  height: 100%;
-  width: 100%;
-  background-size: cover;
-  position: fixed;
-}
-
-#form{
-  position: relative;
-  top: 120%;
-  left: 2%;
-}
-#button1{
-  color: white;
-  background-color: green;
-  height: 90%;
-  border: none;
-  border-radius: 50px;
-}
-#button2{
-  color: white;
-  background-color: red;
-  height: 90%;
-  text-decoration-color: red;
-  outline: none;
-  border: none;
-  border-radius: 50px;
-}
-#button3{
-  color: white;
-  background-color: #001dff;
-  height: 90%;
-  text-decoration-color: red;
-  outline: none;
-  border: none;
-  border-radius: 50px;
-}
-#first_one{
-  position: absolute;
-  top: 5%;
-  left: 7%;
-}
 </style>
 
