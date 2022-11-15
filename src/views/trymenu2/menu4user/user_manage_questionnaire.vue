@@ -85,7 +85,6 @@ export default {
             state:'1',
             createTime:'2002-6-7',
             time:'2020-1-4'
-
           }
         ]
       },
