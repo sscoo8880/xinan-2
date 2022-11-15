@@ -3,6 +3,7 @@
     <div class="qu-wrap">
       <header>
         <span @click="iterator = backBtn(); iterator.next()">&lt; 返回</span>
+
         <p v-show="!titleEditing" @click="titleEditing = true;title=''">{{tempTitle}}</p>
         <input type="text"
                v-model="title"
