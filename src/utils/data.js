@@ -165,7 +165,12 @@ var template = {
 					"type": "textarea",
 					"topic": "文本题",
 					"isMandatory": false
-				}
+				},
+			sounds:{
+					"type":"sounds",
+					"topic":"语音题",
+					"mp3":"",
+				},
 		};
 
 var date = function(year, month) {

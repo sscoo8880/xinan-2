@@ -71,7 +71,18 @@ const routes = [
     path: '/echartsPage',
     name: 'echartsPage',
     component: () => import(/* webpackChunkName: "about" */ '../views/tryecharts/echartsPage.vue'),
-  }
+  },
+  // {
+  //   path: '/test2',
+  //   name: 'test2',
+  //   component: () => import(/* webpackChunkName: "about" */ '../views/trysounds/test2.vue'),
+  // },
+  {
+    path: '/test3',
+    name: 'test3',
+    component: () => import(/* webpackChunkName: "about" */ '../views/trysounds/test3.vue'),
+  },
+
   // 用户界面分析问卷中分析操作都得展开新的页面
 
   //   //测试用页面

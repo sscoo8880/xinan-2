@@ -28,14 +28,44 @@
                    @keyup.enter="doneTopicEdit(index)">
             <span v-if="item.isMandatory"> *</span>
           </h3>
-          <template v-if="item.type === 'textarea'">
+          <template v-if="item.type === 'sounds'">
+
+            <label id="require-check">
+              <input type="checkbox"
+                     v-model="item.mp3">
+              此题是否必填
+            </label>
+
+            <a-button type="primary" @click="startRecorder()" style="margin:0.5vw;">录音
+              <template #icon >
+                <IconVoice id="icons" style="width: 20px;height: 20px"/>
+              </template>
+            </a-button>
+
+<!--              <a-button type="primary" @click="resumeRecorder()" >继续录音</a-button>-->
+<!--              <a-button type="primary" @click="pauseRecorder()" >暂停录音</a-button>-->
+
+            <a-button type="primary" @click="stopRecorder()" style="margin:0.5vw;">结束录音
+              <template #icon >
+                <IconRecordStop  id="icons" style="width: 20px;height: 20px"/>
+              </template>
+            </a-button>
+
+            <a-button type="primary" @click="playRecorder()" style="margin:0.5vw;">播放
+              <template #icon >
+                <IconPlayCircleFill id="icons" style="width: 20px;height: 20px"/>
+              </template>
+            </a-button>
+
+          </template>
+          <ul v-else-if="item.type==='textarea'">
             <textarea rows="8" cols="80"></textarea>
             <label id="require-check">
               <input type="checkbox"
                      v-model="item.isMandatory">
               此题是否必填
             </label>
-          </template>
+          </ul>
           <ul v-else class="options-list" >
             <li v-for="(option, optIndex) in item.options"
                 :class="{optionEditing: curOptIndex === optIndex}">
@@ -74,8 +104,11 @@
             <span @click="addType('radio')">单选题</span>
             <span @click="addType('checkbox')">多选题</span>
             <span @click="addType('textarea')">文本题</span>
+            <span @click="addType('sounds')">语音题
+              <canvas id="canvas" height="1" width="0"></canvas>
+              <canvas id="playChart" height="1" width="0"></canvas>
+            </span>
           </p>
-
           <p class="add-btn" @click="isAdding = !isAdding;">
             <span>+ 添加问题</span>
           </p>
@@ -120,11 +153,23 @@
 import Data from '../../../utils/data.js';
 import Datepicker from './Datepicker.vue';
 import {toRaw} from "vue";
+import Recorder from 'js-audio-recorder';
+import {IconVoice,IconRecordStop,IconPlayCircle,IconPlayCircleFill} from '@arco-design/web-vue/es/icon';
+
+const lamejs = require('lamejs')
+
+let recorder = new Recorder({
+  sampleBits: 16,                 // 采样位数，支持 8 或 16，默认是16
+  sampleRate: 48000,              // 采样率，支持 11025、16000、22050、24000、44100、48000，根据浏览器默认值，我的chrome是48000
+  numChannels: 1,                 // 声道，支持 1 或 2， 默认是1
+  // compiling: false,(0.x版本中生效,1.x增加中)  // 是否边录边转换，默认是false
+})
 
 export default {
   name: "design_questionnaire",
   components: {
-    'date-components': Datepicker
+    'date-components': Datepicker,
+    IconVoice,IconRecordStop,IconPlayCircle,IconPlayCircleFill,
   },
   data() {
     return {
@@ -149,12 +194,23 @@ export default {
       topicEditing: false,
       isShowPrompt: false,
       isShowDatepicker: false,
+
+      recorder,
+      //波浪图-录音
+      drawRecordId:null,
+      oCanvas : null,
+      ctx : null,
+      //波浪图-播放
+      drawPlayId:null,
+      pCanvas : null,
+      pCtx : null,
     }
   },
 
   mounted() {
     this.getData();
     // console.log(this.quList);
+    this.startCanvas();
   },
 
   computed: {
@@ -316,7 +372,243 @@ export default {
         this.saveData();
       })();
       this.$router.push({path: '/'});
-    }
+    },
+
+    // 语音题
+    /**
+     * 波浪图配置
+     * */
+    startCanvas(){
+      //录音波浪
+      this.oCanvas = document.getElementById('canvas');
+      this.ctx = this.oCanvas.getContext("2d");
+      //播放波浪
+      this.pCanvas = document.getElementById('playChart');
+      this.pCtx = this.pCanvas.getContext("2d");
+    },
+
+    /**
+     *  录音的具体操作功能
+     * */
+    // 开始录音
+    startRecorder () {
+      recorder.start().then(() => {
+        this.drawRecord();//开始绘制图片
+      }, (error) => {
+        // 出错了
+        console.log(`${error.name} : ${error.message}`);
+      });
+    },
+    // 继续录音
+    resumeRecorder () {
+      recorder.resume()
+    },
+    // 暂停录音
+    pauseRecorder () {
+      recorder.pause();
+      this.drawRecordId && cancelAnimationFrame(this.drawRecordId);
+      this.drawRecordId = null;
+    },
+    // 结束录音
+    stopRecorder () {
+      recorder.stop()
+      this.drawRecordId && cancelAnimationFrame(this.drawRecordId);
+      this.drawRecordId = null;
+    },
+    // 录音播放
+    playRecorder () {
+      recorder.play();
+      this.drawPlay();//绘制波浪图
+    },
+    // 暂停录音播放
+    pausePlayRecorder () {
+      recorder.pausePlay()
+    },
+    // 恢复录音播放
+    resumePlayRecorder () {
+      recorder.resumePlay();
+      this.drawPlay();//绘制波浪图
+    },
+    // 停止录音播放
+    stopPlayRecorder () {
+      recorder.stopPlay();
+    },
+    // 销毁录音
+    destroyRecorder () {
+      recorder.destroy().then(function() {
+        recorder = null;
+        this.drawRecordId && cancelAnimationFrame(this.drawRecordId);
+        this.drawRecordId = null;
+      });
+    },
+    /**
+     *  获取录音文件
+     * */
+    getRecorder(){
+      let toltime = recorder.duration;//录音总时长
+      let fileSize = recorder.fileSize;//录音总大小
+
+      //录音结束，获取取录音数据
+      let PCMBlob = recorder.getPCMBlob();//获取 PCM 数据
+      let wav = recorder.getWAVBlob();//获取 WAV 数据
+
+      let channel = recorder.getChannelData();//获取左声道和右声道音频数据
+
+    },
+    /**
+     *  下载录音文件
+     * */
+    //下载pcm
+    downPCM(){
+      //这里传参进去的时文件名
+      recorder.downloadPCM('新文件');
+    },
+    //下载wav
+    downWAV(){
+      //这里传参进去的时文件名
+      recorder.downloadWAV('新文件');
+    },
+    /**
+     *  获取麦克风权限
+     * */
+    getPermission(){
+      Recorder.getPermission().then(() => {
+        this.$Message.success('获取权限成功')
+      }, (error) => {
+        console.log(`${error.name} : ${error.message}`);
+      });
+    },
+    /**
+     * 文件格式转换 wav-map3
+     * */
+    getMp3Data(){
+      const mp3Blob = this.convertToMp3(recorder.getWAV());
+      recorder.download(mp3Blob, 'recorder', 'mp3');
+    },
+    convertToMp3(wavDataView) {
+      // 获取wav头信息
+      const wav = lamejs.WavHeader.readHeader(wavDataView); // 此处其实可以不用去读wav头信息，毕竟有对应的config配置
+      const { channels, sampleRate } = wav;
+      const mp3enc = new lamejs.Mp3Encoder(channels, sampleRate, 128);
+      // 获取左右通道数据
+      const result = recorder.getChannelData()
+      const buffer = [];
+
+      const leftData = result.left && new Int16Array(result.left.buffer, 0, result.left.byteLength / 2);
+      const rightData = result.right && new Int16Array(result.right.buffer, 0, result.right.byteLength / 2);
+      const remaining = leftData.length + (rightData ? rightData.length : 0);
+
+      const maxSamples = 1152;
+      for (let i = 0; i < remaining; i += maxSamples) {
+        const left = leftData.subarray(i, i + maxSamples);
+        let right = null;
+        let mp3buf = null;
+
+        if (channels === 2) {
+          right = rightData.subarray(i, i + maxSamples);
+          mp3buf = mp3enc.encodeBuffer(left, right);
+        } else {
+          mp3buf = mp3enc.encodeBuffer(left);
+        }
+
+        if (mp3buf.length > 0) {
+          buffer.push(mp3buf);
+        }
+      }
+
+      const enc = mp3enc.flush();
+
+      if (enc.length > 0) {
+        buffer.push(enc);
+      }
+
+      return new Blob(buffer, { type: 'audio/mp3' });
+    },
+
+    /**
+     * 绘制波浪图-录音
+     * */
+    drawRecord () {
+      // 用requestAnimationFrame稳定60fps绘制
+      this.drawRecordId = requestAnimationFrame(this.drawRecord);
+
+      // 实时获取音频大小数据
+      let dataArray = recorder.getRecordAnalyseData(),
+          bufferLength = dataArray.length;
+
+      // 填充背景色
+      this.ctx.fillStyle = 'rgb(200, 200, 200)';
+      this.ctx.fillRect(0, 0, this.oCanvas.width, this.oCanvas.height);
+
+      // 设定波形绘制颜色
+      this.ctx.lineWidth = 2;
+      this.ctx.strokeStyle = 'rgb(0, 0, 0)';
+
+      this.ctx.beginPath();
+
+      var sliceWidth = this.oCanvas.width * 1.0 / bufferLength, // 一个点占多少位置，共有bufferLength个点要绘制
+          x = 0;          // 绘制点的x轴位置
+
+      for (var i = 0; i < bufferLength; i++) {
+        var v = dataArray[i] / 128.0;
+        var y = v * this.oCanvas.height / 2;
+
+        if (i === 0) {
+          // 第一个点
+          this.ctx.moveTo(x, y);
+        } else {
+          // 剩余的点
+          this.ctx.lineTo(x, y);
+        }
+        // 依次平移，绘制所有点
+        x += sliceWidth;
+      }
+
+      this.ctx.lineTo(this.oCanvas.width, this.oCanvas.height / 2);
+      this.ctx.stroke();
+    },
+    /**
+     * 绘制波浪图-播放
+     * */
+    drawPlay () {
+      // 用requestAnimationFrame稳定60fps绘制
+      this.drawPlayId = requestAnimationFrame(this.drawPlay);
+
+      // 实时获取音频大小数据
+      let dataArray = recorder.getPlayAnalyseData(),
+          bufferLength = dataArray.length;
+
+      // 填充背景色
+      this.pCtx.fillStyle = 'rgb(200, 200, 200)';
+      this.pCtx.fillRect(0, 0, this.pCanvas.width, this.pCanvas.height);
+
+      // 设定波形绘制颜色
+      this.pCtx.lineWidth = 2;
+      this.pCtx.strokeStyle = 'rgb(0, 0, 0)';
+
+      this.pCtx.beginPath();
+
+      var sliceWidth = this.pCanvas.width * 1.0 / bufferLength, // 一个点占多少位置，共有bufferLength个点要绘制
+          x = 0;          // 绘制点的x轴位置
+
+      for (var i = 0; i < bufferLength; i++) {
+        var v = dataArray[i] / 128.0;
+        var y = v * this.pCanvas.height / 2+100;
+
+        if (i === 0) {
+          // 第一个点
+          this.pCtx.moveTo(x, y);
+        } else {
+          // 剩余的点
+          this.pCtx.lineTo(x, y);
+        }
+        // 依次平移，绘制所有点
+        x += sliceWidth;
+      }
+
+      this.pCtx.lineTo(this.pCanvas.width, this.pCanvas.height / 2);
+      this.pCtx.stroke();
+    },
   },
 
   directives: {
@@ -330,4 +622,7 @@ export default {
 
 <style scoped lang="scss">
 @import '../../../style/_Edit';
+#icons{
+  margin-top: 20%;
+}
 </style>
