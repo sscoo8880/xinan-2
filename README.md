@@ -54,6 +54,15 @@ npm run serve
 npm run build
 ```
 
+### 终端执行命令以启动代码
+```
+npm install
+npm install --save-dev @arco-design/web-vue
+yarn add --dev @arco-design/web-vue
+npm install --save echarts
+npm run serve
+```
+
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 >>>>>>> 5c3ff46 (1.0)

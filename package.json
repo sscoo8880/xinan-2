@@ -11,11 +11,12 @@
     "core-js": "^3.8.3",
     "echarts": "^5.4.0",
     "qs": "^6.11.0",
+    "speak-tts": "^2.0.8",
     "vue": "^3.2.13",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
-    "@arco-design/web-vue": "^2.38.2",
+    "@arco-design/web-vue": "^2.38.3",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-router": "~5.0.0",
