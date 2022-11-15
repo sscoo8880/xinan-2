@@ -3,9 +3,39 @@
   <a-form>
     <a-typography-text id="title-m">用户界面</a-typography-text>
     <a-avatar :style="{ backgroundColor: '#3370ff',marginRight:'0px'}" id="upic">
-      <IconUser />
+
+      <a-dropdown trigger="hover">
+        <a-button shape="circle" size="40px" :style="{backgroundColor: '#3370ff',marginRight:'0px'}">
+          <IconUser/>
+        </a-button>
+        <template #content>
+          <a-doption @click="handleClick">
+            <template #icon>
+              <IconBulb/>
+            </template>
+            <template #default>修改密保</template>
+          </a-doption>
+          <a-doption @click="logout">
+            <template #icon>
+              <IconBug/>
+            </template>
+            <template #default>注销</template>
+          </a-doption>
+        </template>
+      </a-dropdown>
+
     </a-avatar>
     <a-typography-text id="uname" style="font-weight: bold">欢迎用户</a-typography-text>
+    <a-modal v-model:visible="visible" title="修改密保" @cancel="handleCancel" @ok="handleOk" ok-text="修改">
+      <a-form :model="form">
+        <a-form-item field="passwordQuestion" label="密保问题">
+          <a-input v-model="form.passwordQuestion"/>
+        </a-form-item>
+        <a-form-item field="passwordQuestion" label="答案">
+          <a-input v-model="form.passwordAnswer"/>
+        </a-form-item>
+      </a-form>
+    </a-modal>
   </a-form>
 
   <div id="background-r"></div>
@@ -69,7 +99,7 @@
 
 
 <script>
-import { ref } from 'vue';
+import {reactive, ref} from 'vue';
 import { Message } from '@arco-design/web-vue';
 import {
   IconMenuFold,
@@ -88,6 +118,8 @@ import user_manage_group from "@/views/trymenu2/menu4user/user_manage_group";
 import User_manage_qTemplate from "@/views/trymenu2/menu4user/user_manage_qTemplate";
 import User_manage_group from "@/views/trymenu2/menu4user/user_manage_group";
 import group_answer from "@/views/trymenu2/menu4user/group_answer";
+import api from "@/api";
+import router from "@/router";
 
 export default {
   components: {
@@ -107,6 +139,36 @@ export default {
     IconUser,
   },
   setup() {
+    const visible = ref(false);
+    const form = reactive({
+      passwordQuestion: '',
+      passwordAnswer: ''
+    })
+    const params = reactive({
+      passwordQuestion: '',
+      passwordAnswer: ''
+    });
+    const handleClick = () => {
+      visible.value = true;
+    };
+    const handleOk = () => {
+      // console.log(form)
+      params.passwordAnswer=form.passwordAnswer
+      params.passwordQuestion=form.passwordQuestion
+      api.updateQuestion(params).then(res => {
+        // console.log(res)
+        if (res.code === 200) {
+          // console.log(res.data.list)
+          // x.col=res.data.list;
+          Message.success(res.msg)
+        } else {
+          Message.error(res.msg)
+        }
+      })
+    };
+    const handleCancel = () => {
+      visible.value = false;
+    }
     return {
       onCollapse(val, type) {
         const content = type === 'responsive' ? '触发响应式收缩' : '点击触发收缩';
@@ -114,7 +176,12 @@ export default {
           content,
           duration: 2000,
         });
-      }
+      },
+      visible,
+      form,
+      handleClick,
+      handleOk,
+      handleCancel
     };
   },
   data(){
@@ -123,6 +190,16 @@ export default {
     }
   },
   methods:{
+    logout() {
+      api.userLogout().then(res => {
+        if (res.code === 20000) {
+          Message.success(res.msg)
+          router.push("/")
+        } else {
+          Message.error(res.msg)
+        }
+      })
+    },
     // 菜单函数
     getpath(id) {
       return document.getElementById(id);

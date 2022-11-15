@@ -3,13 +3,40 @@
   <background/>
   <a-form>
     <a-typography-text id="title-m">角色：答者-问卷宝</a-typography-text>
-    <a-avatar :style="{ backgroundColor: '#3370ff',marginRight:'0px'}" id="upic"      @click="handleClick">
-      <a-modal v-model:visible="visible" title="退出登录" @cancel="handleCancel" @before-ok="handleBeforeOk">
-        <h2>确定退出登录吗？</h2>
-      </a-modal>
-      <IconUser />
+    <a-avatar :style="{ backgroundColor: '#3370ff',marginRight:'0px'}" id="upic">
+
+      <a-dropdown trigger="hover">
+        <a-button shape="circle" size="40px" :style="{backgroundColor: '#3370ff',marginRight:'0px'}">
+          <IconUser/>
+        </a-button>
+        <template #content>
+          <a-doption @click="handleClick">
+            <template #icon>
+              <IconBulb/>
+            </template>
+            <template #default>修改密保</template>
+          </a-doption>
+          <a-doption @click="logout">
+            <template #icon>
+              <IconBug/>
+            </template>
+            <template #default>注销</template>
+          </a-doption>
+        </template>
+      </a-dropdown>
+
     </a-avatar>
-    <a-typography-text id="uname" >欢迎答者</a-typography-text>
+    <a-typography-text id="uname">欢迎答者</a-typography-text>
+    <a-modal v-model:visible="visibleW" title="修改密保" @cancel="handleCancelW" @ok="handleOkW" ok-text="修改">
+      <a-form :model="formW">
+        <a-form-item field="passwordQuestion" label="密保问题">
+          <a-input v-model="formW.passwordQuestion"/>
+        </a-form-item>
+        <a-form-item field="passwordQuestion" label="答案">
+          <a-input v-model="formW.passwordAnswer"/>
+        </a-form-item>
+      </a-form>
+    </a-modal>
   </a-form>
 
 
@@ -67,6 +94,8 @@ import Answer_manage_questionnaire from "@/views/trymenu2/menu4answer/answer_man
 import Answer_myinfo from "@/views/trymenu2/menu4answer/answer_myinfo";
 import Answer_answer_questionnaire from "@/views/trymenu2/menu4answer/answer_answer_questionnaire";
 import background from "@/components/background/background";
+import api from "@/api";
+import router from "@/router";
 export default {
   components: {
     // 引入子页面
@@ -83,6 +112,36 @@ export default {
     IconUser,
   },
   setup() {
+    const visibleW = ref(false);
+    const formW = reactive({
+      passwordQuestion: '',
+      passwordAnswer: ''
+    })
+    const params = reactive({
+      passwordQuestion: '',
+      passwordAnswer: ''
+    });
+    const handleClickW = () => {
+      visible.value = true;
+    };
+    const handleOkW = () => {
+      // console.log(form)
+      params.passwordAnswer=formW.passwordAnswer
+      params.passwordQuestion=formW.passwordQuestion
+      api.updateQuestion(params).then(res => {
+        // console.log(res)
+        if (res.code === 200) {
+          // console.log(res.data.list)
+          // x.col=res.data.list;
+          Message.success(res.msg)
+        } else {
+          Message.error(res.msg)
+        }
+      })
+    };
+    const handleCancelW = () => {
+      visible.value = false;
+    }
     return {
       onCollapse(val, type) {
         const content = type === 'responsive' ? '触发响应式收缩' : '点击触发收缩';
@@ -90,7 +149,12 @@ export default {
           content,
           duration: 2000,
         });
-      }
+      },
+      visibleW,
+      formW,
+      handleClickW,
+      handleOkW,
+      handleCancelW
     };
   },
   data() {
@@ -141,6 +205,16 @@ export default {
   },
 
   methods:{
+    logout() {
+      api.userLogout().then(res => {
+        if (res.code === 20000) {
+          Message.success(res.msg)
+          router.push("/")
+        } else {
+          Message.error(res.msg)
+        }
+      })
+    },
     // 菜单函数
     getpath(id) {
       return document.getElementById(id);

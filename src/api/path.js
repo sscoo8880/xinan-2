@@ -71,7 +71,13 @@ const base ={
     addGroup:"/user-service/group/addGroup",
 
     //删除群组
-    deleteGroup:"/user-service/group/deleteGroup"
+    deleteGroup:"/user-service/group/deleteGroup",
+
+    //注销
+    userLogout:"/user-service/user/logout",
+
+    //修改密保
+    updateQuestion:"/user-service/user/updateQuestion"
 }
 
 export default base;

@@ -120,6 +120,14 @@ const api ={
     //删除群组
     deleteGroup(data){
         return posttoken(path.baseUrl +path.deleteGroup,data,true)
+    },
+
+    userLogout(data){
+        return posttoken(path.baseUrl +path.userLogout,data,true)
+    },
+
+    updateQuestion(data){
+        return posttoken(path.baseUrl +path.updateQuestion,data,true)
     }
 }
 
