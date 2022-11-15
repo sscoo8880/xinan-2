@@ -1,23 +1,31 @@
 <template>
-  <div style="margin-bottom: 15px">
-    <a-space direction="horizontal" size="large" style="width: 100%">
-      <a-input-search :style="{width:'320px'}" placeholder="输入问卷名称，进行模糊搜索" search-button/>
-      <a-button type="outline">查询</a-button>
-    </a-space>
+  <div id="answer">
+    <div style="margin-bottom: 15px">
+      <a-space direction="horizontal" size="large" style="width: 100%">
+        <a-input-search :style="{width:'320px'}" placeholder="输入问卷名称，进行模糊搜索" search-button/>
+        <a-button type="outline">查询</a-button>
+      </a-space>
+    </div>
+    <div>
+      <a-table  :columns="columns" :data="data" :rowKey="data.key" :row-selection="rowSelection" style="margin-top: 10px">
+        <template #optional="{ record }">
+          <router-link :to="{path:'/complished_questionnaire',query:{id:record.id,name:record.name,date:record.last_update}}"><a-button type="primary" status="success" >查看</a-button></router-link>
+        </template>
+      </a-table>
+    </div>
   </div>
-  <div>
-    <a-table  :columns="columns" :data="data" :rowKey="data.key" :row-selection="rowSelection" style="margin-top: 10px">
-      <template #optional="{ record }">
-        <router-link :to="{path:'/complished_questionnaire',query:{id:record.id,name:record.name,date:record.last_update}}"><a-button type="primary" status="success" >查看</a-button></router-link>
-      </template>
-    </a-table>
+  <div id="to_answer">
+
   </div>
+
 </template>
 
 <script >
 import {reactive} from "vue";
+import to_answer_questionnaire from "@/views/trymenu2/menu4answer/to_answer_questionnaire";
 
 export default {
+  components:to_answer_questionnaire,
   data(){
     const rowSelection = reactive({
       type: 'checkbox',

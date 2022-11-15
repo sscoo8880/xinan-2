@@ -18,19 +18,19 @@
         breakpoint="xl"
         @collapse="onCollapse">
 
-      <a-sub-menu key="1"  v-on:click="goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm'))">
+      <a-sub-menu key="1"  v-on:click="goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">
         <template #icon><icon-apps></icon-apps></template>
         <template #title>我的问卷</template>
 <!--        1_0是管理题库，1_1是设计问卷，1_2是管理问卷-->
-        <a-menu-item key="1_0" v-on:click="change1_0(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm'))">管理题库</a-menu-item>
-        <a-menu-item key="1_1" v-on:click="change1_1(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm'))">创建问卷</a-menu-item>
-        <a-menu-item key="1_2" v-on:click="change1_2(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm'))">管理问卷</a-menu-item>
+        <a-menu-item key="1_0" v-on:click="change1_0(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">管理题库</a-menu-item>
+        <a-menu-item key="1_1" v-on:click="change1_1(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">创建问卷</a-menu-item>
+        <a-menu-item key="1_2" v-on:click="change1_2(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">管理问卷</a-menu-item>
       </a-sub-menu>
-      <a-sub-menu key="2" v-on:click="goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm'))">
+      <a-sub-menu key="2" v-on:click="goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">
         <template #icon><icon-bug></icon-bug></template>
         <template #title>我的群组</template>
-          <a-menu-item key="2_0" v-on:click="change2_0(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm'))">所有答者</a-menu-item>
-          <a-menu-item key="2_1" v-on:click="change2_1(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm'))">群组</a-menu-item>
+          <a-menu-item key="2_0" v-on:click="change2_0(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">所有答者</a-menu-item>
+          <a-menu-item key="2_1" v-on:click="change2_1(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">群组</a-menu-item>
       </a-sub-menu>
     </a-menu>
   </div>
@@ -54,6 +54,12 @@
 <!--  对应群组的vue-->
   <div id="div_mmmm" style="display: none">
     <user_manage_group></user_manage_group>
+  </div>
+
+
+<!--  所有答者-->
+  <div id="div_m5" style="display: none">
+    <group_answer></group_answer>
   </div>
 
 
@@ -81,9 +87,11 @@ import design_questionnaire from "@/views/trymenu2/menu4user/design_questionnair
 import user_manage_group from "@/views/trymenu2/menu4user/user_manage_group";
 import User_manage_qTemplate from "@/views/trymenu2/menu4user/user_manage_qTemplate";
 import User_manage_group from "@/views/trymenu2/menu4user/user_manage_group";
+import group_answer from "@/views/trymenu2/menu4user/group_answer";
 
 export default {
   components: {
+    group_answer,
     User_manage_group,
     // 引入子页面
     user_manage_group,
@@ -152,6 +160,16 @@ export default {
     goto_user_manage_group(x)//决定是否跳转user_manage_group页面，用户和群组界面
     {
       if(this.key!=='2_1')
+      {
+        x.style.display="none"
+      }
+      else{
+        x.style.display="block"
+      }
+    },
+    goto_group_answer(x)//决定是否跳转group_answer页面，所有答者界面
+    {
+      if(this.key!=='2_0')
       {
         x.style.display="none"
       }
@@ -245,5 +263,10 @@ export default {
   left: 16%;
   width: 83%;
 }
-
+#div_m5{
+  position: absolute;
+  top: 10%;
+  left: 16%;
+  width: 83%;
+}
 </style>
