@@ -77,7 +77,19 @@ const base ={
     userLogout:"/user-service/user/logout",
 
     //修改密保
-    updateQuestion:"/user-service/user/updateQuestion"
+    updateQuestion:"/user-service/user/updateQuestion",
+
+    //查询答者
+    getAnswer:"/user-service/user/searchAnswer",
+
+    //更新答者
+    updateAnswer:"/user-service/user/updateAnswer",
+
+    //查询答者
+    deleteAnswer:"/user-service/user/deleteAnswer",
+
+    //新增答者
+    registerByUser:"/user-service/user/registerByUser",
 }
 
 export default base;

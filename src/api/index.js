@@ -128,7 +128,26 @@ const api ={
 
     updateQuestion(data){
         return posttoken(path.baseUrl +path.updateQuestion,data,true)
-    }
+    },
+    //查询答者
+    getAnswer(data){
+        return posttoken(path.baseUrl +path.getAnswer,data,true)
+    },
+
+    //更新答者
+    updateAnswer(data){
+        return posttoken(path.baseUrl +path.updateAnswer,data,true)
+    },
+
+    //删除答者
+    deleteAnswer(data){
+        return posttoken(path.baseUrl +path.deleteAnswer,data,true)
+    },
+
+    //新增答者
+    registerByUser(data){
+        return posttoken(path.baseUrl +path.registerByUser,data,true)
+    },
 }
 
 export default api;

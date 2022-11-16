@@ -317,26 +317,26 @@ export default {
 #div-m{
   position: absolute;
   top: 10%;
-  left: 20%;
-  width: 1200px;
+  left: 16%;
+  width: 83%;
 }
 #div-mm{
   position: absolute;
   top: 10%;
-  left: 20%;
-  width: 1200px;
+  left: 16%;
+  width: 83%;
 }
 #div_mmm{
   position: absolute;
   top: 10%;
-  left: 20%;
-  width: 1200px;
+  left: 16%;
+  width: 83%;
 }
 #div_mmmm{
   position: absolute;
   top: 10%;
-  left: 20%;
-  width: 1200px;
+  left: 16%;
+  width: 83%;
 }
 #div_m5{
   position: absolute;
