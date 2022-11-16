@@ -16,7 +16,7 @@ export default {
     let chart1Data, xdata, ydata
 
     function setData() {
-      chart1Data = require("./mock/one.json")
+      chart1Data = require("./tryecharts/mock/one.json")
       xdata = chart1Data.chartData.map(v => v.title)
       ydata = chart1Data.chartData.map(v => v.num)
       console.log("xdata", xdata)
@@ -114,10 +114,9 @@ export default {
 
 <style scoped>
 .chart{
-  margin-top: 0px;
-  margin-left: 0px;
-  height: 600px;
-  width: 100%;
+  top: 5px;
+  height: 300px;
+  width: 400px;
 }
 #title_rl{
   margin-top: 20px;

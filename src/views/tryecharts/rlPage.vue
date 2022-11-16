@@ -1,4 +1,4 @@
-<!--左右四个小框统一格式，不用改-->
+<!--右小框统一格式，不用改-->
 <template>
   <div class="item">
     <slot></slot>
@@ -8,16 +8,19 @@
 
 <script>
 export default {
-  name: "rlPage"
+  name: "rPage"
 }
 </script>
 
 <style scoped>
 .item{
-  /*height: 350px;*/
+  /*height: 704px;*/
   border: 1px solid blue;
   margin: .25rem;
   height: 700px;
-  background-color: rgba(12,130,255,.5);
+  /*margin-left: 15px;*/
+  /*background-color: rgba(12,130,255,.5);*/
+  background-color: rgba(12,130,255,.3);
+
 }
 </style>

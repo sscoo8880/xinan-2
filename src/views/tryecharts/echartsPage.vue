@@ -1,13 +1,12 @@
 <template>
   <h1 id="title_e">数据大屏</h1>
-  <a-button @click="changeflag" type="outline">租户分析</a-button>
+<!--  <a-button @click="changeflag" type="outline">租户分析</a-button>-->
   <section class="container">
     <section class="left">
       <!--      插槽，左1-->
-      <RPage>
-        <L1></L1>
-      </RPage>
-
+      <RlPage>
+        <L></L>
+      </RlPage>
 
     </section>
 
@@ -22,9 +21,9 @@
 
     <section class="right">
       <!--      插槽，右1-->
-      <RPage>
-        <R1></R1>
-      </RPage>
+      <RlPage>
+        <R></R>
+      </RlPage>
 
     </section>
 
@@ -33,12 +32,9 @@
 
 <script>
 import RlPage from "@/views/tryecharts/rlPage";
-import RPage from "@/views/tryecharts/rPage";
 import CPage from "@/views/tryecharts/cPage";
-import R1 from "@/views/tryecharts/r1";
-import R2 from "@/views/tryecharts/r2";
-import L1 from "@/views/tryecharts/l1";
-import L2 from "@/views/tryecharts/l2";
+import R from "@/views/tryecharts/r";
+import L from "@/views/tryecharts/l";
 import C1 from "@/views/tryecharts/c1";
 import C2 from "@/views/tryecharts/c2";
 
@@ -46,7 +42,7 @@ import {inject} from "vue";
 
 export default {
   name: "echartsPage",
-  components: {RlPage, RPage, CPage, R1, R2, L1, L2, C1, C2},
+  components: {RlPage, CPage, R, L, C1, C2},
   setup(){
     let $echarts=inject("echarts")
     let $http=inject("axios")

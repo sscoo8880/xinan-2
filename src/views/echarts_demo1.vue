@@ -16,7 +16,7 @@ export default {
     let chart1Data,xdata,ydata
 
     function setData() {
-      chart1Data = require("./mock/one.json")
+      chart1Data = require("./tryecharts/mock/one.json")
       xdata = chart1Data.chartData.map(v => v.title)
       ydata = chart1Data.chartData.map(v => v.num)
       console.log("xdata", xdata)
