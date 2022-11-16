@@ -1,5 +1,5 @@
 <template>
-  <a-page-header class="title" title="返回" @back="$router.back()" :style="{padding:'20px',height:'60px'}" />
+  <a-page-header class="title" title="返回" @back="$router.back()" :style="{padding:'20px',height:'40px'}" />
   <a-form >
     <a-typography-text id="title-m">租户界面</a-typography-text>
     <a-avatar :style="{ backgroundColor: '#3370ff',marginRight:'0px'}" id="upic">
@@ -197,14 +197,17 @@ export default {
 <style scoped>
 .menu-demo {
   box-sizing: border-box;
+  margin-top: 20px;
   width: 100%;
   height: 100%;
+  background-color: var(--color-neutral-2);
 }
 
 #background-r {
   background: url("../../../assets/login_background.jpg") no-repeat center;
-  top: 70px;
-  left: 0;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
   position: fixed;
 }
 

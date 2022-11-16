@@ -62,9 +62,10 @@ export default {
         },
         legend: {
           type: 'scroll',
-          orient: 'vertical',
-          right: 5,
-          top: 50,
+          orient: 'horizontal',
+          left: '3%',
+          right: '10%',
+          top: '8%',
           bottom: 20,
           data: data.legendData,
           // fontSize:'33px',
@@ -73,8 +74,8 @@ export default {
           {
             name: '姓名',
             type: 'pie',
-            radius: '55%',
-            center: ['40%', '50%'],
+            radius: '65%',
+            center: ['50%', '57%'],
             data: data.seriesData,
             // fontSize:'33px',
             emphasis: {

@@ -208,15 +208,10 @@ export default {
 <style scoped>
 
 #background-r{
-  background: url("../../../assets/login_background.jpg") no-repeat center;
-  /*position:relative;*/
   height: 100%;
   width: 100%;
-  top: 10%;
   background-size: cover;
   position: fixed;
-
-
 }
 
 #title2{

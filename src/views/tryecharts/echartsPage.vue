@@ -52,15 +52,15 @@ export default {
 
 <style scoped>
 #title_e{
-  margin-top: 30px;
-  font-size: 44px;
+  margin-top: 10px;
+  font-size: 33px;
 }
 
 .container{
   /*min-width: 1200px;*/
   /*max-width: 2048px;*/
-  width: 1500px;
-  margin-left: 20px;
+  width: 1200px;
+  margin-left: -50px;
   margin-top: -15px;
   /*margin: 0 auto;*/
   padding: 0 0 0;

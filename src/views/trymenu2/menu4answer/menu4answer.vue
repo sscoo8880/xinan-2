@@ -1,5 +1,5 @@
 <template>
-  <a-page-header class="title" title="返回" @back="$router.back()" :style="{padding:'20px',height:'25px'}" />
+  <a-page-header class="title" title="返回" @back="$router.back()" :style="{padding:'20px',height:'40px'}" />
   <background/>
   <a-form>
     <a-typography-text id="title-m">角色：答者-问卷宝</a-typography-text>
@@ -285,6 +285,7 @@ export default {
 <style scoped>
 .menu-demo {
   box-sizing: border-box;
+  margin-top: 20px;
   width: 100%;
   height: 100%;
   background-color: var(--color-neutral-2);

@@ -200,9 +200,9 @@ export default {
 <style scoped>
 .menu-demo {
   box-sizing: border-box;
+  margin-top: 20px;
   width: 100%;
   height: 100%;
-  padding: 0px;
   background-color: var(--color-neutral-2);
 }
 #title-m{
