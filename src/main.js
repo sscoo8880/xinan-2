@@ -3,6 +3,7 @@ import ArcoVue from '@arco-design/web-vue';
 import App from './App.vue';
 import '@arco-design/web-vue/dist/arco.css';
 import axios from "axios";
+
 import router from './router'
 
 const app=createApp(App);

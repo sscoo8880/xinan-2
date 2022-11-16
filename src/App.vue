@@ -7,6 +7,7 @@ import * as echarts from "echarts"
 import axios from "axios";
 
 export default {
+  name: 'App',
   setup(){
     // provide("名字随便起",传递的内容)
     provide("echarts",echarts)
@@ -14,6 +15,7 @@ export default {
   }
 }
 </script>
+
 <style lang="less" >
 @import "style/reset";
 #app {
