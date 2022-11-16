@@ -72,17 +72,21 @@ const routes = [
     name: 'echartsPage',
     component: () => import(/* webpackChunkName: "about" */ '../views/tryecharts/echartsPage.vue'),
   },
-  // {
-  //   path: '/test2',
-  //   name: 'test2',
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/trysounds/test2.vue'),
-  // },
+  {
+    path: '/send_url',
+    name: 'send_url',
+    component: () => import(/* webpackChunkName: "about" */ '../views/trymenu2/menu4user/user_send_url.vue'),
+  },
   {
     path: '/test4',
     name: 'test4',
     component: () => import(/* webpackChunkName: "about" */ '../views/trysounds/test4.vue'),
   },
-
+  {
+    path: '/wjll',
+    name: 'wjll',
+    component: () => import(/* webpackChunkName: "about" */ '../views/trymenu2/wenjuanliulan.vue'),
+  },
   // 用户界面分析问卷中分析操作都得展开新的页面
 
   //   //测试用页面

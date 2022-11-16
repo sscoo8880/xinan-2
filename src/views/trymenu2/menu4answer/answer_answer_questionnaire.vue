@@ -48,22 +48,22 @@ export default {
           width:150
         },
         {
-          title: '群组名称',
+          title: '问卷名称',
           dataIndex: 'name',
           width:170
         },
         {
-          title: '人数',
+          title: '题目数量',
           dataIndex: 'contains',
           width:110
         },
         {
-          title: '更新日期',
+          title: '完成日期',
           dataIndex: 'last_update',
           width:250
         },
         {
-          title: '联系人电话',
+          title: '发卷人电话',
           dataIndex: 'phone',
           width:270
         },

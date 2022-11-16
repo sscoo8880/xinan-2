@@ -10,7 +10,7 @@
       <a-table  :columns="columns" :data="data" :rowKey="data.key" :row-selection="rowSelection" style="margin-top: 10px">
         <template #optional="{ record }">
           <!--          <router-link :to="{path:'/complished_questionnaire',query:{id:record.id,name:record.name,date:record.last_update}}">-->
-          <a-button type="primary" @click="changeflag()">查看</a-button>
+          <a-button type="primary" @click="changeflag()">开始答题</a-button>
           <!--          </router-link>-->
         </template>
       </a-table>
@@ -50,22 +50,22 @@ export default {
           width:150
         },
         {
-          title: '群组名称',
+          title: '问卷名称',
           dataIndex: 'name',
           width:170
         },
         {
-          title: '人数',
+          title: '题目数量',
           dataIndex: 'contains',
           width:110
         },
         {
-          title: '更新日期',
+          title: '截止日期',
           dataIndex: 'last_update',
           width:250
         },
         {
-          title: '联系人电话',
+          title: '发卷人电话',
           dataIndex: 'phone',
           width:270
         },

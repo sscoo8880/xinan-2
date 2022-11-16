@@ -1,220 +1,187 @@
 <template>
   <div class="container">
     <div class="qu-wrap">
-      <header>
-        <span @click="iterator = backBtn(); iterator.next()">&lt; 返回</span>
-        <p v-show="!titleEditing" @click="titleEditing = true;title=''">{{tempTitle}}</p>
-        <input type="text"
-               v-model="title"
-               :class="{inlineShow: titleEditing}"
-               @focus="_title = title"
-               @blur="titleEditing = false"
-               @keyup.esc="cancelTitleEdit()"
-               @keyup.enter="titleEditing = false"/>
-      </header>
-      <div class="qu-content">
-        <section class="qu-item"
-                 v-for="(item, index) in questions"
-                 :class="{nowEditing: curIndex === index && topicEditing, optEditing: curIndex === index}">
-          <h3 @click="curIndex = index; curOptIndex=''; topicEditing = true">
-            <span class="qu-num">{{`Q${index + 1}`}}</span>
-            <span class="qu-topic">{{ item.topic }}</span>
-            <input type="text"
-                   v-focus
-                   v-model="topic"
-                   @focus="_topic = topic"
-                   @blur="curIndex=''; topic=''"
-                   @keyup.esc="cancelTopicEdit()"
-                   @keyup.enter="doneTopicEdit(index)">
-            <span v-if="item.isMandatory"> *</span>
-          </h3>
-          <template v-if="item.type === 'sounds'">
+<!--      <header>-->
+<!--        <span @click="iterator = backBtn(); iterator.next()">&lt; 返回</span>-->
+<!--        <p v-show="!titleEditing" @click="titleEditing = true;title=''">{{tempTitle}}</p>-->
+<!--        <input type="text"-->
+<!--               v-model="title"-->
+<!--               :class="{inlineShow: titleEditing}"-->
+<!--               @focus="_title = title"-->
+<!--               @blur="titleEditing = false"-->
+<!--               @keyup.esc="cancelTitleEdit()"-->
+<!--               @keyup.enter="titleEditing = false"/>-->
+<!--      </header>-->
+<!--      <div class="qu-content">-->
+<!--        <section class="qu-item"-->
+<!--                 v-for="(item, index) in questions"-->
+<!--                 :class="{nowEditing: curIndex === index && topicEditing, optEditing: curIndex === index}">-->
+<!--          <h3 @click="curIndex = index; curOptIndex=''; topicEditing = true">-->
+<!--            <span class="qu-num">{{`Q${index + 1}`}}</span>-->
+<!--            <span class="qu-topic">{{ item.topic }}</span>-->
+<!--            <input type="text"-->
+<!--                   v-focus-->
+<!--                   v-model="topic"-->
+<!--                   @focus="_topic = topic"-->
+<!--                   @blur="curIndex=''; topic=''"-->
+<!--                   @keyup.esc="cancelTopicEdit()"-->
+<!--                   @keyup.enter="doneTopicEdit(index)">-->
+<!--            <span v-if="item.isMandatory"> *</span>-->
+<!--          </h3>-->
+<!--          <template v-if="item.type === 'sounds'">-->
 
-            <label id="require-check">
-              <input type="checkbox"
-                     v-model="item.mp3">
-              此题是否必填
-            </label>
+<!--            <label id="require-check">-->
+<!--              <input type="checkbox"-->
+<!--                     v-model="item.mp3">-->
+<!--              此题是否必填-->
+<!--            </label>-->
 
-            <a-button type="primary" @click="startRecorder()" style="margin:0.5vw;">录音
-              <template #icon >
-                <IconVoice id="icons" style="width: 20px;height: 20px"/>
-              </template>
-            </a-button>
+<!--            <a-button type="primary" @click="startRecorder()" style="margin:0.5vw;">录音-->
+<!--              <template #icon >-->
+<!--                <IconVoice id="icons" style="width: 20px;height: 20px"/>-->
+<!--              </template>-->
+<!--            </a-button>-->
 
-<!--              <a-button type="primary" @click="resumeRecorder()" >继续录音</a-button>-->
-<!--              <a-button type="primary" @click="pauseRecorder()" >暂停录音</a-button>-->
+<!--            &lt;!&ndash;              <a-button type="primary" @click="resumeRecorder()" >继续录音</a-button>&ndash;&gt;-->
+<!--            &lt;!&ndash;              <a-button type="primary" @click="pauseRecorder()" >暂停录音</a-button>&ndash;&gt;-->
 
-            <a-button type="primary" @click="stopRecorder()" style="margin:0.5vw;">结束录音
-              <template #icon >
-                <IconRecordStop  id="icons" style="width: 20px;height: 20px"/>
-              </template>
-            </a-button>
+<!--            <a-button type="primary" @click="stopRecorder()" style="margin:0.5vw;">结束录音-->
+<!--              <template #icon >-->
+<!--                <IconRecordStop  id="icons" style="width: 20px;height: 20px"/>-->
+<!--              </template>-->
+<!--            </a-button>-->
 
-            <a-button type="primary" @click="playRecorder()" style="margin:0.5vw;">播放
-              <template #icon >
-                <IconPlayCircleFill id="icons" style="width: 20px;height: 20px"/>
-              </template>
-            </a-button>
+<!--            <a-button type="primary" @click="playRecorder()" style="margin:0.5vw;">播放-->
+<!--              <template #icon >-->
+<!--                <IconPlayCircleFill id="icons" style="width: 20px;height: 20px"/>-->
+<!--              </template>-->
+<!--            </a-button>-->
 
-            <br>
-            <h3>录音时长：{{ recorder && recorder.duration.toFixed(4) }}</h3>
-<!--            <a-modal >-->
-              <a-button type="primary" @click="pauseRecorder()" style="margin:0.5vw;" :disabled=visible1 >暂停
-                <template #icon >
-                  <IconPlayCircleFill id="icons" style="width: 20px;height: 20px"/>
-                </template>
-              </a-button>
-<!--            </a-modal>-->
+<!--            <br>-->
+<!--            <h3>录音时长：{{ recorder && recorder.duration.toFixed(4) }}</h3>-->
+<!--            &lt;!&ndash;            <a-modal >&ndash;&gt;-->
+<!--            <a-button type="primary" @click="pauseRecorder()" style="margin:0.5vw;" :disabled=visible1 >暂停-->
+<!--              <template #icon >-->
+<!--                <IconPlayCircleFill id="icons" style="width: 20px;height: 20px"/>-->
+<!--              </template>-->
+<!--            </a-button>-->
+<!--            &lt;!&ndash;            </a-modal>&ndash;&gt;-->
 
-            <a-button type="primary" @click="resumeRecorder()" style="margin:0.5vw;" :disabled=visible2>继续
-              <template #icon >
-                <IconPlayCircleFill id="icons" style="width: 20px;height: 20px"/>
-              </template>
-            </a-button>
+<!--            <a-button type="primary" @click="resumeRecorder()" style="margin:0.5vw;" :disabled=visible2>继续-->
+<!--              <template #icon >-->
+<!--                <IconPlayCircleFill id="icons" style="width: 20px;height: 20px"/>-->
+<!--              </template>-->
+<!--            </a-button>-->
 
 
-            <br>
-            <a-button type="info" @click="downPCM()" style="margin:1vw;">下载PCM</a-button>
-            <a-button type="info" @click="downWAV()" style="margin:1vw;">下载WAV</a-button>
-            <a-button type="info" @click="getMp3Data()" style="margin:1vw;">下载MP3</a-button>
+<!--            <br>-->
+<!--            <a-button type="info" @click="downPCM()" style="margin:1vw;">下载PCM</a-button>-->
+<!--            <a-button type="info" @click="downWAV()" style="margin:1vw;">下载WAV</a-button>-->
+<!--            <a-button type="info" @click="getMp3Data()" style="margin:1vw;">下载MP3</a-button>-->
 
-            <br>
-            <audio controls ref="audio" class="aud">
-              <source src="src/assets/recorder.wav" />
-            </audio>
+<!--            <br>-->
+<!--            <audio controls ref="audio" class="aud">-->
+<!--              <source src="src/assets/recorder.wav" />-->
+<!--            </audio>-->
 
-          </template>
-          <ul v-else-if="item.type==='textarea'">
-            <textarea rows="8" cols="80"></textarea>
-            <label id="require-check">
-              <input type="checkbox"
-                     v-model="item.isMandatory">
-              此题是否必填
-            </label>
-          </ul>
-          <ul v-else class="options-list" >
-            <li v-for="(option, optIndex) in item.options"
-                :class="{optionEditing: curOptIndex === optIndex}">
-							<span class="optionText"
-                    @click="curIndex=index; curOptIndex=optIndex; topicEditing = false">{{ option }}</span>
-              <input type="text"
-                     v-focus
-                     v-model="optionText"
-                     @focus="_optionText = optionText"
-                     @blur="curIndex=''; optionText=''"
-                     @keyup.esc="cancelOptionEdit()"
-                     @keyup.enter="doneOptionEdit(index, optIndex)">
+<!--          </template>-->
+<!--          <ul v-else-if="item.type==='textarea'">-->
+<!--            <textarea rows="8" cols="80"></textarea>-->
+<!--            <label id="require-check">-->
+<!--              <input type="checkbox"-->
+<!--                     v-model="item.isMandatory">-->
+<!--              此题是否必填-->
+<!--            </label>-->
+<!--          </ul>-->
+<!--          <ul v-else class="options-list" >-->
+<!--            <li v-for="(option, optIndex) in item.options"-->
+<!--                :class="{optionEditing: curOptIndex === optIndex}">-->
+<!--							<span class="optionText"-->
+<!--                    @click="curIndex=index; curOptIndex=optIndex; topicEditing = false">{{ option }}</span>-->
+<!--              <input type="text"-->
+<!--                     v-focus-->
+<!--                     v-model="optionText"-->
+<!--                     @focus="_optionText = optionText"-->
+<!--                     @blur="curIndex=''; optionText=''"-->
+<!--                     @keyup.esc="cancelOptionEdit()"-->
+<!--                     @keyup.enter="doneOptionEdit(index, optIndex)">-->
 
-              <ul class="opt-ctrl">
-                <li v-if="optIndex !== 0"
-                    @click="moveUp(optIndex, item.options)">上移</li>
-                <li v-if="optIndex !== item.options.length - 1"
-                    @click="moveDown(optIndex, item.options)">下移</li>
-                <li v-else @click="addOption(item.options)">添加</li>
-                <li @click="delOption(optIndex, item.options)">删除</li>
-              </ul>
-            </li>
-          </ul>
-          <ul class="operat-list">
-            <li v-if="index !== 0"
-                @click="moveUp(index)">上移</li>
-            <li v-if="index !== questions.length - 1"
-                @click="moveDown(index)">下移</li>
-            <li @click="reuse(index)">复用</li>
-            <li @click="delQuestion(index)">删除</li>
-          </ul>
-          <div></div>
-        </section>
-        <div class="add-box">
-          <p class="qu-type" :class="{expand: isAdding}">
-            <span @click="addType('radio')">单选题</span>
-            <span @click="addType('checkbox')">多选题</span>
-            <span @click="addType('textarea')">文本题</span>
-            <span @click="addType('sounds')">语音题
-              <canvas id="canvas" height="1" width="0"></canvas>
-              <canvas id="playChart" height="1" width="0"></canvas>
-            </span>
-          </p>
-          <p class="add-btn" @click="isAdding = !isAdding;">
-            <span>+ 添加问题</span>
-          </p>
-        </div>
-      </div>
-      <footer>
-        <div class="date-part">
-          <label>问卷截止日期
-            <input type="text"
-                   readonly="true"
-                   v-model="date"
-                   @click="isShowDatepicker = !isShowDatepicker">
-          </label>
-          <date-components id="date-picker"
-                           v-show="isShowDatepicker"
-                           @sendDate="changeDate">
-          </date-components>
-        </div>
-        <div class="ctrl-part">
-<!--          <a-form>-->
-<!--            <a-form-item>-->
-<!--              <span @click="iterator = saveBtn(); iterator.next()">保存问卷</span>-->
-<!--            </a-form-item>-->
-<!--          </a-form>-->
-
-<!--          <a-form-item>-->
-<!--            <span @click="iterator = releaseBtn(); iterator.next()">发布问卷</span>-->
-<!--            <a-modal v-model:visible="visibleSend" title="发送问卷" @cancel="handleCancelSend" @ok="handleOkSend" ok-text="发送">-->
-<!--              <a-form :model="url">-->
-<!--                <a-form-item field="username" label="答卷群组/答卷人">-->
-<!--                  <a-cascader :options="options" :style="{width:'320px',textAlign:'left'}" placeholder="选择问卷的发送对象" multiple/>-->
-<!--                </a-form-item>-->
-<!--                <a-form-item field="phone" label="答题链接">-->
-<!--                  <a-input v-model="url" :style="{width:'320px'}" placeholder="设置问卷的发送链接"/>-->
-<!--                </a-form-item>-->
-<!--              </a-form>-->
-<!--            </a-modal>-->
-<!--          </a-form-item>-->
-
-          <span @click="iterator = saveBtn(); iterator.next()">保存问卷</span>
-          <span @click="iterator = releaseBtn(); iterator.next()">发布问卷</span>
-          <a-modal v-model:visible="visibleSend" title="发送问卷" @cancel="handleCancelSend" @ok="handleOkSend" ok-text="发送">
-            <a-form :model="url">
-              <a-form-item field="username" label="发送对象">
-                <a-cascader v-model="optOption" :options="optionsItem" :style="{width:'320px',textAlign:'left'}" placeholder="选择问卷的答卷群组或答者" multiple/>
-              </a-form-item>
-              <a-form-item field="phone" label="答题链接">
-                <a-input v-model="url" :style="{width:'320px'}" placeholder="设置问卷的发送链接"/>
-              </a-form-item>
-            </a-form>
-          </a-modal>
-
-        </div>
-      </footer>
-    </div>
-    <div class="overlay" v-show="isShowPrompt">
-      <div class="prompt-box">
-        <header>
-          <span>提示</span>
-          <a href="javascript:;" @click="isShowPrompt = false">&times;</a>
-        </header>
-        <p>{{ promptText }}</p>
-        <footer>
-          <span @click="isShowPrompt = false; iterator && iterator.next()">确定</span>
-          <span @click="isShowPrompt = false">取消</span>
-        </footer>
-      </div>
+<!--              <ul class="opt-ctrl">-->
+<!--                <li v-if="optIndex !== 0"-->
+<!--                    @click="moveUp(optIndex, item.options)">上移</li>-->
+<!--                <li v-if="optIndex !== item.options.length - 1"-->
+<!--                    @click="moveDown(optIndex, item.options)">下移</li>-->
+<!--                <li v-else @click="addOption(item.options)">添加</li>-->
+<!--                <li @click="delOption(optIndex, item.options)">删除</li>-->
+<!--              </ul>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--          <ul class="operat-list">-->
+<!--            <li v-if="index !== 0"-->
+<!--                @click="moveUp(index)">上移</li>-->
+<!--            <li v-if="index !== questions.length - 1"-->
+<!--                @click="moveDown(index)">下移</li>-->
+<!--            <li @click="reuse(index)">复用</li>-->
+<!--            <li @click="delQuestion(index)">删除</li>-->
+<!--          </ul>-->
+<!--          <div></div>-->
+<!--        </section>-->
+<!--        <div class="add-box">-->
+<!--          <p class="qu-type" :class="{expand: isAdding}">-->
+<!--            <span @click="addType('radio')">单选题</span>-->
+<!--            <span @click="addType('checkbox')">多选题</span>-->
+<!--            <span @click="addType('textarea')">文本题</span>-->
+<!--            <span @click="addType('sounds')">语音题-->
+<!--              <canvas id="canvas" height="1" width="0"></canvas>-->
+<!--              <canvas id="playChart" height="1" width="0"></canvas>-->
+<!--            </span>-->
+<!--          </p>-->
+<!--          <p class="add-btn" @click="isAdding = !isAdding;">-->
+<!--            <span>+ 添加问题</span>-->
+<!--          </p>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <footer>-->
+<!--        <div class="date-part">-->
+<!--          <label>问卷截止日期-->
+<!--            <input type="text"-->
+<!--                   readonly="true"-->
+<!--                   v-model="date"-->
+<!--                   @click="isShowDatepicker = !isShowDatepicker">-->
+<!--          </label>-->
+<!--          <date-components id="date-picker"-->
+<!--                           v-show="isShowDatepicker"-->
+<!--                           @sendDate="changeDate">-->
+<!--          </date-components>-->
+<!--        </div>-->
+<!--        <div class="ctrl-part">-->
+<!--          <span @click="iterator = saveBtn(); iterator.next()">保存问卷</span>-->
+<!--          <span @click="iterator = releaseBtn(); iterator.next()">发布问卷</span>-->
+<!--        </div>-->
+<!--      </footer>-->
+<!--    </div>-->
+<!--    <div class="overlay" v-show="isShowPrompt">-->
+<!--      <div class="prompt-box">-->
+<!--        <header>-->
+<!--          <span>提示</span>-->
+<!--          <a href="javascript:;" @click="isShowPrompt = false">&times;</a>-->
+<!--        </header>-->
+<!--        <p>{{ promptText }}</p>-->
+<!--        <footer>-->
+<!--          <span @click="isShowPrompt = false; iterator && iterator.next()">确定</span>-->
+<!--          <span @click="isShowPrompt = false">取消</span>-->
+<!--        </footer>-->
+<!--      </div>-->
     </div>
   </div>
 </template>
 
 <script>
-import Data from '../../../utils/data.js';
-import Datepicker from './Datepicker.vue';
-import {reactive,ref, toRaw} from "vue";
+import Data from '../../utils/data.js';
+import Datepicker from './menu4user/Datepicker.vue';
+import {toRaw} from "vue";
 import Recorder from 'js-audio-recorder';
 import {IconVoice,IconRecordStop,IconPlayCircle,IconPlayCircleFill} from '@arco-design/web-vue/es/icon';
-import api from "@/api";
-import {Message} from "@arco-design/web-vue";
 
 const lamejs = require('lamejs')
 
@@ -224,14 +191,13 @@ const lamejs = require('lamejs')
 //   numChannels: 1,                 // 声道，支持 1 或 2， 默认是1
 //   // compiling: false,(0.x版本中生效,1.x增加中)  // 是否边录边转换，默认是false
 // })
-let visibleSend=false;
+
 export default {
   name: "design_questionnaire",
   components: {
     'date-components': Datepicker,
     IconVoice,IconRecordStop,IconPlayCircle,IconPlayCircleFill,
   },
-
   data() {
     return {
       index: '',
@@ -256,68 +222,6 @@ export default {
       isShowPrompt: false,
       isShowDatepicker: false,
 
-      //通过链接发送问卷
-      visibleSend:false,
-      optionsItem : [
-        {
-          value: 'groupA',
-          label: 'GroupA',
-          children: [
-            {
-              value: 'answerAA',
-              label: 'AnswerAA',
-            },
-            {
-              value: 'answerAB',
-              label: 'AnswerAB',
-            },
-            {
-              value: 'answerAC',
-              label: 'AnswerAC',
-            },
-            {
-              value: 'answerAD',
-              label: 'AnswerAD',
-            },
-          ],
-        },
-        {
-          value: 'groupB',
-          label: 'GroupB',
-          children: [
-            {
-              value: 'answerBA',
-              label: 'AnswerBA',
-            },
-            {
-              value: 'answerBB',
-              label: 'AnswerBB',
-            },
-          ],
-        },
-        {
-          value: 'groupC',
-          label: 'GroupC',
-          children: [
-            {
-              value: 'answerCA',
-              label: 'AnswerCA',
-            },
-            {
-              value: 'answerCB',
-              label: 'AnswerCB',
-            },
-            {
-              value: 'answerCC',
-              label: 'AnswerCC',
-            },
-          ],
-        },
-      ],
-      optOption:[],
-      url:'',
-
-      //录音题
       recorder:null,
       visible1:false,
       visible2:true,
@@ -468,60 +372,35 @@ export default {
     },
 
     saveData() {
+      if (this.questions.length < 1) {
+        this.errorPrompt(`每份问卷至少一个问题！`);
+        return;
+      }
       this.quData.title = this.title;
       this.quData.time = this.date;
       this.quData.questions = [...this.questions];
     },
-
 
     backBtn() {
       this.showPrompt(`确认未保存回到主页吗？`);
       this.$router.push({path: '/'});
     },
 
-
     saveBtn() {
       this.showPrompt(`确认要保存问卷？`);
-      if (this.questions.length < 1) {
-        this.errorPrompt(`每份问卷至少一个问题！`);
-        return;
-      }
-      else this.saveData();
+      this.saveData();
       let raw = toRaw(this.quData)
       console.log(JSON.stringify(raw));
     },
 
     releaseBtn() {
-      // this.showPrompt(`确认要保存并发布问卷？`);
-      this.quData.state = 1;
-      this.quData.stateName = '发布中';
-      if (this.questions.length < 1) {
-        this.errorPrompt(`每份问卷至少一个问题！`);
-      }
-      else {
-        this.visibleSend=true;
-      }
-      // this.$router.push({path: '/send_url'});\
-    },
-
-    handleCancelSend(){
-      visibleSend=false;
-    },
-
-    handleOkSend(){
-      if (this.optOption.length===0){
-        // this.errorPrompt(`请选择发送对象！`);
-        alert('请选择发送对象')
-
-      }
-      else if (this.url === '')alert('请填写链接')
-      else if (this.questions.length < 1) {
-        this.errorPrompt(`每份问卷至少一个问题！`);
-      }
-      else {
+      this.showPrompt(`确认要保存并发布问卷？`);
+      (() => {
+        this.quData.state = 1;
+        this.quData.stateName = '发布中';
         this.saveData();
-        this.showPrompt(`确认要保存并发布问卷？`);
-      }
+      })();
+      this.$router.push({path: '/'});
     },
 
     // 语音题
@@ -792,7 +671,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '../../../style/_Edit';
+@import '../../style/_Edit';
 #icons{
   margin-top: 20%;
 }
