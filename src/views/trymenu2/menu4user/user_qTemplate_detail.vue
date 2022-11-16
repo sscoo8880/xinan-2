@@ -27,9 +27,9 @@
           </a-form-item>
           <a-form-item field="type" label="类型">
             <a-select v-model="newQuestion.type">
-              <a-option value="post1">单选</a-option>
-              <a-option value="post2">多选</a-option>
-              <a-option value="post3">填空</a-option>
+              <a-option value="单选">单选</a-option>
+              <a-option value="多选">多选</a-option>
+              <a-option value="填空">填空</a-option>
             </a-select>
           </a-form-item>
           <a-form-item field="answer" label="答案">

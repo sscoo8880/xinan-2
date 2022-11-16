@@ -7,7 +7,38 @@
   <div id="form2">
     <a-space direction="horizontal" size="large" style="width: 80%">
       <a-input-search :style="{width:'320px'}" placeholder="输入租户名称，进行模糊搜索" search-button/>
-      <a-button type="outline" :style="{width:'200px',left:'320px'}">新增题库</a-button>
+      <a-button @click="handleClick" type="outline" :style="{width:'200px',left:'320px'}">新增题库</a-button>
+      <a-modal  v-model:visible="visible" title="新增题库" @cancel="handleCancel_qTemplate" @before-ok="handleBeforeOk">
+        <a-form :model="form_qTemplate">
+          <a-form-item field="name" label="题库名称">
+            <a-input v-model="form_qTemplate.gname" />
+          </a-form-item>
+          <a-form-item field="type" label="题库类型">
+            <a-select v-model="form_qTemplate.qTemplate_type">
+              <a-option value="考试">考试</a-option>
+              <a-option value="调查">调查</a-option>
+            </a-select>
+          </a-form-item>
+          <a-form-item field="explanation" label="题库描述">
+            <a-textarea v-model="form_qTemplate.qTemplate_description"></a-textarea>
+          </a-form-item>
+          <!--          <a-form-item field="description" label="题目数量" value="form_qTemplate.qTemplate_questionnaireNum">-->
+          <a-form-item>
+            <router-link :to="{
+              path:'/user_qTemplate_detail',
+              query:{
+                qTemplate_id:form_qTemplate.qTemplate_id,
+                qTemplate_name:form_qTemplate.qTemplate_name,
+                qTemplate_type:form_qTemplate.qTemplate_type,
+                qTemplate_questionnaireNum:0,
+                qTemplate_description:form_qTemplate.qTemplate_description,
+              }
+            }">
+              <a-button  type="primary" style="width: 380px">设置题目</a-button>
+            </router-link>
+          </a-form-item>
+        </a-form>
+      </a-modal>
       <a-button type="outline" :style="{width:'200px',left:'320px'}">导入题库</a-button>
     </a-space>
   </div>
@@ -36,6 +67,8 @@
 
 <script>
 import {reactive, ref} from 'vue';
+import {Message, Modal} from "@arco-design/web-vue";
+import api from "@/api";
 
 export default {
 
@@ -49,6 +82,14 @@ export default {
     return{
       value : '',
       text : '',
+      visible:false,
+      form_qTemplate:{
+        qTemplate_name:'',
+        qTemplate_type: '',
+        qTemplate_questionnaireNum:'',
+        qTemplate_description:''
+        // qTemplate_questions:[],
+      },
       rowSelection,
       columns : [
         {
@@ -116,7 +157,43 @@ export default {
       }]),
     }
   },
+  methods:{
+    handleClick(){
+      this.visible=true;
+    },
+    handleCancel_qTemplate(){
+      this.visible= false;
+    },
+    handleBeforeOk(done){
+      if(this.form_group.gname===''){
+        Modal.warning({
+          title: '警告',
+          content: '群组名不能为空'
+        });
+        window.setTimeout(() => {
+          done(false)
+        }, 300)
+      }
+      else {
+        api.addGroup(this.form_group).then(res=>{
+          if(res.code===200){
+            window.setTimeout(() => {
+              done()
+            }, 300)
+            this.updateGroup();
+            Message.success('增加群组成功')
+          }
+          else {
+            window.setTimeout(() => {
+              done(false)
+            }, 300)
+            Message.error('增加群组失败')
+          }
+        })
+      }
+    },
 
+  }
 }
 </script>
 

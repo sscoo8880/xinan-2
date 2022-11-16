@@ -1,4 +1,5 @@
 <template>
+  <div v-if="flag===0">
   <div style="margin-bottom: 15px">
     <a-space direction="horizontal" size="large" style="width: 100%">
       <p>群组名:</p>
@@ -22,9 +23,7 @@
   </div>
   <a-table :columns="columns" :data="info.col" :pagination="pagination" :row-selection="rowSelection" v-model:selectedKeys="selectedKeys" style="margin-top: 10px">
     <template #optional="{ record }">
-      <router-link :to="{path:'/user_manage_answer'}">
-        <a-button type="primary" status="success" style="margin-right:10px;background-color: #ffc940" >管理</a-button>
-      </router-link>
+        <a-button type="primary" status="success" style="margin-right:10px;background-color: #ffc940" @click="changeflag">管理</a-button>
       <a-button type="primary" @click="handleClickDelete(record.gname)" style="margin-right:10px;background-color: #409EFF">删除</a-button>
     </template>
   </a-table>
@@ -34,15 +33,22 @@
     </template>
     <div>是否确认删除该问卷</div>
   </a-modal>
+  </div>
+  <div v-else>
+    <lessee_manage_user @flag="getchange"/>
+  </div>
 </template>
 
 <script>
 import {reactive} from 'vue';
 import {Message, Modal} from "@arco-design/web-vue";
 import api from "@/api";
+import lessee_manage_user from "@/views/trymenu2/menu4user/lessee_manage_user";
 
 export default {
-
+  components:{
+    lessee_manage_user
+  },
   mounted() {
     this.form.gname =this.group_name;
     api.selectGroup(this.form).then(res => {
@@ -60,6 +66,7 @@ export default {
       showCheckedAll: true
     });
     return{
+      flag:0,
       action:true,
       selectedKeys :['1','2'],
       group_name: '',
@@ -74,7 +81,12 @@ export default {
       },
       pagination:{pageSize: 5},
       info:{
-        col:[]
+        col:[{
+          gid: 123,
+          gname: 456,
+          createTime:789,
+          updateTime:742
+        }]
       },
       text : '',
       rowSelection,
@@ -194,6 +206,12 @@ export default {
           Message.error('删除失败！')
         }
       })
+    },
+    changeflag(){
+      this.flag=1;
+    },
+    getchange(data){
+      this.flag=data
     }
   }
 }

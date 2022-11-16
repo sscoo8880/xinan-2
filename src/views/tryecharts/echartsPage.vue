@@ -1,5 +1,6 @@
 <template>
   <h1 id="title_e">数据大屏</h1>
+  <a-button @click="changeflag" type="outline">租户分析</a-button>
   <section class="container">
     <section class="left">
       <!--      插槽，左1-->

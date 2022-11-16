@@ -1,7 +1,15 @@
 <template>
   <div style="margin-bottom: 15px">
     <a-space direction="horizontal" size="large" style="width: 100%">
-      <a-input-search :style="{width:'320px'}" placeholder="输入群组名称，进行模糊搜索" search-button/>
+      <p>问卷名:</p>
+      <a-mention v-model="question_name"  placeholder="请输入答者名..." />
+      <a-button @click="serchQuestion" type="outline" >查询</a-button>
+      <a-modal v-model:visible="flag_search" @ok="handleOk" @cancel="handleCancel">
+        <template #title>
+          提醒
+        </template>
+        <div>没有查询到相关问卷</div>
+      </a-modal>
     </a-space>
   </div>
 

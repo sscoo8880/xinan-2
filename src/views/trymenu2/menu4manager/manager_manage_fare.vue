@@ -1,38 +1,8 @@
 <template>
-  <div><h1> </h1></div>
-  <div class="Login" id="figure">
-    <!--    <img alt="Vue logo" src="../../assets/dashboard.png">-->
-  </div>
-
-  <div>
-<!--    <a-form layout="inline" @submit="handleSubmit">-->
-<!--      <a-form-item field="username" label="租户姓名">-->
-<!--        <a-input v-model="form2.username" placeholder="请输入姓名..." />-->
-<!--      </a-form-item>-->
-<!--      <a-form-item field="phone" label="手机号">-->
-<!--        <a-input v-model="form2.phone" placeholder="请输入手机号..." />-->
-<!--      </a-form-item>-->
-<!--      <a-form-item>-->
-<!--        <a-button html-type="submit" type="outline">查询</a-button>-->
-<!--      </a-form-item>-->
-<!--      <a-form-item>-->
-<!--        <a-button type="outline" style="margin-right: 100px" @click="handleNew">新增租户</a-button>-->
-<!--        <a-modal v-model:visible="visibleNew" title="租户信息" @cancel="handleCancelNew" @ok="handleOkNew" ok-text="创建">-->
-<!--          <a-form :model="formNew">-->
-<!--            <a-form-item field="username" label="租户名">-->
-<!--              <a-input v-model="formNew.username" @blur="checkUsernameOrPhone" />-->
-<!--            </a-form-item>-->
-<!--            <a-form-item field="phone" label="手机号">-->
-<!--              <a-input v-model="formNew.phone" @blur="checkUsernameOrPhone"/>-->
-<!--            </a-form-item>-->
-<!--            <a-form-item field="password" label="密码">-->
-<!--              <a-input type="password" v-model="formNew.password" />-->
-<!--            </a-form-item>-->
-<!--          </a-form>-->
-<!--        </a-modal>-->
-<!--      </a-form-item>-->
-<!--    </a-form>-->
-
+  <div v-if="flag===0">
+    <a-form-item>
+    <a-button @click="changeflag" type="outline">租户分析</a-button>
+    </a-form-item>
     <a-table :columns="columns" :data="x.col" :row-selection="rowSelection" v-model:selectedKeys="selectedKeys" :pagination="pagination">
       <template #optional="{ record }">
         <a-button type="primary" style="margin-right:10px;background-color: #ffc940" @click="handleClick(record)">管理</a-button>
@@ -55,17 +25,22 @@
       </template>
     </a-table>
   </div>
-
-
+  <div v-if="flag===1">
+    <echarts-page/>
+  </div>
 </template>
 
 <script>
 import {reactive, ref} from 'vue';
 import api from "@/api";
 import {Message} from "@arco-design/web-vue";
+import echartsPage from "@/views/tryecharts/echartsPage";
 
 export default {
   name: "manager_manage_fare",
+  components:{
+    echartsPage
+  },
   mounted() {
     api.getLessees(this.form2).then(res => {
       // console.log(res)
@@ -247,10 +222,7 @@ export default {
       console.log(uid)
       deleteMes.uid = uid
       api.deleteLessees(deleteMes).then(res => {
-        // console.log(res)
         if (res.code === 200){
-          // console.log(res.data.list)
-          // x.col=res.data.list;
           handleSubmit();
           Message.success(res.msg)
         }else {
@@ -260,7 +232,6 @@ export default {
     }
 
     const handleSubmit = () => {
-      // console.log(window.sessionStorage.getItem("token"))
       keyword.username = form2.username
       keyword.phone = form2.phone
       api.getLessees(keyword).then(res => {
@@ -297,47 +268,23 @@ export default {
       handleCancelNew,
       handleOkNew,
       formNew,
-      checkUsernameOrPhone
-      // show
+      checkUsernameOrPhone,
     };
   },
+  data(){
+    return{
+      flag: 0
+    }
+  },
+  methods:{
+    changeflag(){
+      this.flag=1
+    }
+  }
 }
 </script>
 
 <style>
-
-#background-r{
-  background: url("../../../assets/login_background.jpg") no-repeat center;
-  height: 100%;
-  width: 100%;
-  background-size: cover;
-  position: fixed;
-}
-
-#form{
-  position: absolute;
-  top: 90%;
-  left: 50%;
-  /*-ms-transform: translate(-50%, -50%);*/
-  /*transform: translate(-50%, -50%);*/
-}
-
-#form2{
-  position: relative;
-  top: 30%;
-  left: 45%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-
-#form3{
-  position: relative;
-  top: 60%;
-  left: 44.625%;
-  width: 98%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
 </style>
 
 
