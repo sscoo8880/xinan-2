@@ -1,5 +1,7 @@
 <template>
-  <h1 >题库详情 </h1>
+  <a-page-header class="title" title="返回" @back="$router.back()" :style="{padding:'20px',height:'10px'}" >
+  </a-page-header>
+  <h1>题库详情</h1>
   <div id="background-r">
 
     <div id="form">

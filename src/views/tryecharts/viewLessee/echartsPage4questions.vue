@@ -1,9 +1,4 @@
 <template>
-  <div style="margin-bottom: 15px">
-    <a-space direction="horizontal" size="large" style="width: 100%">
-      <a-button @click="changeflag" type="primary">返回上一界面</a-button>
-    </a-space>
-  </div>
   <h1 id="title_e">数据大屏-分析问卷</h1>
 <!--  对答卷情况进行可视化展示-->
   <!--  <a-button @click="changeflag" type="outline">租户分析</a-button>-->
