@@ -3,43 +3,44 @@
   <div >
     <a-button type="primary" @click="changeflag">返回上级页面</a-button>
   </div>
-  <div class="container">
-    <div class="qu-wrap">
-      <header>
-        <router-link tag="span" to="/">&lt; 返回</router-link>
-        <p>{{ quData.title }}</p>
-        <p id="data-tip">(随机生成的数据 可能会有不准确)</p>
-      </header>
-      <div class="qu-content">
-        <div class="qu-item" v-for="(item, index) in quData.questions">
-          <section class="qu-data">
-            <h3>{{ `Q${index + 1}&nbsp;&nbsp;&nbsp;${item.topic}`}}</h3>
-            <template v-if="item.type !== 'textarea'">
-              <p v-for="option in item.options">{{ option }}</p>
-            </template>
-            <p v-else>有效回答</p>
-          </section>
-          <section class="ans-data">
-            <h4>数据占比</h4>
-            <template v-if="item.type === 'radio'">
-              <p class="outerBar" v-for="(option, optIndex) in item.options">
-                <span class="innerBar" :style="{width: randomScale()}"></span>
-                <span class="scaleNum"></span>
-              </p>
-            </template>
-            <p class="outerBar" v-else-if="item.type === 'textarea'">
-              <span class="innerBar" :style="{width: randomScale()}"></span>
-              <span class="scaleNum"></span>
-            </p>
-            <p class="echart" v-else></p>
-          </section>
-        </div>
-      </div>
-      <footer>
-        <router-link tag="p" to="/" id="backBtn">返 回</router-link>
-      </footer>
-    </div>
-  </div>
+  <echarts-page4questions/>
+<!--  <div class="container">-->
+<!--    <div class="qu-wrap">-->
+<!--      <header>-->
+<!--        <router-link tag="span" to="/">&lt; 返回</router-link>-->
+<!--        <p>{{ quData.title }}</p>-->
+<!--        <p id="data-tip">(随机生成的数据 可能会有不准确)</p>-->
+<!--      </header>-->
+<!--      <div class="qu-content">-->
+<!--        <div class="qu-item" v-for="(item, index) in quData.questions">-->
+<!--          <section class="qu-data">-->
+<!--            <h3>{{ `Q${index + 1}&nbsp;&nbsp;&nbsp;${item.topic}`}}</h3>-->
+<!--            <template v-if="item.type !== 'textarea'">-->
+<!--              <p v-for="option in item.options">{{ option }}</p>-->
+<!--            </template>-->
+<!--            <p v-else>有效回答</p>-->
+<!--          </section>-->
+<!--          <section class="ans-data">-->
+<!--            <h4>数据占比</h4>-->
+<!--            <template v-if="item.type === 'radio'">-->
+<!--              <p class="outerBar" v-for="(option, optIndex) in item.options">-->
+<!--                <span class="innerBar" :style="{width: randomScale()}"></span>-->
+<!--                <span class="scaleNum"></span>-->
+<!--              </p>-->
+<!--            </template>-->
+<!--            <p class="outerBar" v-else-if="item.type === 'textarea'">-->
+<!--              <span class="innerBar" :style="{width: randomScale()}"></span>-->
+<!--              <span class="scaleNum"></span>-->
+<!--            </p>-->
+<!--            <p class="echart" v-else></p>-->
+<!--          </section>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <footer>-->
+<!--        <router-link tag="p" to="/" id="backBtn">返 回</router-link>-->
+<!--      </footer>-->
+<!--    </div>-->
+<!--  </div>-->
 </template>
 
 <script>
@@ -48,8 +49,12 @@ import echarts from 'echarts/lib/echarts'
 import 'echarts/lib/chart/pie'
 import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/toolbox'
+import echartsPage4questions from "@/views/tryecharts/viewLessee/echartsPage4questions";
 export default {
   name: "user_manage_analyse_questionnaire",
+  components:{
+    echartsPage4questions
+  },
   data() {
     return {
       flag: 0,
