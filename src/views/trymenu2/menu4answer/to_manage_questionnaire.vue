@@ -141,9 +141,8 @@ export default {
 
     sendAnswer() {
       this.getAnswer();
-      this.changeflag();
       Message.success("提交成功!")
-
+      this.changeflag();
     },
 
     *submitBtn() {

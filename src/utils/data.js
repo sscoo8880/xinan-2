@@ -5,7 +5,7 @@
 var list = [
 		{
 			"id": 1,
-			"title": "问卷调查1",
+			"title": "食堂问卷",
 			"state": 1,
 			"stateName": "发布中",
 			"time": "2020-07-01",
@@ -53,49 +53,44 @@ var list = [
 		},
 		{
 			"id": 3,
-			"title": "问卷调查3",
-			"state": 0,
-			"stateName": "未发布",
+			"title": "食堂问卷",
+			"state": 1,
+			"stateName": "已发布",
 			"time": "2020-06-01",
 			"questions": [
 				{
 					"type": "radio",
-					"topic": "单选题",
-					"options": ["选项1","选项2","选项3","选项4"]
+					"topic": "评价",
+					"options": ["一星","两星","三星","无评价"]
 				},
 				{
 					"type": "checkbox",
-					"topic": "多选题",
-					"options": ["选项1","选项2","选项3","选项4"]
+					"topic": "喜欢的食物",
+					"options": ["排骨","拉面","砂锅饭","蛋糕"]
 				},
 				{
 					"type": "textarea",
-					"topic": "文本题",
+					"topic": "你的建议",
 					"isMandatory": false
 				}
 			]
 		},
 		{
 			"id": 4,
-			"title": "问卷调查4",
+			"title": "环境问卷",
 			"state": 2,
 			"stateName": "已结束",
 			"time": "2020-03-01",
 			"questions": [
 				{
 					"type": "radio",
-					"topic": "单选题",
-					"options": ["选项1","选项2","选项3","选项4"]
+					"topic": "对环境的认可度",
+					"options": ["优","良","中","差"]
 				},
 				{
 					"type": "checkbox",
-					"topic": "多选题",
-					"options": ["选项1","选项2","选项3","选项4"]
-				},
-				{
-					"type": "textarea",
-					"topic": "文本题",
-					"isMandatory": false
+					"topic": "影响因素",
+					"options": ["污水","砍伐","垃圾","排气"]
 				}
 			]
 		},
@@ -165,12 +160,7 @@ var template = {
 					"type": "textarea",
 					"topic": "文本题",
 					"isMandatory": false
-				},
-			sounds:{
-					"type":"sounds",
-					"topic":"语音题",
-					"mp3":"",
-				},
+				}
 		};
 
 var date = function(year, month) {
