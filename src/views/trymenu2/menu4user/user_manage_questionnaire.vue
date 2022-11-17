@@ -1,5 +1,5 @@
 <template>
-  <div id="manage">
+  <div v-if="flag===0">
     <div class="Login" id="figure">
     </div>
     <br>
@@ -19,13 +19,13 @@
     <a-table :columns="columns" :data="info.col" :pagination="pagination" :row-selection="rowSelection" v-model:selectedKeys="selectedKeys" style="margin-top: 10px">
       <template #optional="{ record }">
         <div v-if="record.state==0">
-          <a-button type="primary" style="margin-right:10px;background-color: #ffc940">查看</a-button>
-          <a-button type="primary" style="margin-right:10px;background-color: crimson" @click="disappare(getpath('manage')),appare(getpath('change'))">修改</a-button>
+          <a-button type="primary" style="margin-right:10px;background-color: #ffc940" @click="changeflag_view(record.title)">查看</a-button>
+          <a-button type="primary" style="margin-right:10px;background-color: crimson" @click="changeflag_change(record.title)">修改</a-button>
           <a-button type="primary" @click="handleClickDelete(record.title)" style="background-color: #409EFF">删除</a-button>
         </div>
         <div v-else>
-          <a-button type="primary" style="margin-right:10px;background-color: #ffc940">查看</a-button>
-          <a-button type="primary" style="margin-right:10px;background-color: #4ddc14" @click="disappare(getpath('manage')),appare(getpath('analyse'))">分析</a-button>
+          <a-button type="primary" style="margin-right:10px;background-color: #ffc940" @click="changeflag_view(record.title)">查看</a-button>
+          <a-button type="primary" style="margin-right:10px;background-color: #4ddc14" @click="changeflag_analyse">分析</a-button>
           <a-button type="primary" @click="handleClickDelete(record.title)" style="background-color: #409EFF">删除</a-button>
         </div>
         <a-modal v-model:visible="flag_delete" @ok="DeleteQuestion" @cancel="cancelDeleteQuestion">
@@ -37,12 +37,14 @@
       </template>
     </a-table>
   </div>
-  <div id="analyse" style="display: none">
-    <user_manage_analyse_questionnaire></user_manage_analyse_questionnaire>
+  <div v-else-if="flag===1">
+    <user_manage_view_questionnaire :title1="title1" @flag_view="getflag0"></user_manage_view_questionnaire>
   </div>
-
-  <div id="change" style="display: none">
-    <user_manage_change_questionnaire></user_manage_change_questionnaire>
+  <div v-else-if="flag===2">
+    <user_manage_change_questionnaire :title1="title1" @flag_change="getflag0"></user_manage_change_questionnaire>
+  </div>
+  <div v-else>
+    <user_manage_analyse_questionnaire @flag_analyse="getflag0"></user_manage_analyse_questionnaire>
   </div>
 
 </template>
@@ -53,9 +55,11 @@ import api from "@/api";
 import {Message, Modal} from '@arco-design/web-vue';
 import user_manage_analyse_questionnaire from "@/views/trymenu2/menu4user/user_manage_analyse_questionnaire";
 import user_manage_change_questionnaire from "@/views/trymenu2/menu4user/user_manage_change_questionnaire";
+import user_manage_view_questionnaire from "@/views/trymenu2/menu4user/user_manage_view_questionnaire";
 export default {
   name: "user_manage_send_questionnaire",
   components:{
+    user_manage_view_questionnaire,
     user_manage_change_questionnaire,
     user_manage_analyse_questionnaire,
   },
@@ -63,7 +67,7 @@ export default {
     this.form.title =this.question_name;
     api.searchQuestion(this.form).then(res => {
       if (res.code === 200){
-        console.log(res.data)
+        // console.log(res.data)
         this.info.col=res.data;
       }else {
         this.info.col = null;
@@ -77,6 +81,7 @@ export default {
     });
 
     return{
+      flag:0,
       selectedKeys :['1','2'],
       form:{
         title: '',
@@ -104,6 +109,7 @@ export default {
       flag_delete:false,
       question_name : '',
       text : '',
+      title1:'',
       rowSelection,
       columns : [
         {
@@ -205,9 +211,22 @@ export default {
     appare(x)//数据大屏页面出现
     {
       x.style.display="block"
+    },
+    changeflag_view(data){
+      this.flag=1
+      this.title1 = data;
+    },
+    changeflag_change(data){
+      this.flag=2
+      this.title1 = data;
+    },
+    changeflag_analyse(data){
+      this.flag=3
+      this.title1 = data;
+    },
+    getflag0(){
+      this.flag=0
     }
-
-
   }
 }
 </script>

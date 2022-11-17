@@ -234,6 +234,7 @@ export default {
 
   data() {
     return {
+
       index: '',
       quData: {},
       questions: [],
@@ -333,7 +334,7 @@ export default {
   },
 
   mounted() {
-    this.getData();
+    this.getData(0);
     // console.log(this.quList);
     this.startCanvas();
   },
@@ -345,20 +346,34 @@ export default {
   },
 
   methods: {
-    getData() {
+    getData(id) {
+
+      if (id === 0){
+        let item = {};
+        //问卷id后端自己生成
+        //标题名字自己取
+        item.title = `请输入问卷名...`;
+        item.state = 0;
+        item.stateName = '未发布';
+        item.time = '2020-12-31';
+        item.questions = [];
+        this.quData = item;
+      }else {
+        this.quData = null;
+      }
       //改这里，创建问卷时id默认为零来进入if
-      let item = {};
+      // let item = {};
       //问卷id后端自己生成
       //标题名字自己取
-      item.title = `请输入问卷名...`;
-      item.state = 0;
-      item.stateName = '未发布';
-      item.time = '2020-12-31';
-      item.questions = [];
-      this.quData = item;
+      // item.title = `请输入问卷名...`;
+      // item.state = 0;
+      // item.stateName = '未发布';
+      // item.time = '2020-12-31';
+      // item.questions = [];
+      // this.quData = item;
       this.date = this.quData.time;
       this.title = this.quData.title;
-      this.index = this.quData.id - 1;
+      // this.index = this.quData.id - 1;
       this.questionTemplate = Data.template;
       this.questions = [...this.quData.questions];
     },
@@ -489,6 +504,18 @@ export default {
       else this.saveData();
       let raw = toRaw(this.quData)
       console.log(JSON.stringify(raw));
+
+      //新建问卷接口
+      api.addQuestionnaire(raw).then(res => {
+        // console.log(res)
+        if (res.code === 200) {
+          // console.log(res.data.list)
+          // x.col=res.data.list;
+          Message.success(res.msg)
+        } else {
+          Message.error(res.msg)
+        }
+      })
     },
 
     releaseBtn() {

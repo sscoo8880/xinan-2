@@ -1,7 +1,7 @@
 <template>
 <h1>分析问卷</h1>
   <div >
-    <a-button type="primary" @click="appare(getpath('manage')),disappare(getpath('analyse'))">返回上级页面</a-button>
+    <a-button type="primary" @click="changeflag">返回上级页面</a-button>
   </div>
   <div class="container">
     <div class="qu-wrap">
@@ -52,6 +52,7 @@ export default {
   name: "user_manage_analyse_questionnaire",
   data() {
     return {
+      flag: 0,
       quData: {},
       scale: '',
     }
@@ -105,6 +106,9 @@ export default {
         ]
       };
       myChart.setOption(option);
+    },
+    changeflag(){
+      this.$emit('flag_analyse',this.flag)
     }
   },
   mounted() {

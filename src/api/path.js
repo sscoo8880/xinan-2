@@ -79,6 +79,12 @@ const base ={
     //修改密保
     updateQuestion:"/user-service/user/updateQuestion",
 
+    addQuestionnaire:"/user-service/questionnaire/addQuestionnaire",
+
+    getQuestionnaireInfo:"/user-service/questionnaire/getQuestionnaireInfo",
+
+    updateQuestionnaire:"/user-service/questionnaire/updateQuestionnaire",
+
     //查询答者
     getAnswer:"/user-service/user/searchAnswer",
 

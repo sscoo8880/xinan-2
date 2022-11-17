@@ -1,5 +1,5 @@
 <template>
-  <a-page-header class="title" title="返回" @back="$router.back()" :style="{padding:'20px',height:'40px'}" />
+  <a-page-header class="title" title="返回" @back="$router.back()" :style="{padding:'20px',height:'60px'}" />
   <a-form>
     <a-typography-text id="title-m">用户界面</a-typography-text>
     <a-avatar :style="{ backgroundColor: '#3370ff',marginRight:'0px'}" id="upic">
@@ -51,7 +51,7 @@
       <a-sub-menu key="1"  v-on:click="goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">
         <template #icon><icon-apps></icon-apps></template>
         <template #title>我的问卷</template>
-<!--        1_0是管理题库，1_1是设计问卷，1_2是管理问卷-->
+        <!--        1_0是管理题库，1_1是设计问卷，1_2是管理问卷-->
         <a-menu-item key="1_0" v-on:click="change1_0(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">管理题库</a-menu-item>
         <a-menu-item key="1_1" v-on:click="change1_1(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">创建问卷</a-menu-item>
         <a-menu-item key="1_2" v-on:click="change1_2(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">管理问卷</a-menu-item>
@@ -59,35 +59,35 @@
       <a-sub-menu key="2" v-on:click="goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">
         <template #icon><icon-bug></icon-bug></template>
         <template #title>我的群组</template>
-          <a-menu-item key="2_0" v-on:click="change2_0(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">所有答者</a-menu-item>
-          <a-menu-item key="2_1" v-on:click="change2_1(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">群组</a-menu-item>
+        <a-menu-item key="2_0" v-on:click="change2_0(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">所有答者</a-menu-item>
+        <a-menu-item key="2_1" v-on:click="change2_1(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">群组</a-menu-item>
       </a-sub-menu>
     </a-menu>
   </div>
 
-<!--  对应管理题库的vue-->
+  <!--  对应管理题库的vue-->
   <div id="div-m" >
     <user_manage_qTemplate></user_manage_qTemplate>
   </div>
 
-<!--  对应创建问卷的vue-->
+  <!--  对应创建问卷的vue-->
   <div id="div-mm" style="display:none">
     <design_questionnaire></design_questionnaire>
     <!--    <user_create_questionnaire></user_create_questionnaire>-->
   </div>
 
-<!--  对应管理问卷的vue-->
+  <!--  对应管理问卷的vue-->
   <div id="div_mmm" style="display: none">
     <user_manage_questionnaire></user_manage_questionnaire>
   </div>
 
-<!--  对应群组的vue-->
+  <!--  对应群组的vue-->
   <div id="div_mmmm" style="display: none">
     <user_manage_group></user_manage_group>
   </div>
 
 
-<!--  所有答者-->
+  <!--  所有答者-->
   <div id="div_m5" style="display: none">
     <group_answer></group_answer>
   </div>
@@ -279,19 +279,21 @@ export default {
 };
 </script>
 <style scoped>
+
 .menu-demo {
   box-sizing: border-box;
-  margin-top: 20px;
   width: 100%;
   height: 100%;
-  background-color: var(--color-neutral-2);
 }
 
 #background-r {
   background: url("../../../assets/login_background.jpg") no-repeat center;
+  top: 8%;
+  left: 0;
   height: 100%;
   width: 100%;
   background-size: cover;
+
   position: fixed;
 }
 
@@ -317,14 +319,14 @@ export default {
 #div-m{
   position: absolute;
   top: 10%;
-  left: 16%;
-  width: 83%;
+  left: 20%;
+  width: 1200px;
 }
 #div-mm{
   position: absolute;
   top: 10%;
-  left: 16%;
-  width: 83%;
+  left: 20%;
+  width: 1200px;
 }
 #div_mmm{
   position: absolute;

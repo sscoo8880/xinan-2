@@ -129,6 +129,18 @@ const api ={
     updateQuestion(data){
         return posttoken(path.baseUrl +path.updateQuestion,data,true)
     },
+
+    addQuestionnaire(data){
+        return posttoken(path.baseUrl +path.addQuestionnaire,data,true)
+    },
+
+    getQuestionnaireInfo(data){
+        return posttoken(path.baseUrl +path.getQuestionnaireInfo,data,true)
+    },
+
+    updateQuestionnaire(data){
+        return posttoken(path.baseUrl +path.updateQuestionnaire,data,true)
+    },
     //查询答者
     getAnswer(data){
         return posttoken(path.baseUrl +path.getAnswer,data,true)
