@@ -1,48 +1,43 @@
 <template>
-  <h1 id="title_e">数据大屏</h1>
-<!--  <a-button @click="changeflag" type="outline">租户分析</a-button>-->
+  <h1 id="title_e">数据大屏-答卷情况</h1>
+<!--  对答卷情况进行可视化展示-->
+  <!--  <a-button @click="changeflag" type="outline">租户分析</a-button>-->
   <section class="container">
     <section class="left">
       <!--      插槽，左1-->
       <RlPage>
-        <L></L>
+        <l4lPage></l4lPage>
       </RlPage>
 
-    </section>
-
-    <section class="center">
-      <CPage>
-        <c1></c1>
-      </CPage>
-      <CPage style="margin-top: 6px">
-        <c2></c2>
-      </CPage>
     </section>
 
     <section class="right">
-      <!--      插槽，右1-->
-      <RlPage>
-        <R></R>
-      </RlPage>
-
+      <CPage>
+        <r14l></r14l>
+      </CPage>
+      <CPage style="margin-top: 6px">
+        <r24l></r24l>
+      </CPage>
     </section>
-
   </section>
 </template>
 
 <script>
-import RlPage from "@/views/tryecharts/rlPage";
-import CPage from "@/views/tryecharts/cPage";
-import R from "@/views/tryecharts/r";
-import L from "@/views/tryecharts/l";
-import C1 from "@/views/tryecharts/c1";
-import C2 from "@/views/tryecharts/c2";
+import RlPage from "@/views/tryecharts/components/rlPage";
+import CPage from "@/views/tryecharts/components/cPage";
+import R from "@/views/tryecharts/viewAnswers/r";
+import C1 from "@/views/tryecharts/viewAnswers/c1";
+import C2 from "@/views/tryecharts/viewAnswers/c2";
 
 import {inject} from "vue";
+import L4lessee from "@/views/tryecharts/demo";
+import L4lPage from "@/views/tryecharts/viewLessee/l4lPage.vue";
+import R14l from "@/views/tryecharts/viewLessee/r14l";
+import R24l from "@/views/tryecharts/viewLessee/r24l";
 
 export default {
   name: "echartsPage",
-  components: {RlPage, CPage, R, L, C1, C2},
+  components: {L4lPage,L4lessee, RlPage, CPage, R, R14l, R24l},
   setup(){
     let $echarts=inject("echarts")
     let $http=inject("axios")
@@ -68,13 +63,13 @@ export default {
 }
 
 .left{
-  flex: 6;
+  flex: 7;
   height: 700px;
   /*width: 100%;*/
 }
 
 .right{
-  flex: 4;
+  flex: 3;
   height: 700px;
   /*width: 100%;*/
 }

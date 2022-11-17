@@ -70,22 +70,17 @@ const routes = [
   {
     path: '/echartsPage',
     name: 'echartsPage',
-    component: () => import(/* webpackChunkName: "about" */ '../views/tryecharts/echartsPage.vue'),
+    component: () => import(/* webpackChunkName: "about" */ '../views/tryecharts/viewAnswers/echartsPage4lessee.vue'),
   },
   {
-    path: '/send_url',
-    name: 'send_url',
-    component: () => import(/* webpackChunkName: "about" */ '../views/trymenu2/menu4user/user_send_url.vue'),
+    path: '/echartsPage4questions',
+    name: 'echartsPage4questions',
+    component: () => import(/* webpackChunkName: "about" */ '../views/tryecharts/viewLessee/echartsPage4questions.vue'),
   },
   {
-    path: '/test4',
-    name: 'test4',
-    component: () => import(/* webpackChunkName: "about" */ '../views/trysounds/test4.vue'),
-  },
-  {
-    path: '/wjll',
-    name: 'wjll',
-    component: () => import(/* webpackChunkName: "about" */ '../views/trymenu2/wenjuanliulan.vue'),
+    path: '/pie',
+    name: 'pie',
+    component: () => import(/* webpackChunkName: "about" */ '../views/tryecharts/viewLessee/l4lPage.vue'),
   },
   // 用户界面分析问卷中分析操作都得展开新的页面
 

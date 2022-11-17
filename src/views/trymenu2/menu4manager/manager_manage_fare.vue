@@ -34,7 +34,7 @@
 import {reactive, ref} from 'vue';
 import api from "@/api";
 import {Message} from "@arco-design/web-vue";
-import echartsPage from "@/views/tryecharts/echartsPage";
+import echartsPage from "@/views/tryecharts/viewAnswers/echartsPage4lessee";
 
 export default {
   name: "manager_manage_fare",
