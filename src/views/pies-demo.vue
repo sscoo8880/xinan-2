@@ -59,9 +59,13 @@ export default {
           },
           {
             text: '',
-            subtext:'第三题：题目',
+            subtext:
+                '总计 ' +
+                Object.keys(Q2Data).reduce(function (all, key) {
+                  return all + Q3Data[key];
+                }, 0),
             left: '50%',
-            top: '40%',
+            top: '60%',
             textAlign: 'center'
           },
         ],
@@ -90,8 +94,8 @@ export default {
           },
           {
             type: 'pie',
-            radius: ['15%', '5%'],
-            center: ['25%', '70%'],
+            radius: [0, '30%'],
+            center: ['50%', '125%'],
             data: Object.keys(Q2Data).map(function (key) {
               return {
                 name: key.replace('.js', ''),
