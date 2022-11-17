@@ -1,19 +1,10 @@
 <template>
 
 <div>
-  <div id="form">
-    <a-descriptions column="1" direction="horizontal" >
-      <a-descriptions-item label="群组名称:">{{$route.query.name}}</a-descriptions-item>
-      <a-descriptions-item label="负责人手机号：">{{$route.query.phone}}</a-descriptions-item>
-      <a-descriptions-item label="群组人数：">{{$route.query.contains}}</a-descriptions-item>
-      <a-descriptions-item label="上次更新：">{{$route.query.last_update}}</a-descriptions-item>
-    </a-descriptions>
-  </div>
-  <br><br>
-  <div id="form2" >
+  <div >
     <a-space column="1" direction="horizontal" size="large" style="width: 100%">
         <p>用户名:</p>
-        <a-mention v-model="form_user.username"  placeholder="请输入用户名..." />
+        <a-mention v-model="form_user.user.username"  placeholder="请输入用户名..." />
         <a-button @click="searchUser" type="outline" >查询</a-button>
         <a-modal v-model:visible="flag_search" @ok="handleOk" @cancel="handleCancel">
           <template #title>
@@ -36,10 +27,8 @@
     </a-space>
   </div>
 
-  <br><br>
-  <br><br><br><br><br><br><br><br><br>
-
-  <a-table id="form3" :columns="columns" :data="info.col" :row-selection="rowSelection" v-model:selectedKeys="selectedKeys" :pagination="pagination">
+  <div style="margin-top: 15px">
+  <a-table :columns="columns" :data="info.col" :row-selection="rowSelection" v-model:selectedKeys="selectedKeys" :pagination="pagination">
     <template #optional="{ record }">
       <a-button type="primary" status="danger" @click="handleClickDelete(record.username)">移除</a-button>
     </template>
@@ -51,12 +40,13 @@
     <div>是否确认删除该用户</div>
   </a-modal>
 </div>
+</div>
 
 
 </template>
 
 <script>
-import {reactive, ref} from 'vue';
+import {reactive, ref, toRaw} from 'vue';
 import api from "@/api";
 import {Message, Modal} from "@arco-design/web-vue";
 const size = ref('large');
@@ -64,8 +54,9 @@ export default {
   name: "lessee_manage_user",
   props:['gname'],
   mounted() {
-    this.form_user.username =this.gname;
-    api.selectGroupUser(this.form_user).then(res => {
+    this.form_user.group.gname=this.gname
+    this.form_user.user.username=''
+    api.selectGroupUser(toRaw(this.form_user)).then(res => {
       if (res.code === 200){
         this.info.col=res.data;
       }else {
@@ -80,7 +71,12 @@ export default {
     });
     return{
       form_user:{
-        username: '',
+        group:{
+          gname:''
+        },
+        user: {
+          username: ''
+        },
       },
       form_groupUser:{
         group:{
@@ -117,7 +113,6 @@ export default {
         },
         {
           title: '操作',
-          dataIndex: 'option',
           width:180,
           slotName: 'optional'
         },
@@ -135,8 +130,9 @@ export default {
   },
   methods:{
     updateGroupUser(){
-      this.form_groupUser.gname=''
-      this.form_groupUser.username=''
+      this.form_groupUser.gname=this.gname
+      this.form_groupUser.user.username=''
+      console.log(this.form_groupUser)
       api.selectGroupUser(this.form_groupUser).then(res=>{
         if(res.code===200){
           this.info.col=res.data;
@@ -193,7 +189,8 @@ export default {
     searchUser(){
       api.selectGroupUser(this.form_user).then(res=>{
         if(res.code===200){
-          this.info.col=res.data;
+          this.info.col=toRaw(res.data);
+          console.log(this.info.col)
         }
         else{
           this.flag_search = true;
@@ -224,28 +221,5 @@ export default {
 </script>
 
 <style scoped>
-
-#form{
-  position: absolute;
-  top: 3%;
-  left: 2%;
-}
-
-#form2{
-  position: absolute;
-  top: 90%;
-  left: 26%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-
-#form3{
-  position: absolute;
-  top: 200%;
-  left: 50%;
-  width: 98%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
 
 </style>
