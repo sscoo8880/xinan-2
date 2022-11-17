@@ -26,7 +26,7 @@
     </a-table>
   </div>
   <div v-if="flag===1">
-    <echarts-page/>
+    <echarts-page @flag_echarts_lessee="getflag"/>
   </div>
 </template>
 
@@ -279,6 +279,9 @@ export default {
   methods:{
     changeflag(){
       this.flag=1
+    },
+    getflag(data){
+      this.flag=data
     }
   }
 }
