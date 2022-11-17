@@ -1,5 +1,4 @@
 <template>
-  <h1>未完成问卷界面</h1>
   <div>
     <div class="container">
       <div class="qu-wrap">

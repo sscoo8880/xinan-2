@@ -63,11 +63,11 @@
   </div>
 
   <div id="div_mmm" style="display: none">
-    <answer_answer_questionnaire></answer_answer_questionnaire>//已完成问卷
+    <answer_answer_questionnaire></answer_answer_questionnaire>
   </div>
 
   <div id="div_mmmm" style="display: none">
-    <answer_manage_questionnaire></answer_manage_questionnaire>//未完成问卷
+    <answer_manage_questionnaire></answer_manage_questionnaire>
   </div>
 
 </template>

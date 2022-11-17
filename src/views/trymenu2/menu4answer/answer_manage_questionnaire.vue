@@ -20,7 +20,6 @@
   <div v-else>
     <to_manage_questionnaire @flag="getchange"/>
   </div>
-
 </template>
 
 <script >
