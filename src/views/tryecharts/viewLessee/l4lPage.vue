@@ -35,10 +35,9 @@ export default {
       'd': 721,
     };
     const Q4Data = {
-      'a': 594,
-      'b': 925,
-      'c': 608,
-      'd': 721,
+      '好': 594,
+      '一般': 925,
+      '差': 608,
     };
 
     onMounted(() => {
@@ -48,8 +47,8 @@ export default {
         title: [{
           text: ' ',
           subtext: '第1题：语言',
-          top: '0px',
           left: '150px',
+          top: '-15px',
           textAlign: 'center',
         },
           {
@@ -69,29 +68,64 @@ export default {
           {
             text: '',
             subtext: '第4题：题目',
-            top: '450px',
             left: '150px',
+            top: '450px',
             textAlign: 'center'
           },
           {
             text: '',
             subtext: '第5题：题目',
-            left: '350px',
+            left: '50%',
             top: '0px',
             textAlign: 'center'
           },
           {
             text: '',
             subtext: '第6题：题目',
-            left: '25%',
-            top: '250px',
+            left: '50%',
+            top: '150px',
             textAlign: 'center'
           },
           {
             text: '',
             subtext: '第7题：题目',
-            left: '25%',
-            top: '250px',
+            left: '50%',
+            top: '300px',
+            textAlign: 'center'
+          },
+          {
+            text: '',
+            subtext: '第8题：题目',
+            left: '50%',
+            top: '450px',
+            textAlign: 'center'
+          },
+          {
+            text: '',
+            subtext: '第9题：题目',
+            left: '80%',
+            top: '0px',
+            textAlign: 'center'
+          },
+          {
+            text: '',
+            subtext: '第10题：题目',
+            left: '80%',
+            top: '150px',
+            textAlign: 'center'
+          },
+          {
+            text: '',
+            subtext: '第11题：题目',
+            left: '80%',
+            top: '300px',
+            textAlign: 'center'
+          },
+          {
+            text: '',
+            subtext: '第12题：题目',
+            left: '80%',
+            top: '450px',
             textAlign: 'center'
           },
 
@@ -100,7 +134,7 @@ export default {
           {
             type: 'pie',
             radius: ['40px', '15px'],
-            center: ['150px', '95px'],
+            center: ['150px', '75px'],
             data: Object.keys(Q1Data).map(function (key) {
               return {
                 name: key.replace('.js', ''),
@@ -141,7 +175,92 @@ export default {
               };
             }),
           },
-
+          {
+            type: 'pie',
+            radius: ['40px', '15px'],
+            center: ['50%', '75px'],
+            data: Object.keys(Q2Data).map(function (key) {
+              return {
+                name: key.replace('.js', ''),
+                value: Q2Data[key]
+              };
+            }),
+          },
+          {
+            type: 'pie',
+            radius: ['40px', '15px'],
+            center: ['50%', '225px'],
+            data: Object.keys(Q4Data).map(function (key) {
+              return {
+                name: key.replace('.js', ''),
+                value: Q4Data[key]
+              };
+            }),
+          },
+          {
+            type: 'pie',
+            radius: ['40px', '15px'],
+            center: ['50%', '375px'],
+            data: Object.keys(Q1Data).map(function (key) {
+              return {
+                name: key.replace('.js', ''),
+                value: Q1Data[key]
+              };
+            }),
+          },
+          {
+            type: 'pie',
+            radius: ['40px', '15px'],
+            center: ['50%', '525px'],
+            data: Object.keys(Q3Data).map(function (key) {
+              return {
+                name: key.replace('.js', ''),
+                value: Q3Data[key]
+              };
+            }),
+          },
+          {
+            type: 'pie',
+            radius: ['40px', '15px'],
+            center: ['80%', '75px'],
+            data: Object.keys(Q3Data).map(function (key) {
+              return {
+                name: key.replace('.js', ''),
+                value: Q3Data[key]
+              };
+            }),
+          },
+          {
+            type: 'pie',
+            radius: ['40px', '15px'],
+            center: ['80%', '225px'],
+            data: Object.keys(Q4Data).map(function (key) {
+              return {
+                name: key.replace('.js', ''),
+                value: Q4Data[key]
+              };
+            }),
+          },          {
+            type: 'pie',
+            radius: ['40px', '15px'],
+            center: ['80%', '375px'],
+            data: Object.keys(Q2Data).map(function (key) {
+              return {
+                name: key.replace('.js', ''),
+                value: Q2Data[key]
+              };
+            }),
+          },          {
+            type: 'pie',
+            radius: ['40px', '15px'],
+            center: ['80%', '525px'],
+            data: Object.keys(Q1Data).map(function (key) {
+              return {
+                name: key.replace('.js', ''),
+                value: Q1Data[key]
+              };
+            }),
+          },
         ]
       }
       myChart.setOption(option)
