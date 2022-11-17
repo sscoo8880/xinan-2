@@ -90,6 +90,15 @@ const base ={
 
     //新增答者
     registerByUser:"/user-service/user/registerByUser",
+
+    //群组下的用户删除
+    deleteGroupUser:"/user-service/group/deleteGroupUser",
+
+    //群组下的新增用户
+    addGroupUser:"/user-service/group/addGroupUser",
+
+    //群则下的查询用户
+    selectGroupUser:"/user-service/group/selectGroupUser"
 }
 
 export default base;

@@ -23,7 +23,7 @@
   </div>
   <a-table :columns="columns" :data="info.col" :pagination="pagination" :row-selection="rowSelection" v-model:selectedKeys="selectedKeys" style="margin-top: 10px">
     <template #optional="{ record }">
-        <a-button type="primary" status="success" style="margin-right:10px;background-color: #ffc940" @click="changeflag">管理</a-button>
+        <a-button type="primary" status="success" style="margin-right:10px;background-color: #ffc940" @click="changeflag(record.gname)">管理</a-button>
       <a-button type="primary" @click="handleClickDelete(record.gname)" style="margin-right:10px;background-color: #409EFF">删除</a-button>
     </template>
   </a-table>
@@ -35,7 +35,7 @@
   </a-modal>
   </div>
   <div v-else>
-    <lessee_manage_user @flag="getchange"/>
+    <lessee_manage_user @flag="getchange" :gname="gname"/>
   </div>
 </template>
 
@@ -66,6 +66,7 @@ export default {
       showCheckedAll: true
     });
     return{
+      gname:'',
       flag:0,
       action:true,
       selectedKeys :['1','2'],
@@ -207,8 +208,9 @@ export default {
         }
       })
     },
-    changeflag(){
+    changeflag(data){
       this.flag=1;
+      this.gname=data
     },
     getchange(data){
       this.flag=data

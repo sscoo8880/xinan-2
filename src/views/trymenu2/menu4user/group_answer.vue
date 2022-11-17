@@ -31,7 +31,7 @@
               {{record.uid}}
             </a-form-item>
             <a-form-item field="username" label="答者名">
-              <a-input v-model="form2.username" />
+              <a-input v-model="form.username" />
             </a-form-item>
           </a-form>
         </a-modal>
@@ -84,7 +84,7 @@ export default {
       username: '',
       phone:'',
       password:'',
-      authority:1,
+      authority:3,
     });
     const handleCancelNew = () => {
       visibleNew.value = false;
@@ -201,8 +201,8 @@ export default {
       ]
     })
     const serchAnswer = () => {
-      keyword.username = form2.username
-      keyword.phone = ''
+      // keyword.username = form2.username
+      // keyword.phone = ''
       api.getAnswer(keyword).then(res => {
         if (res.code === 200){
           x.col=res.data.list;
@@ -213,6 +213,7 @@ export default {
     }
     return{
       form2,
+      keyword,
       serchAnswer,
       handleSubmit,
       columns,

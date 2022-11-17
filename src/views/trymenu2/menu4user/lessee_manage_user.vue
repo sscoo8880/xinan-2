@@ -1,6 +1,6 @@
 <template>
 
-<div >
+<div>
   <div id="form">
     <a-descriptions column="1" direction="horizontal" >
       <a-descriptions-item label="群组名称:">{{$route.query.name}}</a-descriptions-item>
@@ -12,46 +12,44 @@
   <br><br>
   <div id="form2" >
     <a-space column="1" direction="horizontal" size="large" style="width: 100%">
-        <p>答者名:</p>
-        <a-mention v-model="question_name"  placeholder="请输入答者名..." />
-        <a-button @click="serchQuestion" type="outline" >查询</a-button>
+        <p>用户名:</p>
+        <a-mention v-model="form_user.username"  placeholder="请输入用户名..." />
+        <a-button @click="searchUser" type="outline" >查询</a-button>
         <a-modal v-model:visible="flag_search" @ok="handleOk" @cancel="handleCancel">
           <template #title>
             提醒
           </template>
           <div>没有查询到相关问卷</div>
         </a-modal>
-      <a-button type="outline" :style="{width:'130px',left:'50px'}">新增答者</a-button>
+      <a-button type="outline" :style="{width:'130px',left:'50px'}" @click="addUser">新增用户</a-button>
+      <a-modal  v-model:visible="flag_add" title="新增用户" @cancel="handleCancel_groupuser" @before-ok="handleBeforeOk_groupuser">
+        <a-form :model="form_groupUser">
+          <a-form-item field="name" label="群组名">
+            {{gname}}
+          </a-form-item>
+          <a-form-item field="name" label="用户名">
+            <a-input v-model="form_groupUser.user.username" />
+          </a-form-item>
+        </a-form>
+      </a-modal>
       <a-button type="outline" :style="{width:'130px',left:'50px'}" @click="changeflag">返回上一级页面</a-button>
     </a-space>
   </div>
 
-
   <br><br>
-
   <br><br><br><br><br><br><br><br><br>
 
-  <a-table id="form3" :columns="columns" :data="data" :rowKey="data.key" :row-selection="rowSelection">
+  <a-table id="form3" :columns="columns" :data="info.col" :row-selection="rowSelection" v-model:selectedKeys="selectedKeys" :pagination="pagination">
     <template #optional="{ record }">
-      <a-button type="primary" status="success"  @click="handleClick">管理</a-button>
-      <a-modal v-model:visible="visible" title="用户信息详情" @cancel="handleCancel" @before-ok="handleBeforeOk">
-        <a-form :model="record">
-          <a-form-item field="name" label="用户名">
-            <a-input v-model="record.name" />
-          </a-form-item>
-          <a-form-item field="level" label="会员等级">
-            <a-select v-model="record.level">
-              <a-option value="post1">青铜</a-option>
-              <a-option value="post2">白银</a-option>
-              <a-option value="post3">黄金</a-option>
-              <a-option value="post4">钻石</a-option>
-            </a-select>
-          </a-form-item>
-        </a-form>
-      </a-modal>
-      <a-button type="primary" status="danger" @click="$modal.info({ title:'删除', content:'群组名称：'+record.name })">删除</a-button>
+      <a-button type="primary" status="danger" @click="handleClickDelete(record.username)">移除</a-button>
     </template>
   </a-table>
+  <a-modal v-model:visible="flag_delete" @ok="DeleteGroupUser" @cancel="cancelDeleteGroupUser">
+    <template #title>
+      提示
+    </template>
+    <div>是否确认删除该用户</div>
+  </a-modal>
 </div>
 
 
@@ -59,67 +57,58 @@
 
 <script>
 import {reactive, ref} from 'vue';
-import data from "@/utils/data";
+import api from "@/api";
+import {Message, Modal} from "@arco-design/web-vue";
 const size = ref('large');
 export default {
   name: "lessee_manage_user",
+  props:['gname'],
+  mounted() {
+    this.form_user.username =this.gname;
+    api.selectGroupUser(this.form_user).then(res => {
+      if (res.code === 200){
+        this.info.col=res.data;
+      }else {
+        this.info.col = null;
+      }
+    })
+  },
   data(){
     const rowSelection = reactive({
       type: 'checkbox',
-      // fixed:false,
       showCheckedAll: true
     });
-    // 管理-弹出框
-    const visible = ref(false);
-    const record = reactive({
-      name: '',
-      level: '',
-    });
-    const handleClick = () => {
-      visible.value = true;
-    };
-    const handleBeforeOk = (done) => {
-
-      window.setTimeout(() => {
-        done()
-        // prevent close
-        // done(false)
-      }, 3000)
-    };
-    const handleCancel = () => {
-      visible.value = false;
-    };
-
     return{
+      form_user:{
+        username: '',
+      },
+      form_groupUser:{
+        group:{
+          gname:''
+        },
+        user: {
+          username: ''
+        },
+      },
+      flag_delete:false,
+      flag_add:false,
+      flag_search:false,
+      selectedKeys :['1','2'],
       flag:0,
-      visible,
-      record,
       rowSelection,
-      handleClick,
-      handleBeforeOk,
-      handleCancel,
+      pagination:{pageSize: 5},
       value : '',
       text : '',
       columns : [
         {
           title: 'ID',
-          dataIndex: 'id',
+          dataIndex: 'uid',
           width:150
         },
         {
           title: '用户名称',
-          dataIndex: 'name',
+          dataIndex: 'username',
           width:170
-        },
-        {
-          title: '会员等级',
-          dataIndex: 'level',
-          width:110
-        },
-        {
-          title: '更新日期',
-          dataIndex: 'last_update',
-          width:250
         },
         {
           title: '用户电话',
@@ -133,65 +122,102 @@ export default {
           slotName: 'optional'
         },
       ],
-      data : ([{
-        key: '1',
-        name: 'uJane Doe',
-        level:'黄金',
-        id: 23000,
-        last_update:'2002-6-7',
-        address: '32 Park Road, London',
-        email: 'jane.doe@example.com',
-        phone:'18640967655',
-      }, {
-        key: '2',
-        name: 'uAlisa Ross',
-        level:'钻石',
-        id: 25000,
-        last_update:'2002-8-10',
-        address: '35 Park Road, London',
-        email: 'alisa.ross@example.com',
-        phone:'19585652545',
-
-      }, {
-        key: '3',
-        name: 'uKevin Sandra',
-        level:'黄金',
-        id: 22000,
-        last_update:'1996-5-13',
-        address: '31 Park Road, London',
-        email: 'kevin.sandra@example.com',
-        phone:'13961552541'
-      }, {
-        key: '4',
-        name: 'uEd Hellen',
-        level:'钻石',
-        id: 17000,
-        last_update:'1992-10-19',
-        address: '42 Park Road, London',
-        email: 'ed.hellen@example.com',
-        phone:'18555625262',
-      }, {
-        key: '5',
-        name: 'uWilliam Smith',
-        level:'黄金',
-        id: 27000,
-        last_update:'1989-6-27',
-        address: '62 Park Road, London',
-        email: 'william.smith@example.com',
-        phone:'13625252573',
-      }]),
+      info :{
+        col:[
+          {
+            uid: 23000,
+            username: 'uJane Doe',
+            phone: '18640967655',
+          }
+        ]
+      }
     }
   },
-  setup(){
-    // 勾选框
-    const rowSelection = reactive({
-      type: 'checkbox',
-      showCheckedAll: true
-    });
-  },
   methods:{
+    updateGroupUser(){
+      this.form_groupUser.gname=''
+      this.form_groupUser.username=''
+      api.selectGroupUser(this.form_groupUser).then(res=>{
+        if(res.code===200){
+          this.info.col=res.data;
+        }
+        else{
+          this.info.col=null;
+        }
+      })
+    },
     changeflag(){
       this.$emit("flag",this.flag)
+    },
+    handleOk(){
+      this.flag_search = false;
+    },
+    handleCancel(){
+      this.flag_search = false;
+    },
+    addUser(){
+      this.flag_add=true
+    },
+    handleCancel_groupuser(){
+      this.flag_add= false;
+    },
+    handleBeforeOk_groupuser(done){
+      if(this.form_groupUser.user.username===''){
+        Modal.warning({
+          title: '警告',
+          content: '用户名不能为空'
+        });
+        window.setTimeout(() => {
+          done(false)
+        }, 300)
+      }
+      else {
+        this.form_groupUser.group.gname=this.gname
+        api.addGroupUser(this.form_groupUser).then(res=>{
+          if(res.code===200){
+            window.setTimeout(() => {
+              done()
+            }, 300)
+            this.updateGroupUser();
+            Message.success('增加用户成功')
+          }
+          else {
+            window.setTimeout(() => {
+              done(false)
+            }, 300)
+            Message.error('增加用户失败')
+          }
+        })
+      }
+    },
+    searchUser(){
+      api.selectGroupUser(this.form_user).then(res=>{
+        if(res.code===200){
+          this.info.col=res.data;
+        }
+        else{
+          this.flag_search = true;
+        }
+      })
+    },
+    handleClickDelete(username){
+      this.form_groupUser.group.gname=this.gname
+      this.form_groupUser.user.username=username
+      this.flag_delete =true;
+    },
+    DeleteGroupUser(){
+      api.deleteGroupUser(this.form_groupUser).then(res=>{
+        if(res.code===200){
+          this.updateGroupUser()
+          Message.success(res.msg)
+        }
+        else{
+          Message.error('删除失败！')
+        }
+      })
+    },
+    cancelDeleteGroupUser(){
+      this.flag_delete=false;
     }
   }
 }

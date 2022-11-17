@@ -148,6 +148,21 @@ const api ={
     registerByUser(data){
         return posttoken(path.baseUrl +path.registerByUser,data,true)
     },
+
+    //群组下的用户删除
+    deleteGroupUser(data){
+        return posttoken(path.baseUrl+path.deleteGroupUser,data,true)
+    },
+
+    //群组下的新增用户
+    addGroupUser(data){
+        return posttoken(path.baseUrl+path.addGroupUser,data,true)
+    },
+
+    //群则下的查询用户
+    selectGroupUser(data){
+        return posttoken(path.baseUrl+path.selectGroupUser,data,true)
+    }
 }
 
 export default api;
