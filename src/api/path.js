@@ -104,7 +104,7 @@ const base ={
     addGroupUser:"/user-service/group/addGroupUser",
 
     //群则下的查询用户
-    selectGroupUser:"/user-service/group/selectGroupUser"
+    selectGroupUser:"/user-service/group/selectGroupUserByUsername"
 }
 
 export default base;

@@ -1,4 +1,19 @@
 <template>
+  <div>
+    <a-button  type="outline" style="left: -38%" @click="handleClick">导入题库</a-button>
+    <a-modal :row-selection="rowSelection" v-model:visible="visible" title="题库详情" @cancel="handleCancel" @before-ok="handleBeforeOk">
+      <a-form >
+        <a-table :columns="columns" :data="info.col" :pagination="pagination" :row-selection="rowSelection" v-model:selectedKeys="selectedKeys" style="margin-top: 10px">
+          <template #optional="{ record }">
+          </template>
+        </a-table>
+      </a-form>
+    </a-modal>
+    <div v-if="isReloadData">
+      <a-descriptions style="margin-top: 60px" :data="data2" :size="7" :column="2"/>
+    </div>
+  </div>
+
   <div class="container">
     <div class="qu-wrap">
       <header>
@@ -233,6 +248,41 @@ export default {
   },
 
   data() {
+
+    const rowSelection = reactive({
+      type: 'checkbox',
+      // fixed:false,
+      showCheckedAll: true
+    });
+    // 管理-弹出框
+    const visible = ref(false);
+    const record = reactive({
+      name: '张三',
+      sex: '男',
+      power:'用户',
+      time:'2019-10-26',
+      phone:'165-5671-4545',
+      local:'辽宁省沈阳市',
+      hometown:'辽宁省沈阳市',
+      home: '东北大学浑南校区第二学生宿舍',
+    });
+    const handleClick = () => {
+      visible.value = true;
+    };
+    const handleBeforeOk = (done) => {
+      console.log(record)
+
+      done()
+      // prevent close
+      // done(false)
+      this.reload();
+    };
+    const handleCancel = () => {
+      visible.value = false;
+    };
+
+
+
     return {
 
       index: '',
@@ -330,6 +380,89 @@ export default {
       drawPlayId:null,
       pCanvas : null,
       pCtx : null,
+
+
+      selectedKeys :['1','2'],
+      form:{
+        title: '',
+      },
+      pagination:{pageSize: 5},
+      info:{
+        col:[
+          {
+            id: '1',
+            title: '题库一',
+            state:'lounge是什么意思',
+            createTime:'2002-6-7',
+            time:'2020-1-4'
+          },
+          {
+            id: '2',
+            title: '题库一',
+            state:'exhaust是什么意思',
+            createTime:'2002-6-7',
+            time:'2020-1-4'
+          },
+          {
+            id: '3',
+            title: '题库一',
+            state:'inflation是什么意思',
+            createTime:'2002-6-7',
+            time:'2020-1-4'
+          },
+          {
+            id: '4',
+            title: '题库二',
+            state:'insight是什么意思',
+            createTime:'2002-6-7',
+            time:'2020-1-4'
+          },
+          {
+            id: '5',
+            title: '题库二',
+            state:'curb是什么意思',
+            createTime:'2002-6-7',
+            time:'2020-1-4'
+          },
+          {
+            id: '6',
+            title: '题库三',
+            state:'reckon是什么意思',
+            createTime:'2002-6-7',
+            time:'2020-1-4'
+          }
+        ]
+      },
+      flag_search:false,
+      flag_delete:false,
+      question_name : '',
+      text : '',
+      columns : [
+        {
+          title: '题库ID',
+          dataIndex: 'id',
+          width:80
+        },
+        {
+          title: '题库名称',
+          dataIndex: 'title',
+          width:120
+        },
+        {
+          title: '题目名称',
+          dataIndex: 'state',
+          width:170
+        },
+      ],
+
+      visible,
+      record,
+      rowSelection,
+      handleClick,
+      handleBeforeOk,
+      handleCancel,
+      isReloadData: true,
+
     }
   },
 

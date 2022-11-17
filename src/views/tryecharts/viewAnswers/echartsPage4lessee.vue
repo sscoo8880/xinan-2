@@ -1,5 +1,10 @@
 <template>
-  <h1 id="title_e">数据大屏</h1>
+  <div style="margin-bottom: 15px">
+    <a-space direction="horizontal" size="large" style="width: 100%">
+      <a-button @click="changeflag" type="primary">返回上一界面</a-button>
+    </a-space>
+  </div>
+  <h1 id="title_e">租户分析</h1>
 <!--  <a-button @click="changeflag" type="outline">租户分析</a-button>-->
   <section class="container">
     <section class="left">
@@ -39,13 +44,22 @@ import C1 from "@/views/tryecharts/viewAnswers/c1";
 import C2 from "@/views/tryecharts/viewAnswers/c2";
 
 import {inject} from "vue";
-
 export default {
   name: "echartsPage",
   components: {RlPage, CPage, R, L, C1, C2},
+  data(){
+    return{
+      flag:0,
+    }
+  },
   setup(){
     let $echarts=inject("echarts")
     let $http=inject("axios")
+  },
+  methods:{
+    changeflag(){
+      this.$emit('flag_echarts_lessee',this.flag)
+    }
   }
 }
 </script>

@@ -5,7 +5,7 @@
       <div class="qu-wrap">
         <header>
           <span @click=" changeflag">&lt; 返回</span>
-          <p>{{ quData.title }}</p>
+          <p>{{ title1 }}</p>
         </header>
         <div class="qu-content">
           <section class="qu-item" v-for="(item, index) in questions">
