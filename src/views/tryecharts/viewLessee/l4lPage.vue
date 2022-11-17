@@ -1,5 +1,5 @@
 <template>
-  <h2 id="title_rl">题目</h2>
+  <h2 id="title_rl">《我的阅读兴趣》自测问卷</h2>
   <div className="chart" id="demo"/>
 </template>
 
@@ -29,10 +29,10 @@ export default {
       '榴莲': 2179,
     };
     const Q3Data = {
-      'a': 594,
-      'b': 925,
-      'c': 608,
-      'd': 721,
+      '天空': 594,
+      '海洋': 925,
+      '眼睛': 608,
+      '其他': 1721,
     };
     const Q4Data = {
       '好': 594,
@@ -46,56 +46,56 @@ export default {
       const option = {
         title: [{
           text: ' ',
-          subtext: '第1题：语言',
+          subtext: '第1题：最近看的一本语言书？（单选题）',
           left: '150px',
           top: '-15px',
           textAlign: 'center',
         },
           {
             text: '',
-            subtext: '第2题：题目',
+            subtext: '第2题：讨厌的食物有？（多选题）',
             left: '150px',
             top: '150px',
             textAlign: 'center'
           },
           {
             text: '',
-            subtext: '第3题：题目',
+            subtext: '第3题：什么是蓝色的？（填空题）',
             left: '150px',
             top: '300px',
             textAlign: 'center'
           },
           {
             text: '',
-            subtext: '第4题：题目',
+            subtext: '第4题：自我感觉（单选题）',
             left: '150px',
             top: '450px',
             textAlign: 'center'
           },
           {
             text: '',
-            subtext: '第5题：题目',
+            subtext: '第5题：喜欢的书籍',
             left: '50%',
             top: '0px',
             textAlign: 'center'
           },
           {
             text: '',
-            subtext: '第6题：题目',
+            subtext: '第6题：喜欢的作者',
             left: '50%',
             top: '150px',
             textAlign: 'center'
           },
           {
             text: '',
-            subtext: '第7题：题目',
+            subtext: '第7题：喜欢的文学派别',
             left: '50%',
             top: '300px',
             textAlign: 'center'
           },
           {
             text: '',
-            subtext: '第8题：题目',
+            subtext: '第8题：下面那本书不是川端康成的',
             left: '50%',
             top: '450px',
             textAlign: 'center'

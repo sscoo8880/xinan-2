@@ -1,8 +1,9 @@
 <template>
-<h1>分析问卷</h1>
-  <div >
-    <a-button type="primary" @click="changeflag">返回上级页面</a-button>
-  </div>
+<!--<h1>分析问卷</h1>-->
+<!--  <div >-->
+<!--    -->
+<!--    <a-button type="primary" @click="changeflag">返回上级页面</a-button>-->
+<!--  </div>-->
   <echarts-page4questions/>
 <!--  <div class="container">-->
 <!--    <div class="qu-wrap">-->

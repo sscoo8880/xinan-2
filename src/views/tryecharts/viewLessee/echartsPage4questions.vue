@@ -1,5 +1,10 @@
 <template>
-  <h1 id="title_e">数据大屏-答卷情况</h1>
+  <div style="margin-bottom: 15px">
+    <a-space direction="horizontal" size="large" style="width: 100%">
+      <a-button @click="changeflag" type="primary">返回上一界面</a-button>
+    </a-space>
+  </div>
+  <h1 id="title_e">数据大屏-分析问卷</h1>
 <!--  对答卷情况进行可视化展示-->
   <!--  <a-button @click="changeflag" type="outline">租户分析</a-button>-->
   <section class="container">
@@ -47,15 +52,15 @@ export default {
 
 <style scoped>
 #title_e{
-  margin-top: 10px;
+  margin-top: -50px;
   font-size: 33px;
 }
 
 .container{
   /*min-width: 1200px;*/
   /*max-width: 2048px;*/
-  width: 1200px;
-  margin-left: -50px;
+  width: 1300px;
+  margin-left: 0px;
   margin-top: -15px;
   /*margin: 0 auto;*/
   padding: 0 0 0;
