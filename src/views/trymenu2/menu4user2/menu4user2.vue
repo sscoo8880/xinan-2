@@ -1,7 +1,7 @@
 <template>
-  <a-page-header class="title" title="返回" @back="$router.back()" :style="{padding:'20px',height:'60px'}" />
-  <a-form>
-    <a-typography-text id="title-m">用户界面</a-typography-text>
+  <a-page-header class="title" title="返回" @back="$router.back()" :style="{padding:'20px',height:'40px'}" />
+  <a-form >
+    <a-typography-text id="title-m">用户页面</a-typography-text>
     <a-avatar :style="{ backgroundColor: '#3370ff',marginRight:'0px'}" id="upic">
 
       <a-dropdown trigger="hover">
@@ -25,7 +25,7 @@
       </a-dropdown>
 
     </a-avatar>
-    <a-typography-text id="uname" style="font-weight: bold">欢迎用户</a-typography-text>
+    <a-typography-text id="uname">欢迎管理员</a-typography-text>
     <a-modal v-model:visible="visible" title="修改密保" @cancel="handleCancel" @ok="handleOk" ok-text="修改">
       <a-form :model="form">
         <a-form-item field="passwordQuestion" label="密保问题">
@@ -42,57 +42,25 @@
   <div class="menu-demo">
     <a-menu
         :style="{ width: '15%', height: '100%',top:'-30px' }"
-        :default-open-keys="['1']"
-        :default-selected-keys="['1_0']"
+        :default-open-keys="['0']"
+        :default-selected-keys="['0_0']"
         show-collapse-button
         breakpoint="xl"
         @collapse="onCollapse">
 
-      <a-sub-menu key="1"  v-on:click="goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">
-        <template #icon><icon-apps></icon-apps></template>
-        <template #title>我的问卷</template>
-        <!--        1_0是管理题库，1_1是设计问卷，1_2是管理问卷-->
-        <a-menu-item key="1_0" v-on:click="change1_0(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">管理题库</a-menu-item>
-        <a-menu-item key="1_1" v-on:click="change1_1(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">创建问卷</a-menu-item>
-        <a-menu-item key="1_2" v-on:click="change1_2(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">管理问卷</a-menu-item>
-      </a-sub-menu>
-      <a-sub-menu key="2" v-on:click="goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">
-        <template #icon><icon-bug></icon-bug></template>
-        <template #title>我的群组</template>
-        <a-menu-item key="2_0" v-on:click="change2_0(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">所有答者</a-menu-item>
-        <a-menu-item key="2_1" v-on:click="change2_1(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">群组</a-menu-item>
-      </a-sub-menu>
+      <a-menu-item key="0_0" v-on:click="change0(),if_goto_manager_manage_lessee(getpath('div-m')),if_goto_manager_manage_fare(getpath('div-mm'))">查询虚假新闻</a-menu-item>
+      <a-menu-item key="1_0" v-on:click="change1_1(),if_goto_manager_manage_lessee(getpath('div-m')),if_goto_manager_manage_fare(getpath('div-mm'))">上传新闻</a-menu-item>
+
     </a-menu>
   </div>
 
-  <!--  对应管理题库的vue-->
-  <div id="div-m" >
+  <div id="div-m">
     <user_manage_qTemplate></user_manage_qTemplate>
   </div>
 
-  <!--  对应创建问卷的vue-->
   <div id="div-mm" style="display:none">
     <design_questionnaire></design_questionnaire>
-    <!--    <user_create_questionnaire></user_create_questionnaire>-->
   </div>
-
-  <!--  对应管理问卷的vue-->
-  <div id="div_mmm" style="display: none">
-    <user_manage_questionnaire></user_manage_questionnaire>
-  </div>
-
-  <!--  对应群组的vue-->
-  <div id="div_mmmm" style="display: none">
-    <user_manage_group></user_manage_group>
-  </div>
-
-
-  <!--  所有答者-->
-  <div id="div_m5" style="display: none">
-    <group_answer></group_answer>
-  </div>
-
-
 
 </template>
 
@@ -111,26 +79,19 @@ import {
 } from '@arco-design/web-vue/es/icon';
 
 // 引入子页面
-import User_create_questionnaire from "@/views/trymenu2/menu4user/user_create_questionnaire";
-import User_manage_questionnaire from "@/views/trymenu2/menu4user/user_manage_questionnaire";
-import design_questionnaire from "@/views/trymenu2/menu4user/design_questionnaire";
-import user_manage_group from "@/views/trymenu2/menu4user/user_manage_group";
-import User_manage_qTemplate from "@/views/trymenu2/menu4user/user_manage_qTemplate";
-import User_manage_group from "@/views/trymenu2/menu4user/user_manage_group";
-import group_answer from "@/views/trymenu2/menu4user/group_answer";
+import Manager_manage_lessee from "@/views/trymenu2/menu4manager/manager_manage_lessee";
+import Manager_manage_fare from "@/views/trymenu2/menu4manager/manager_manage_fare";
 import api from "@/api";
 import router from "@/router";
-
+import user_manage_qTemplate from "@/views/trymenu2/menu4user2/user_manage_qTemplate";
+import Design_questionnaire from "@/views/trymenu2/menu4user2/design_questionnaire";
 export default {
   components: {
-    group_answer,
-    User_manage_group,
+    Design_questionnaire,
+    user_manage_qTemplate,
     // 引入子页面
-    user_manage_group,
-    design_questionnaire,
-    User_manage_questionnaire,
-    User_create_questionnaire,
-    User_manage_qTemplate,
+    Manager_manage_fare,
+    Manager_manage_lessee,
     IconMenuFold,
     IconMenuUnfold,
     IconApps,
@@ -204,9 +165,10 @@ export default {
     getpath(id) {
       return document.getElementById(id);
     },
-    goto_user_manage_questionnairebank(x)//决定是否跳转user_manage_questionnairebank页面，题库管理界面
+    if_goto_manager_manage_lessee(x)//决定是否跳转manager_manage_lessee页面
     {
-      if(this.key!=='1_0')
+
+      if(this.key!=='0')
       {
         x.style.display="none"
       }
@@ -215,85 +177,46 @@ export default {
       }
 
     },
-    goto_user_create_questionnaire(x){//决定是否跳转user_create_questionnaire页面，创建问卷界面
-      if(this.key!=='1_1')
-      {
-        x.style.display="none"
-      }
-      else{
-        x.style.display="block"
-      }
-    },
-    goto_user_manage_questionnaire(x)//决定是否跳转user_manage_send_questionnaire页面，发送问卷界面
+    if_goto_manager_manage_fare(x)//决定是否跳转manager_manage_fare
     {
-      if(this.key!=='1_2')
+      if(this.key!=='1.1')
       {
+
         x.style.display="none"
       }
       else{
+
+
         x.style.display="block"
       }
-    },
-    goto_user_manage_group(x)//决定是否跳转user_manage_group页面，用户和群组界面
-    {
-      if(this.key!=='2_1')
-      {
-        x.style.display="none"
-      }
-      else{
-        x.style.display="block"
-      }
-    },
-    goto_group_answer(x)//决定是否跳转group_answer页面，所有答者界面
-    {
-      if(this.key!=='2_0')
-      {
-        x.style.display="none"
-      }
-      else{
-        x.style.display="block"
-      }
+
     }
     ,
-    change1_0()//当前状态改变为1_0
+    change0()//当前状态改变为0
     {
-      this.key='1_0'
+      this.key='0'
     },
-    change1_1()//当前状态改变为1_1
-    {
-      this.key='1_1'
-    },
-    change1_2()//当前状态改变为1_2
-    {
-      this.key='1_2'
-    },
-    change2_0()//当前状态改变为2_0
-    {
-      this.key='2_0'
-    },
-    change2_1()//当前状态改变为2_1
-    {
-      this.key='2_1'
+    change1_1(){//当前状态改变为1.1
+      this.key='1.1'
     }
+
   }
 };
 </script>
 <style scoped>
-
 .menu-demo {
   box-sizing: border-box;
+  margin-top: 20px;
   width: 100%;
   height: 100%;
+  background-color: var(--color-neutral-2);
 }
 
 #background-r {
   background: url("../../../assets/login_background.jpg") no-repeat center;
-  top: 8%;
-  left: 0;
   height: 100%;
   width: 100%;
   background-size: cover;
-
   position: fixed;
 }
 
@@ -331,19 +254,14 @@ export default {
 #div_mmm{
   position: absolute;
   top: 10%;
-  left: 16%;
-  width: 83%;
+  left: 20%;
+  width: 1200px;
 }
 #div_mmmm{
   position: absolute;
   top: 10%;
-  left: 16%;
-  width: 83%;
+  left: 20%;
+  width: 1200px;
 }
-#div_m5{
-  position: absolute;
-  top: 10%;
-  left: 16%;
-  width: 83%;
-}
+
 </style>

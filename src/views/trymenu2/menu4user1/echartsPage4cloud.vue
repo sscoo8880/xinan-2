@@ -1,7 +1,11 @@
 <template>
+  <div style="margin-bottom: 15px">
+
+  <h1 class="title_e">每日数据集收集量</h1>
   <section class="container">
     <cloudview></cloudview>
   </section>
+  </div>
 </template>
 
 <script>
@@ -29,9 +33,10 @@ export default {
 </script>
 
 <style scoped>
-#title_e{
+.title_e{
   margin-top: 10px;
-  font-size: 33px;
+  margin-right: 111px;
+  font-size: 25px;
 }
 
 .container{

@@ -81,9 +81,10 @@ export default {
 .container {
   /*min-width: 1200px;*/
   /*max-width: 2048px;*/
-  width: 1200px;
+  width: 1150px;
+  height: 444px;
   margin-left: 50px;
-  margin-top: 20px;
+  margin-top: 7px;
   /*margin: 0 auto;*/
   padding: 0 0 0;
   display: flex;

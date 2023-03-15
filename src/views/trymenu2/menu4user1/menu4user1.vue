@@ -1,7 +1,7 @@
 <template>
   <a-page-header class="title" title="返回" @back="$router.back()" :style="{padding:'20px',height:'60px'}" />
   <a-form>
-    <a-typography-text id="title-m">用户界面</a-typography-text>
+    <a-typography-text id="title-m">管理员页面</a-typography-text>
     <a-avatar :style="{ backgroundColor: '#3370ff',marginRight:'0px'}" id="upic">
 
       <a-dropdown trigger="hover">
@@ -59,8 +59,8 @@
       <a-sub-menu key="2" v-on:click="goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">
         <template #icon><icon-bug></icon-bug></template>
         <template #title>结果</template>
-        <a-menu-item key="2_0" v-on:click="change2_0(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">云端</a-menu-item>
-        <a-menu-item key="2_1" v-on:click="change2_1(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">本地</a-menu-item>
+        <a-menu-item key="2_0" v-on:click="change2_0(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">本地</a-menu-item>
+        <a-menu-item key="2_1" v-on:click="change2_1(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">云端</a-menu-item>
       </a-sub-menu>
     </a-menu>
   </div>
@@ -78,21 +78,18 @@
 
   <!--  对应管理问卷的vue-->
   <div id="div_mmm" style="display: none">
-    <echartsPage4local></echartsPage4local>
+    <user_create_questionnaire></user_create_questionnaire>
   </div>
 
   <!--  对应群组的vue-->
   <div id="div_mmmm" style="display: none">
-    <echartsPage4cloud></echartsPage4cloud>
-  </div>
-
-
-  <!--  所有答者-->
-  <div id="div_m5" style="display: none">
     <echartsPage4local></echartsPage4local>
   </div>
 
-
+  <!--  所有答者-->
+  <div id="div_m5" style="display: none">
+    <echartsPage4cloud></echartsPage4cloud>
+  </div>
 
 </template>
 
@@ -304,7 +301,7 @@ export default {
 #title-m{
   position: absolute;
   top: 20px;
-  left: 55%;
+  left: 50%;
   height: 20px;
   font-size: 30px;
 }
@@ -340,9 +337,9 @@ export default {
 }
 #div_mmmm{
   position: absolute;
-  top: 15%;
-  left: 22%;
-  width: 70%;
+  top: 10%;
+  left: 16%;
+  width: 83%;
 }
 #div_m5{
   position: absolute;

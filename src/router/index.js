@@ -78,6 +78,12 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/trymenu2/menu4user/user_qTemplate_detail.vue'),
   },
   {
+    path: '/user_qTemplate_detail_user2',
+    name: 'user_qTemplate_detail_user2',
+    component: () => import(/* webpackChunkName: "about" */ '../views/trymenu2/menu4user2/user_qTemplate_detail.vue'),
+  },
+
+  {
     path: '/echartsPage',
     name: 'echartsPage',
     component: () => import(/* webpackChunkName: "about" */ '../views/tryecharts/viewAnswers/echartsPage4lessee.vue'),

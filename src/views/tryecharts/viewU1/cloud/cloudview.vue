@@ -1,5 +1,4 @@
 <template>
-  <h2 id="title_rl">题目</h2>
   <div class="chart" id="cloudview"/>
 </template>
 
@@ -8,7 +7,7 @@ import {inject,onMounted} from "vue";
 import * as echarts from "echarts";
 
 export default {
-  name: "l4lessee",
+  name: "cloudview",
 
   setup() {
     let $echarts = inject("echarts")
@@ -43,17 +42,17 @@ export default {
         },
         calendar: [
           {
-            range: '2017',
+            range: '2022',
             cellSize: ['auto', 20]
           },
           {
             top: 260,
-            range: '2016',
+            range: '2021',
             cellSize: ['auto', 20]
           },
           {
             top: 450,
-            range: '2015',
+            range: '2020',
             cellSize: ['auto', 20],
             right: 5
           }
@@ -63,19 +62,19 @@ export default {
             type: 'heatmap',
             coordinateSystem: 'calendar',
             calendarIndex: 0,
-            data: getVirtualData('2017')
+            data: getVirtualData('2022')
           },
           {
             type: 'heatmap',
             coordinateSystem: 'calendar',
             calendarIndex: 1,
-            data: getVirtualData('2016')
+            data: getVirtualData('2021')
           },
           {
             type: 'heatmap',
             coordinateSystem: 'calendar',
             calendarIndex: 2,
-            data: getVirtualData('2015')
+            data: getVirtualData('2020')
           }
         ]
       };
@@ -89,7 +88,7 @@ export default {
 
 <style scoped>
 .chart{
-  margin-left: 20px;
+  margin-left: 100px;
   margin-top:10px;
   height: 600px;
   width: 1200px;
