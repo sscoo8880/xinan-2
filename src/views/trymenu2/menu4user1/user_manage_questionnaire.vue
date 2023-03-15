@@ -1,0 +1,238 @@
+<template>
+  <div v-if="flag===0">
+    <div class="Login" id="figure">
+    </div>
+    <br>
+    <div style="margin-bottom: 15px">
+      <a-space direction="horizontal" size="large" style="width: 100%">
+        <p>问卷名:</p>
+        <a-mention v-model="question_name"  placeholder="请输入问卷名..." />
+        <a-button @click="serchQuestion" type="outline" >查询</a-button>
+        <a-modal v-model:visible="flag_search" @ok="handleOk" @cancel="handleCancel">
+          <template #title>
+            提醒
+          </template>
+          <div>没有查询到相关问卷</div>
+        </a-modal>
+      </a-space>
+    </div>
+    <a-table :columns="columns" :data="info.col" :pagination="pagination" :row-selection="rowSelection" v-model:selectedKeys="selectedKeys" style="margin-top: 10px">
+      <template #optional="{ record }">
+        <div v-if="record.state==0">
+          <a-button type="primary" style="margin-right:10px;background-color: #ffc940" @click="changeflag_view(record.title)">查看</a-button>
+          <a-button type="primary" style="margin-right:10px;background-color: crimson" @click="changeflag_change(record.title)">修改</a-button>
+          <a-button type="primary" @click="handleClickDelete(record.title)" style="background-color: #409EFF">删除</a-button>
+        </div>
+        <div v-else>
+          <a-button type="primary" style="margin-right:10px;background-color: #ffc940" @click="changeflag_view(record.title)">查看</a-button>
+          <a-button type="primary" style="margin-right:10px;background-color: #4ddc14" @click="changeflag_analyse">分析</a-button>
+          <a-button type="primary" @click="handleClickDelete(record.title)" style="background-color: #409EFF">删除</a-button>
+        </div>
+        <a-modal v-model:visible="flag_delete" @ok="DeleteQuestion" @cancel="cancelDeleteQuestion">
+          <template #title>
+            提示
+          </template>
+          <div>是否确认删除该问卷</div>
+        </a-modal>
+      </template>
+    </a-table>
+  </div>
+  <div v-else-if="flag===1">
+    <user_manage_view_questionnaire :title1="title1" @flag_view="getflag0"></user_manage_view_questionnaire>
+  </div>
+  <div v-else-if="flag===2">
+    <user_manage_change_questionnaire :title1="title1" @flag_change="getflag0"></user_manage_change_questionnaire>
+  </div>
+  <div v-else>
+    <user_manage_analyse_questionnaire @flag_analyse="getflag0"></user_manage_analyse_questionnaire>
+  </div>
+
+</template>
+
+<script>
+import {reactive, ref} from 'vue';
+import api from "@/api";
+import {Message, Modal} from '@arco-design/web-vue';
+import user_manage_analyse_questionnaire from "@/views/trymenu2/menu4user/user_manage_analyse_questionnaire";
+import user_manage_change_questionnaire from "@/views/trymenu2/menu4user/user_manage_change_questionnaire";
+import user_manage_view_questionnaire from "@/views/trymenu2/menu4user/user_manage_view_questionnaire";
+export default {
+  name: "user_manage_send_questionnaire",
+  components:{
+    user_manage_view_questionnaire,
+    user_manage_change_questionnaire,
+    user_manage_analyse_questionnaire,
+  },
+  mounted() {
+    this.form.title =this.question_name;
+    api.searchQuestion(this.form).then(res => {
+      if (res.code === 200){
+        // console.log(res.data)
+        this.info.col=res.data;
+      }else {
+        this.info.col = null;
+      }
+    })
+  },
+  data(){
+    const rowSelection = reactive({
+      type: 'checkbox',
+      showCheckedAll: true
+    });
+
+    return{
+      flag:0,
+      selectedKeys :['1','2'],
+      form:{
+        title: '',
+      },
+      pagination:{pageSize: 5},
+      info:{
+        col:[
+          {
+            id: '1',
+            title: '问卷一',
+            state:'1',
+            createTime:'2002-6-7',
+            time:'2020-1-4'
+          },
+          {
+            id: '2',
+            title: '问卷二',
+            state:'0',
+            createTime:'2002-6-7',
+            time:'2020-1-4'
+          }
+        ]
+      },
+      flag_search:false,
+      flag_delete:false,
+      question_name : '',
+      text : '',
+      title1:'',
+      rowSelection,
+      columns : [
+        {
+          title: '问卷ID',
+          dataIndex: 'id',
+          width:100
+        },
+        {
+          title: '问卷名称',
+          dataIndex: 'title',
+          width:170
+        },
+        {
+          title: '问卷状态',
+          dataIndex: 'state',
+          width:170
+        },
+        {
+          title: '创建日期',
+          dataIndex: 'createTime',
+          width:110
+        },
+        {
+          title: '截止日期',
+          dataIndex: 'time',
+          width:110
+        },
+        {
+          title: '操作',
+          slotName: 'optional',
+          width:180,
+        },
+      ],
+    }
+  },
+
+  methods:{
+    updateQuestion(){
+      this.form.title='';
+      api.searchQuestion(this.form).then(res=>{
+        if(res.code===200){
+          this.info.col=res.data;
+        }
+        else{
+          this.info.col=null;
+        }
+      })
+    },
+    handleOk(){
+      this.flag_search = false;
+    },
+    handleCancel(){
+      this.flag_search = false;
+    },
+    serchQuestion(){
+      if(this.question_name===""){
+        Modal.warning({
+          title: '警告提示',
+          content: '输入问卷名字不能为空'
+        });
+      }
+      else {
+        this.form.title =this.question_name;
+        api.searchQuestion(this.form).then(res=>{
+          if(res.code===200){
+            this.info.col=res.data;
+          }
+          else{
+            this.flag_search = true;
+          }
+        })
+      }
+    },
+    handleClickDelete(title){
+      this.form.title=title
+      this.flag_delete =true;
+    },
+    cancelDeleteQuestion(){
+      this.flag_delete=false;
+    },
+    DeleteQuestion(){
+      api.deleteQuestion(this.form).then(res=>{
+        if(res.code===200){
+          this.updateQuestion()
+          Message.success(res.msg)
+        }
+        else{
+          Message.error('删除失败！')
+        }
+      })
+    },
+    getpath(id) {
+      return document.getElementById(id);
+    },
+    disappare(x)//当前问卷分析页面消失
+    {
+      x.style.display="none"
+    },
+    appare(x)//数据大屏页面出现
+    {
+      x.style.display="block"
+    },
+    changeflag_view(data){
+      this.flag=1
+      this.title1 = data;
+    },
+    changeflag_change(data){
+      this.flag=2
+      this.title1 = data;
+    },
+    changeflag_analyse(data){
+      this.flag=3
+      this.title1 = data;
+    },
+    getflag0(){
+      this.flag=0
+    }
+  }
+}
+</script>
+
+<style>
+
+</style>
+
+

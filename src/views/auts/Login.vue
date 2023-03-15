@@ -43,12 +43,29 @@
         <a-button  html-type="submit" id="a-button">登录</a-button>
       </a-form-item>
 
-      <a-form-item>
-        <router-link to="/menu4manager" style="width: 25%">管理员菜单</router-link>
-        <router-link to="/menu4lessee" style="width: 25%">租户菜单</router-link>
-        <router-link to="/menu4user" style="width: 25%">用户菜单</router-link>
-        <router-link to="/menu4answer" style="width: 25%">答者菜单</router-link>
-      </a-form-item>
+
+<!--      <a-form-item>-->
+<!--        <router-link to="/menu4user">-->
+<!--          <a-button html-type="submit" id="a-button">-->
+<!--            登录1-->
+<!--          </a-button>-->
+<!--        </router-link>-->
+<!--      </a-form-item>-->
+
+<!--      <a-form-item>-->
+<!--        <a-button html-type="submit" id="a-button">-->
+<!--          <router-link to="\menu4user">-->
+<!--            登录3-->
+<!--          </router-link>-->
+<!--        </a-button>-->
+<!--      </a-form-item>-->
+
+<!--      <a-form-item>-->
+<!--        <router-link to="/menu4manager" style="width: 25%">管理员菜单</router-link>-->
+<!--        <router-link to="/menu4lessee" style="width: 25%">租户菜单</router-link>-->
+<!--        <router-link to="/menu4user" style="width: 25%">用户菜单</router-link>-->
+<!--        <router-link to="/menu4answer" style="width: 25%">答者菜单</router-link>-->
+<!--      </a-form-item>-->
     </a-form>
   </div>
 </template>
@@ -94,34 +111,47 @@ export default {
         if(form.username === ""||form.password ===""){
           alert("用户名或密码不能为空")
         }
-        else {
-          if (form.userflag) {
-            form1.username = form.username
-            form1.password = form.password
-            api.getuserLogin(form1).then(res => {
-              if (res.data.code === 20000) {
-                if(res.data.data.authority==0){
-                  sessionStorage.setItem("token",res.data.data.token);
-                  router.push("/menu4manager");
-                }
-                else if (res.data.data.authority==1){
-                  sessionStorage.setItem("token",res.data.data.token);
-                  router.push("/menu4lessee");
-                }
-                else if (res.data.data.authority==2){
-                  sessionStorage.setItem("token",res.data.data.token);
-                  router.push("/menu4user");
-                }
-                else {
-                  sessionStorage.setItem("token",res.data.data.token);
-                  router.push("/menu4answer");
-                }
-              } else {
-                alert("登录失败")
-              }
-            })
-          }
-      }
+        else if (form.username==="admin"&&form.password==="77"){
+          form1.username = form.username
+          form1.password = form.password
+          router.push("/menu4user1")
+        }
+        else if (form.username==="user"&&form.password==="11"){
+          form1.username = form.username
+          form1.password = form.password
+          router.push("/menu4user2")
+        }
+        else{
+          alert("请输入正确的账号和密码")
+        }
+      //   else {
+      //     if (form.userflag) {
+      //       form1.username = form.username
+      //       form1.password = form.password
+      //       api.getuserLogin(form1).then(res => {
+      //         if (res.data.code === 20000) {
+      //           if(res.data.data.authority===0){
+      //             sessionStorage.setItem("token",res.data.data.token);
+      //             router.push("/menu4manager");
+      //           }
+      //           else if (res.data.data.authority===1){
+      //             sessionStorage.setItem("token",res.data.data.token);
+      //             router.push("/menu4lessee");
+      //           }
+      //           else if (res.data.data.authority===2){
+      //             sessionStorage.setItem("token",res.data.data.token);
+      //             router.push("/menu4user");
+      //           }
+      //           else {
+      //             sessionStorage.setItem("token",res.data.data.token);
+      //             router.push("/menu4answer");
+      //           }
+      //         } else {
+      //           alert("登录失败")
+      //         }
+      //       })
+      //     }
+      // }
       }
       else {
         if(form.phone === ""||form.capcode ===""){
