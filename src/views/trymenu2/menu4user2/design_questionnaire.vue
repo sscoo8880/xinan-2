@@ -42,7 +42,7 @@
       <a-date-picker v-model="form.date" placeholder="请选择报道日期" style="width: 725px"/>
     </a-form-item>
     <a-form-item field="time" label="报道时间">
-      <a-time-picker v-model="form.time" placeholder="请选择报道时间"style="width: 725px"/>
+      <a-time-picker v-model="form.time" placeholder="请选择报道时间" style="width: 725px"/>
     </a-form-item>
 <!--    <a-form-item field="radio" label="Radio" :rules="[{match:/one/,message:'must select one'}]">-->
 <!--      <a-radio-group v-model="form.radio">-->
