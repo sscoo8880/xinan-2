@@ -92,11 +92,6 @@ export default {
           form1.password = form.password
           router.push("/menu")
         }
-        else if (form.username==="user"&&form.password==="11"){
-          form1.username = form.username
-          form1.password = form.password
-          router.push("/menu4user2")
-        }
         else{
           alert("请输入正确的账号和密码")
         }

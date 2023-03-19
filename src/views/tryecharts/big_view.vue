@@ -53,7 +53,7 @@ import D from "@/views/tryecharts/view/local/D";
 import {inject} from "vue";
 
 export default {
-  name: "echartsPage",
+  name: "big_view",
   components: {APage, BPage, CPage, DPage, A1, A2, A3, B1, B2, C, D},
   data() {
     return {

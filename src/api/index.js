@@ -49,6 +49,10 @@ const api ={
         return posttoken(path.baseUrl +path.updateQuestion,data,true)
     },
 
+    //数据大屏
+    view(data) {
+        return post(path.baseUrl+path.view,data,true)
+    }
 }
 
 export default api;
