@@ -3,15 +3,6 @@ import path from "./path";
 
 const api ={
     //登录
-    getuserLogin(data){
-        return axios.post( path.baseUrl+path.userlogin,
-            {
-                username:data.username,
-                password:data.password
-            })
-    },
-
-    //登录
     getphoneLogin(data){
         return post( path.baseUrl+path.phonelogin,data,true)
     },
