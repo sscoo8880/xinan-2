@@ -16,7 +16,6 @@ const api ={
         return post( path.baseUrl+path.phonelogin,data,true)
     },
 
-
     //注册验证码
     getregistercode(data){
         return axios.post(path.baseUrl + path.registercode + '/' + data)
@@ -46,80 +45,9 @@ const api ={
     getquestion(data){
         return post(path.baseUrl+path.getQuestion,data,true)
     },
-
-    //查询租户
-    getLessees(data){
-        return posttoken(path.baseUrl + path.getLessees, data, true)
-    },
-
-    //查询用户
-    searchUser(data){
-        return posttoken(path.baseUrl + path.searchUser, data, true)
-    },
-
-    //删除租户
-    deleteLessees(data){
-        return posttoken(path.baseUrl + path.deleteLessees, data, true)
-    },
-
-    //修改租户
-    updateLessees(data){
-        return posttoken(path.baseUrl + path.updateLessees, data, true)
-    },
-
-    //创建前验证唯一：租户名或手机号(异步
-    checkUsernameOrPhone(data){
-        return posttoken(path.baseUrl + path.checkUsernameOrPhone, data, true)
-    },
-
-    //新增租户，管理员
-    registerByAdmin(data){
-        return posttoken(path.baseUrl + path.registerByAdmin, data, true)
-    },
-
-    //新增用户，租户
-    registerByLessees(data){
-        return posttoken(path.baseUrl + path.registerByLessees, data, true)
-    },
-
-    //修改前验证唯一：租户名或手机号(异步
-    checkUsernameOrPhoneExpOwn(data){
-        return posttoken(path.baseUrl + path.checkUsernameOrPhoneExpOwn, data, true)
-    },
-
-    //修改租户
-    updateUser(data){
-        return posttoken(path.baseUrl + path.updateUser, data, true)
-    },
-
-    //删除用户
-    deleteUser(data){
-        return posttoken(path.baseUrl + path.deleteUser, data, true)
-    },
-
-    //查询问卷
-    searchQuestion(data){
-        return posttoken(path.baseUrl +path.searchQuestion,data,true)
-    },
-
-    //删除问卷
-    deleteQuestion(data){
-        return posttoken(path.baseUrl +path.deleteQuestion,data,true)
-    },
-
-    //查询群组
-    selectGroup(data){
-        return posttoken(path.baseUrl +path.selectGroup,data,true)
-    },
-
     //新增群组
     addGroup(data){
         return posttoken(path.baseUrl +path.addGroup,data,true)
-    },
-
-    //删除群组
-    deleteGroup(data){
-        return posttoken(path.baseUrl +path.deleteGroup,data,true)
     },
 
     userLogout(data){
@@ -130,51 +58,6 @@ const api ={
         return posttoken(path.baseUrl +path.updateQuestion,data,true)
     },
 
-    addQuestionnaire(data){
-        return posttoken(path.baseUrl +path.addQuestionnaire,data,true)
-    },
-
-    getQuestionnaireInfo(data){
-        return posttoken(path.baseUrl +path.getQuestionnaireInfo,data,true)
-    },
-
-    updateQuestionnaire(data){
-        return posttoken(path.baseUrl +path.updateQuestionnaire,data,true)
-    },
-    //查询答者
-    getAnswer(data){
-        return posttoken(path.baseUrl +path.getAnswer,data,true)
-    },
-
-    //更新答者
-    updateAnswer(data){
-        return posttoken(path.baseUrl +path.updateAnswer,data,true)
-    },
-
-    //删除答者
-    deleteAnswer(data){
-        return posttoken(path.baseUrl +path.deleteAnswer,data,true)
-    },
-
-    //新增答者
-    registerByUser(data){
-        return posttoken(path.baseUrl +path.registerByUser,data,true)
-    },
-
-    //群组下的用户删除
-    deleteGroupUser(data){
-        return posttoken(path.baseUrl+path.deleteGroupUser,data,true)
-    },
-
-    //群组下的新增用户
-    addGroupUser(data){
-        return posttoken(path.baseUrl+path.addGroupUser,data,true)
-    },
-
-    //群则下的查询用户
-    selectGroupUser(data){
-        return posttoken(path.baseUrl+path.selectGroupUser,data,true)
-    }
 }
 
 export default api;
