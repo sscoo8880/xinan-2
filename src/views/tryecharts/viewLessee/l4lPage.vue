@@ -5,7 +5,6 @@
 
 <script>
 import {inject, onMounted} from "vue";
-import echarts_demo1 from "@/views/echarts_demo1";
 
 export default {
   name: "l4lessee",

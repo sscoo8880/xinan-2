@@ -82,7 +82,6 @@ const routes = [
     name: 'user_qTemplate_detail_user2',
     component: () => import(/* webpackChunkName: "about" */ '../views/trymenu2/menu4user2/user_qTemplate_detail.vue'),
   },
-
   {
     path: '/echartsPage',
     name: 'echartsPage',

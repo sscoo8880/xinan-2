@@ -42,30 +42,6 @@
       <a-form-item>
         <a-button  html-type="submit" id="a-button">登录</a-button>
       </a-form-item>
-
-
-<!--      <a-form-item>-->
-<!--        <router-link to="/menu4user">-->
-<!--          <a-button html-type="submit" id="a-button">-->
-<!--            登录1-->
-<!--          </a-button>-->
-<!--        </router-link>-->
-<!--      </a-form-item>-->
-
-<!--      <a-form-item>-->
-<!--        <a-button html-type="submit" id="a-button">-->
-<!--          <router-link to="\menu4user">-->
-<!--            登录3-->
-<!--          </router-link>-->
-<!--        </a-button>-->
-<!--      </a-form-item>-->
-
-<!--      <a-form-item>-->
-<!--        <router-link to="/menu4manager" style="width: 25%">管理员菜单</router-link>-->
-<!--        <router-link to="/menu4lessee" style="width: 25%">租户菜单</router-link>-->
-<!--        <router-link to="/menu4user" style="width: 25%">用户菜单</router-link>-->
-<!--        <router-link to="/menu4answer" style="width: 25%">答者菜单</router-link>-->
-<!--      </a-form-item>-->
     </a-form>
   </div>
 </template>

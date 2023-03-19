@@ -79,8 +79,6 @@ import {
 } from '@arco-design/web-vue/es/icon';
 
 // 引入子页面
-import Manager_manage_lessee from "@/views/trymenu2/menu4manager/manager_manage_lessee";
-import Manager_manage_fare from "@/views/trymenu2/menu4manager/manager_manage_fare";
 import api from "@/api";
 import router from "@/router";
 import user_manage_qTemplate from "@/views/trymenu2/menu4user2/user_manage_qTemplate";
@@ -90,8 +88,6 @@ export default {
     Design_questionnaire,
     user_manage_qTemplate,
     // 引入子页面
-    Manager_manage_fare,
-    Manager_manage_lessee,
     IconMenuFold,
     IconMenuUnfold,
     IconApps,
