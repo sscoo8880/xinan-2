@@ -67,22 +67,22 @@
 
   <!--  对应管理题库的vue-->
   <div id="div-m" >
-    <user_manage_qTemplate></user_manage_qTemplate>
+    <manage></manage>
   </div>
 
   <!--  对应创建问卷的vue-->
   <div id="div_m2" style="display:none">
-    <design_questionnaire></design_questionnaire>
+    <update></update>
   </div>
 
   <!--  对应群组的vue-->
   <div id="div_m3" style="display: none">
-    <echartsPage4local></echartsPage4local>
+    <view1_0></view1_0>
   </div>
 
   <!--  所有答者-->
   <div id="div_m4" style="display: none">
-    <echartsPage4cloud></echartsPage4cloud>
+    <view1_1></view1_1>
   </div>
 
 </template>
@@ -102,20 +102,20 @@ import {
 } from '@arco-design/web-vue/es/icon';
 
 // 引入子页面
-import design_questionnaire from "@/views/trymenu2/menu4user1/design_questionnaire";
-import User_manage_qTemplate from "@/views/trymenu2/menu4user1/user_manage_qTemplate";
-import echartsPage4local from "@/views/trymenu2/menu4user1/echartsPage4local";
-import echartsPage4cloud from "@/views/trymenu2/menu4user1/echartsPage4cloud";
+import update from "@/views/trymenu2/menu/update";
+import manage from "@/views/trymenu2/menu/manage";
+import view1_0 from "@/views/trymenu2/menu/view1_0";
+import view1_1 from "@/views/trymenu2/menu/view1_1";
 import api from "@/api";
 import router from "@/router";
 
 export default {
   components: {
-    echartsPage4local,
-    echartsPage4cloud,
+    view1_0,
+    view1_1,
     // 引入子页面
-    design_questionnaire,
-    User_manage_qTemplate,
+    update,
+    manage,
     IconMenuFold,
     IconMenuUnfold,
     IconApps,

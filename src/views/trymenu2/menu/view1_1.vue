@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import cloudview from "@/views/tryecharts/viewU1/cloud/cloudview";
+import cloudview from "@/views/tryecharts/view4user1/cloud/cloudview";
 
 import {inject} from "vue";
 export default {

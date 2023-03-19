@@ -90,7 +90,7 @@ export default {
         else if (form.username==="admin"&&form.password==="77"){
           form1.username = form.username
           form1.password = form.password
-          router.push("/menu4user1")
+          router.push("/menu")
         }
         else if (form.username==="user"&&form.password==="11"){
           form1.username = form.username

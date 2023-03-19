@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import B11 from "@/views/tryecharts/viewU1/local/B11";
+import B11 from "@/views/tryecharts/view4user1/local/B11";
 
 export default {
   name: "B2",

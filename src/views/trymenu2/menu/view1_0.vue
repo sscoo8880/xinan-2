@@ -42,13 +42,13 @@ import APage from "@/views/tryecharts/components/A-Page";
 import BPage from "@/views/tryecharts/components/B-Page";
 import CPage from "@/views/tryecharts/components/C-Page";
 import DPage from "@/views/tryecharts/components/D-Page";
-import A1 from "@/views/tryecharts/viewU1/local/A1";
-import A2 from "@/views/tryecharts/viewU1/local/A2";
-import A3 from "@/views/tryecharts/viewU1/local/A3";
-import B1 from "@/views/tryecharts/viewU1/local/B1";
-import B2 from "@/views/tryecharts/viewU1/local/B2";
-import C from "@/views/tryecharts/viewU1/local/C";
-import D from "@/views/tryecharts/viewU1/local/D";
+import A1 from "@/views/tryecharts/view4user1/local/A1";
+import A2 from "@/views/tryecharts/view4user1/local/A2";
+import A3 from "@/views/tryecharts/view4user1/local/A3";
+import B1 from "@/views/tryecharts/view4user1/local/B1";
+import B2 from "@/views/tryecharts/view4user1/local/B2";
+import C from "@/views/tryecharts/view4user1/local/C";
+import D from "@/views/tryecharts/view4user1/local/D";
 
 import {inject} from "vue";
 
