@@ -1,5 +1,7 @@
 <template>
-  <section class="container">
+  <h1 :style="{marginTop: '30px',fontSize:'41px'}">区块链数据收集</h1>
+  <section class="container" style="margin-top: -105px">
+
     <section class="left">
       <section class="A">
         <APage>
@@ -79,48 +81,68 @@ export default {
 }
 
 .container {
+
   /*min-width: 1200px;*/
   /*max-width: 2048px;*/
-  width: 1150px;
-  height: 444px;
-  margin-left: 50px;
-  margin-top: 7px;
+  /*width: 1577px;*/
+  width: 100%;
+  height: 899px;
+  /*height: 880px;*/
   /*margin: 0 auto;*/
   padding: 0 0 0;
   display: flex;
+  background-color: floralwhite;
+  /*background: url("../../assets/pic_2.jpg") no-repeat center*/
+
 }
 
 .A {
   flex: 5;
+  margin-left: 50px;
+  margin-top: 111px;
   display: flex; /*内部横向*/
 }
 
 .B {
   flex: 5;
+  margin-right: 50px;
+  margin-top: 111px;
   height: 195px;
   display: flex; /*内部横向*/
 }
 
 .C {
   flex: 5;
-  margin-top: 5px;
+  margin-left: 50px;
+  margin-top: 20px;
   height: 200px;
 }
 
 .D {
   flex: 5;
+  margin-right: 50px;
+  margin-top: 20px;
   height: 200px;
+}
+
+.top{
+  height: 50px;
+  width: 100%;
+}
+
+.bottom{
+  width: 100%;
 }
 
 .left {
   flex: 5;
-  height: 800px;
+  height: 700px;
   /*width: 100%;*/
 }
 
 .right {
   flex: 5;
-  height: 800px;
+  height: 700px;
   /*width: 100%;*/
 }
 
