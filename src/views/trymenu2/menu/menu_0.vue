@@ -1,7 +1,7 @@
 <template>
   <a-page-header class="title" title="返回" @back="$router.back()" :style="{padding:'20px',height:'60px'}" />
   <a-form>
-    <a-typography-text id="title-m">用户界面</a-typography-text>
+    <a-typography-text id="title-m">管理员页面</a-typography-text>
     <a-avatar :style="{ backgroundColor: '#3370ff',marginRight:'0px'}" id="upic">
 
       <a-dropdown trigger="hover">
@@ -48,49 +48,49 @@
         breakpoint="xl"
         @collapse="onCollapse">
 
-      <a-sub-menu key="1"  v-on:click="goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">
+      <a-sub-menu key="1"  v-on:click="goto_1_0(getpath('div-m')),goto_1_1(getpath('div_m2')),goto_2_0(getpath('div_m3')),goto_2_1(getpath('div_m4'))">
         <template #icon><icon-apps></icon-apps></template>
-        <template #title>模型</template>
+        <template #title>数据集</template>
         <!--        1_0是管理题库，1_1是设计问卷，1_2是管理问卷-->
-        <a-menu-item key="1_0" v-on:click="change1_0(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">管理数据集</a-menu-item>
-        <a-menu-item key="1_1" v-on:click="change1_1(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">训练模型</a-menu-item>
-        <a-menu-item key="1_2" v-on:click="change1_2(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">测试新闻</a-menu-item>
+        <a-menu-item key="1_0" v-on:click="change1_0(),goto_1_0(getpath('div-m')),goto_1_1(getpath('div_m2')),goto_2_0(getpath('div_m3')),goto_2_1(getpath('div_m4'))">管理</a-menu-item>
+        <a-menu-item key="1_2" v-on:click="change1_2(),goto_1_0(getpath('div-m')),goto_1_1(getpath('div_m2')),goto_2_0(getpath('div_m3')),goto_2_1(getpath('div_m4'))">训练模型</a-menu-item>
+        <a-menu-item key="1_1" v-on:click="change1_1(),goto_1_0(getpath('div-m')),goto_1_1(getpath('div_m2')),goto_2_0(getpath('div_m3')),goto_2_1(getpath('div_m4'))">测试新闻</a-menu-item>
       </a-sub-menu>
-      <a-sub-menu key="2" v-on:click="goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">
+      <a-sub-menu key="2" v-on:click="goto_1_0(getpath('div-m')),goto_1_1(getpath('div_m2')),goto_2_0(getpath('div_m3')),goto_2_1(getpath('div_m4'))">
         <template #icon><icon-bug></icon-bug></template>
-        <template #title>记录</template>
-        <a-menu-item key="2_0" v-on:click="change2_0(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">本地</a-menu-item>
-        <a-menu-item key="2_1" v-on:click="change2_1(),goto_user_manage_questionnairebank(getpath('div-m')),goto_user_create_questionnaire(getpath('div-mm')),goto_user_manage_questionnaire(getpath('div_mmm')),goto_user_manage_group(getpath('div_mmmm')),goto_group_answer(getpath('div_m5'))">云端</a-menu-item>
+        <template #title>结果</template>
+        <a-menu-item key="2_0" v-on:click="change2_0(),goto_1_0(getpath('div-m')),goto_1_1(getpath('div_m2')),goto_2_0(getpath('div_m3')),goto_2_1(getpath('div_m4'))">本地</a-menu-item>
+        <a-menu-item key="2_1" v-on:click="change2_1(),goto_1_0(getpath('div-m')),goto_1_1(getpath('div_m2')),goto_2_0(getpath('div_m3')),goto_2_1(getpath('div_m4'))">云端</a-menu-item>
       </a-sub-menu>
     </a-menu>
   </div>
 
-  <!--  对应管理题库的vue-->
+  <!--  对应管理的vue-->
   <div id="div-m" >
-    <manage_news_dataset></manage_news_dataset>
+    <user_manage_qTemplate></user_manage_qTemplate>
   </div>
 
-  <!--  对应创建问卷的vue-->
-  <div id="div-mm" style="display:none">
+  <!--  对应训练的vue-->
+  <div id="div_m" style="display:none">
     <train></train>
   </div>
 
-  <!--  对应管理问卷的vue-->
-  <div id="div_mmm" style="display: none">
+  <!--  对应测试的vue-->
+  <div id="div_m2" style="display:none">
     <test></test>
   </div>
 
-  <!--  对应群组的vue-->
-  <div id="div_mmmm" style="display: none">
+
+
+  <!--  对应云端的vue-->
+  <div id="div_m3" style="display: none">
     <view1_0></view1_0>
   </div>
 
-
-  <!--  所有答者-->
-  <div id="div_m5" style="display: none">
+  <!--  本地-->
+  <div id="div_m4" style="display: none">
     <view1_1></view1_1>
   </div>
-
 
 </template>
 
@@ -109,11 +109,10 @@ import {
 } from '@arco-design/web-vue/es/icon';
 
 // 引入子页面
-
-
-import manage_news_dataset from "@/views/trymenu2/menu/manage_news_dataset";
-import train from "@/views/trymenu2/menu/train";
+import update from "@/views/trymenu2/menu/update";
 import test from "@/views/trymenu2/menu/test";
+import train from "@/views/trymenu2/menu/train";
+import user_manage_qTemplate from "@/views/trymenu2/menu/manage_news_dataset";
 import view1_0 from "@/views/trymenu2/menu/view1_0";
 import view1_1 from "@/views/trymenu2/menu/view1_1";
 import api from "@/api";
@@ -121,12 +120,13 @@ import router from "@/router";
 
 export default {
   components: {
-    // 引入子页面
     view1_0,
-    train,
-    manage_news_dataset,
-    test,
     view1_1,
+    // 引入子页面
+    update,
+    test,
+    train,
+    user_manage_qTemplate,
     IconMenuFold,
     IconMenuUnfold,
     IconApps,
@@ -200,7 +200,7 @@ export default {
     getpath(id) {
       return document.getElementById(id);
     },
-    goto_user_manage_questionnairebank(x)//决定是否跳转user_manage_questionnairebank页面，题库管理界面
+    goto_1_0(x)//决定是否跳转user_manage_questionnairebank页面，题库管理界面
     {
       if(this.key!=='1_0')
       {
@@ -211,7 +211,7 @@ export default {
       }
 
     },
-    goto_user_create_questionnaire(x){//决定是否跳转user_create_questionnaire页面，创建问卷界面
+    goto_1_1(x){//决定是否跳转user_create_questionnaire页面，创建问卷界面
       if(this.key!=='1_1')
       {
         x.style.display="none"
@@ -220,17 +220,7 @@ export default {
         x.style.display="block"
       }
     },
-    goto_user_manage_questionnaire(x)//决定是否跳转user_manage_send_questionnaire页面，发送问卷界面
-    {
-      if(this.key!=='1_2')
-      {
-        x.style.display="none"
-      }
-      else{
-        x.style.display="block"
-      }
-    },
-    goto_user_manage_group(x)//决定是否跳转user_manage_group页面，用户和群组界面
+    goto_2_0(x)//决定是否跳转user_manage_group页面，用户和群组界面
     {
       if(this.key!=='2_1')
       {
@@ -240,7 +230,7 @@ export default {
         x.style.display="block"
       }
     },
-    goto_group_answer(x)//决定是否跳转group_answer页面，所有答者界面
+    goto_2_1(x)//决定是否跳转group_answer页面，所有答者界面
     {
       if(this.key!=='2_0')
       {
@@ -318,25 +308,19 @@ export default {
   left: 20%;
   width: 1200px;
 }
-#div-mm{
+#div_m2{
   position: absolute;
   top: 10%;
   left: 20%;
   width: 1200px;
 }
-#div_mmm{
+#div_m3{
   position: absolute;
   top: 10%;
   left: 16%;
   width: 83%;
 }
-#div_mmmm{
-  position: absolute;
-  top: 10%;
-  left: 16%;
-  width: 83%;
-}
-#div_m5{
+#div_m4{
   position: absolute;
   top: 10%;
   left: 16%;

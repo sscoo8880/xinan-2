@@ -37,6 +37,11 @@ const routes = [
     name: 'big_view',
     component: () => import(/* webpackChunkName: "about" */ '../views/tryecharts/big_view.vue'),
   },
+  {
+    path: '/news_dataset_detail',
+    name: 'news_dataset_detail',
+    component: () => import(/* webpackChunkName: "about" */ '../views/trymenu2/menu/news_dataset_detail.vue'),
+  },
 ]
 
 const router = createRouter({

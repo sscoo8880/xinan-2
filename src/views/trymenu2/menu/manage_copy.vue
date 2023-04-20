@@ -14,7 +14,7 @@
   <a-table :columns="columns" :data="data" :rowKey="data.key" :row-selection="rowSelection" direction="horizontal" style="margin-top: 10px">
     <template #optional="{ record }">
       <router-link :to="{
-        path:'/user_qTemplate_detail',
+        path:'/dataset_info',
         query:{
           qTemplate_id:record.qTemplate_id,
           qTemplate_name:record.qTemplate_name,
@@ -23,7 +23,7 @@
           qTemplate_description:record.qTemplate_description,
         }
       }">
-        <a-button type="primary" status="success" >查看</a-button>
+        <a-button type="primary" status="success" @click="changeflag" >查看</a-button>
       </router-link>
 
       <a-button type="primary" status="danger" @click="$modal.info({ title:'删除', content:'群组名称：'+record.qTemplate_name })">删除</a-button>
@@ -37,9 +37,12 @@
 import {reactive, ref} from 'vue';
 import {Message, Modal} from "@arco-design/web-vue";
 import api from "@/api";
-
+import dataset_info from "@/views/trymenu2/menu/dataset_info";
 export default {
 
+  components:{
+    dataset_info,
+  },
   name: "user_manage_questionnaireTemplate",
 
   data(){
@@ -48,6 +51,7 @@ export default {
       showCheckedAll: true
     });
     return{
+      flag:0,
       value : '',
       text : '',
       visible:false,
@@ -126,6 +130,13 @@ export default {
     }
   },
   methods:{
+    changeflag(){
+      this.flag=1
+    },
+    getflag(data){
+      this.flag=data
+    },
+
     handleClick(){
       this.visible=true;
     },

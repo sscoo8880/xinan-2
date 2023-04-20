@@ -34,7 +34,7 @@ export default {
         },
         yAxis: {
           type: 'category',
-          data: ['百度贴吧', '知乎', '哔哩哔哩', '其他', '今日头条']
+          data: ['百度贴吧', '知乎', '新浪网', '其他', '今日头条']
         },
         series: [
           {

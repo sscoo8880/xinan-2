@@ -5,7 +5,7 @@
   </div>
   <div id="form">
     <a-typography-title id="title-l">
-      问卷宝
+      虚假新闻检测系统
     </a-typography-title>
     <a-form :model="form" :style="{width:'550px'}" @submit="handleSubmit">
       <a-form-item v-if="form.userflag" field="name" label="用户名">
